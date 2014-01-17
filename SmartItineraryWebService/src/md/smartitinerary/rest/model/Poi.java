@@ -3,7 +3,7 @@ package md.smartitinerary.rest.model;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.postgis.Point;
-
+// Prova commit eclipse
 @XmlRootElement
 public class Poi {
 	private Point poi;
