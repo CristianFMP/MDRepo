@@ -9,7 +9,7 @@ import org.postgis.LineString;
 @XmlRootElement
 public class Itinerary {
 	private LineString poiLine; // da sistemare
-	private List<Poi> pois;
+	private List<Poi> pois; // bla bla
 	private int popularity;
 	private double length;
 	
