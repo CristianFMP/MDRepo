@@ -10,7 +10,7 @@ import org.postgis.LineString;
 public class Itinerary {
 	private LineString poiLine; // da sistemare
 	private List<Poi> pois;
-	private int popularity;
+	private int popularity; // ciao!
 	private double length;
 	
 	public Itinerary(LineString poiLine, List<Poi> pois, int popularity, double length) {
