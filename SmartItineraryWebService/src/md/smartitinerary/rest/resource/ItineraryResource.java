@@ -18,6 +18,8 @@ import javax.ws.rs.core.UriInfo;
 import md.smartitinerary.rest.model.Itinerary;
 import md.smartitinerary.util.Utilities;
 
+import org.postgis.Point;
+
 @Path("/itinerary")
 public class ItineraryResource {
 	// The @Context annotation allows us to have certain contextual objects
@@ -56,13 +58,16 @@ public class ItineraryResource {
     public List<Itinerary> itineraries(
             MultivaluedMap<String, String> itineraryParams
             ) {
-        
+        double range = 500.0;
+        double maxLength = 1000.0;
+        int k = 10;
+        Point userLocation = new Point(-73.979135, 40.759195);
         Set<String> macrocats = itineraryParams.keySet();
         List<String> categories = new ArrayList<>();
         for (String s : macrocats) {
         	categories.addAll(itineraryParams.get(s));
         }
-        List<Itinerary> itineraries = Utilities.retrieveItineraries(categories);
+        List<Itinerary> itineraries = Utilities.retrieveItineraries(categories, range, maxLength, userLocation, k);
         return itineraries;                         
     }
 }

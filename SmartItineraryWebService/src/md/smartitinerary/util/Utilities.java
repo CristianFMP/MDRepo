@@ -84,7 +84,7 @@ public class Utilities {
 	}
 
 	/** Returns a list of itineraries*/
-	public static List<Itinerary> retrieveItineraries(List<String> categories) {
+	public static List<Itinerary> retrieveItineraries(List<String> categories, double range, double maxLength, Point userLocation, int k) {
 		Connection connection = getConnection();
 		ResultSet result;
 		List<String> categoryList = categories;
@@ -93,29 +93,40 @@ public class Utilities {
 		try {
 			Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			// First part of the query
-			String query = "SELECT ST_AsText(geom) AS linestring, count(*) AS popularity, ST_Length(ST_Transform(geom, 26915)) AS length, ST_NPoints(geom) AS n_vertices" +
-					"FROM (SELECT \"userID\", ST_MakeLine(location::geometry ORDER BY time) As geom, DATE(time) " +
-						"FROM (SELECT Ckins.\"userID\", Pois.location, time " + 
-							"FROM \"POIs\".\"Checkins4sqManhattan\" AS Ckins LEFT JOIN \"POIs\".\"POIsManhattan\" AS Pois ON Ckins.\"4sqExtended\" = Pois.\"4sqExtended\" " + 
-							"WHERE ";
+			String query = "SELECT itinerari.\"pois\" AS poi_list, linestring, itinerari.\"st_length\" AS length, itinerari.\"count\" AS popularity " +
+					"FROM (SELECT POIs, count(*), geom::geography, ST_Length(geom::geography, false), ST_NPoints(geom) " +
+						"FROM (SELECT \"userID\", ST_MakeLine(location::geometry) AS geom, string_agg(\"4sqExtended\", ',') AS POIs, DATE(time) " + 
+							"FROM (SELECT Ckins.\"userID\", Pois.location, Pois.\"4sqExtended\", time " + 
+								"FROM \"POIs\".\"Checkins4sqManhattan\" AS Ckins, \"POIs\".\"POIsManhattan\" AS Pois, \"POIs\".\"RelPOIManCategorie\" AS Cats " +
+								"WHERE (Ckins.\"4sqExtended\" = Pois.\"4sqExtended\" AND Pois.\"4sqExtended\" = poi) AND (";
 			boolean door = true;
 			// Concatenating the categories for the POIs research
 			for (String c : categoryList) {
 				if (door) {
-					query.concat("Pois.categoria LIKE '%" + c + "%'");
+					query.concat("Cats.categoria = '" + c + "'");
 					door = false;
 				} else
-					query.concat(" OR Pois.categoria LIKE '%" + c + "%'");
+					query.concat(" OR Cats.categoria = '" + c + "'");
 			}
 			// Second part of the query
-			query.concat(") AS CatSel" + 
-						"GROUP BY \"userID\", DATE(time) AS groups " +
-					"GROUP BY geom " + 
-					"HAVING ST_Length(geom) > 0 AND ST_NPoints(geom) > 1 " +
+			query.concat(") ORDER BY time) AS CatSel " + 
+						"GROUP BY \"userID\", DATE(time)) AS groups " +
+					"GROUP BY POIs, geom " + 
+					"ST_Length(geom::geography, false) > 0 AND ST_Length(geom::geography, false) < " + maxLength + " AND ST_NPoints(geom) > 1 " +
 					"ORDER BY count(*) DESC " +
-					"LIMIT 10;");
+					"LIMIT 1000) AS itinerari " +
+					"SELECT Pois.\"4sqExtended\", count(*) AS popolarita, ST_Distance(Geography(ST_SetSRID(ST_MakePoint(-73.979135, 40.759195), 4326)), Pois.location) AS distance " +
+					"FROM \"POIs\".\"Checkins4sqManhattan\" AS Ckins INNER JOIN \"POIs\".\"POIsManhattan\" AS Pois ON Ckins.\"4sqExtended\" = Pois.\"4sqExtended\"" +
+					"WHERE ST_DWithin(Pois.location, Geography(ST_SetSRID("+userLocation+", 4326)), "+ range +")" + 
+					"GROUP BY Pois.\"4sqExtended\"" +
+					"ORDER BY count(*) DESC) AS rangeQuery" +
+				"WHERE itinerari.\"pois\" ILIKE CONCAT('%', rangeQuery.\"4sqExtended\", '%')" +
+				"GROUP BY poi_list, geom, length, popularity" +
+				"ORDER BY popularity DESC" +
+				"LIMIT" + k);
 			result = statement.executeQuery(query);
 			System.out.println("\nExecuted query: " + query);
+			System.out.println("Itinerari trovati:");
 			while (result.next()) {
 				// Navigate query result
 				LineString linestring = new LineString(result.getString("linestring"));
@@ -123,9 +134,10 @@ public class Utilities {
 				List<Poi> pois = new ArrayList<>();
 				for (int i = 0; i < points.length; i++) {
 					// TODO: add query to get id and name of POIs
-					pois.add(new Poi(points[i], "id", "name"));
+					pois.add(new Poi(points[i], "id", "name", 0));
 				}
 				itineraryList.add(new Itinerary(linestring, pois, result.getInt("popularity"), result.getDouble("length")));
+				System.out.println("");
 			}
 			return itineraryList;
 		} catch (SQLException e) {

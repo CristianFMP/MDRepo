@@ -3,29 +3,32 @@ package md.smartitinerary.rest.model;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.postgis.Point;
-// Seconda prova commit eclipse
+
 @XmlRootElement
 public class Poi {
 	private Point poi;
 	private String id;
 	private String name;
+	private int popularity;
 	private double latitude;
 	private double longitude;
 	
-	public Poi(Point poi, String id, String name) {
+	public Poi(Point poi, String id, String name, int popularity) {
 		this.poi = poi;
 		this.id = id;
 		this.name = name;
+		this.popularity = popularity;
 		this.latitude = poi.getX();
 		this.longitude = poi.getY();
 	}
 	
 	public Poi() {
-		poi = null;
+		poi = new Point();
 		id = "";
 		name = "";
-		latitude = 0.0;
-		longitude = 0.0;
+		popularity = 0;
+		latitude = poi.getX();
+		longitude = poi.getY();
 	}
 	
 	public String getId() {
@@ -60,5 +63,13 @@ public class Poi {
 		this.poi = poi;
 		this.latitude = poi.getX();
 		this.longitude = poi.getY();
+	}
+
+	public int getPopularity() {
+		return popularity;
+	}
+
+	public void setPopularity(int popularity) {
+		this.popularity = popularity;
 	}	
 }
