@@ -1,23 +1,21 @@
 package md.smartitinerary.rest.resource;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
 import md.smartitinerary.rest.model.Itinerary;
 import md.smartitinerary.util.Utilities;
 
+import org.postgis.LineString;
 import org.postgis.Point;
 
 @Path("/itinerary")
@@ -52,21 +50,27 @@ public class ItineraryResource {
     */
     
     // Use data from the client source to retrieve itineraries
-    @POST
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @GET
+    @Path("/post")
+    // @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Itinerary> itineraries(
-            MultivaluedMap<String, String> itineraryParams
-            ) {
+    public List<Itinerary> itineraries() {
         double range = 500.0;
         double maxLength = 1000.0;
         int k = 10;
         Point userLocation = new Point(-73.979135, 40.759195);
-        Set<String> macrocats = itineraryParams.keySet();
+        try {
+			LineString line = new LineString("0102000020E610000002000000C828CFBC1C7E52C031854178B8604440725CCBE11A7E52C023B679ACBB604440");
+			System.out.println(line.toString());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        System.out.println(userLocation.toString());
         List<String> categories = new ArrayList<>();
-        for (String s : macrocats) {
-        	categories.addAll(itineraryParams.get(s));
-        }
+        categories.add("Home (private)");
+        categories.add("Coworking Space");
+        categories.add("Office");
         List<Itinerary> itineraries = Utilities.retrieveItineraries(categories, range, maxLength, userLocation, k);
         return itineraries;                         
     }

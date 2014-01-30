@@ -93,7 +93,7 @@ public class Utilities {
 		try {
 			Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			// First part of the query
-			String query = "SELECT itinerari.\"pois\" AS poi_list, linestring, itinerari.\"st_length\" AS length, itinerari.\"count\" AS popularity " +
+			String query = "SELECT itinerari.\"pois\" AS poi_list, geom::geometry AS linestring, itinerari.\"st_length\" AS length, itinerari.\"count\" AS popularity " +
 					"FROM (SELECT POIs, count(*), geom::geography, ST_Length(geom::geography, false), ST_NPoints(geom) " +
 						"FROM (SELECT \"userID\", ST_MakeLine(location::geometry) AS geom, string_agg(\"4sqExtended\", ',') AS POIs, DATE(time) " + 
 							"FROM (SELECT Ckins.\"userID\", Pois.location, Pois.\"4sqExtended\", time " + 
@@ -103,38 +103,47 @@ public class Utilities {
 			// Concatenating the categories for the POIs research
 			for (String c : categoryList) {
 				if (door) {
-					query.concat("Cats.categoria = '" + c + "'");
+					query = query.concat("Cats.categoria = '" + c + "'");
 					door = false;
 				} else
-					query.concat(" OR Cats.categoria = '" + c + "'");
+					query = query.concat(" OR Cats.categoria = '" + c + "'");
 			}
 			// Second part of the query
-			query.concat(") ORDER BY time) AS CatSel " + 
+			query = query.concat(") ORDER BY time) AS CatSel " + 
 						"GROUP BY \"userID\", DATE(time)) AS groups " +
 					"GROUP BY POIs, geom " + 
-					"ST_Length(geom::geography, false) > 0 AND ST_Length(geom::geography, false) < " + maxLength + " AND ST_NPoints(geom) > 1 " +
+					"HAVING ST_Length(geom::geography, false) > 0 AND ST_Length(geom::geography, false) < " + maxLength + " AND ST_NPoints(geom) > 1 " +
 					"ORDER BY count(*) DESC " +
-					"LIMIT 1000) AS itinerari " +
-					"SELECT Pois.\"4sqExtended\", count(*) AS popolarita, ST_Distance(Geography(ST_SetSRID(ST_MakePoint(-73.979135, 40.759195), 4326)), Pois.location) AS distance " +
-					"FROM \"POIs\".\"Checkins4sqManhattan\" AS Ckins INNER JOIN \"POIs\".\"POIsManhattan\" AS Pois ON Ckins.\"4sqExtended\" = Pois.\"4sqExtended\"" +
-					"WHERE ST_DWithin(Pois.location, Geography(ST_SetSRID("+userLocation+", 4326)), "+ range +")" + 
-					"GROUP BY Pois.\"4sqExtended\"" +
-					"ORDER BY count(*) DESC) AS rangeQuery" +
-				"WHERE itinerari.\"pois\" ILIKE CONCAT('%', rangeQuery.\"4sqExtended\", '%')" +
-				"GROUP BY poi_list, geom, length, popularity" +
-				"ORDER BY popularity DESC" +
-				"LIMIT" + k);
-			result = statement.executeQuery(query);
+					"LIMIT 1000) AS itinerari, " +
+					"(SELECT Pois.\"4sqExtended\", count(*) AS popolarita, ST_Distance(Geography(ST_SetSRID(ST_Point(" + userLocation.getX() + ", " + userLocation.getY() + "), 4326)), Pois.location) AS distance " +
+					"FROM \"POIs\".\"Checkins4sqManhattan\" AS Ckins INNER JOIN \"POIs\".\"POIsManhattan\" AS Pois ON Ckins.\"4sqExtended\" = Pois.\"4sqExtended\" " +
+					"WHERE ST_DWithin(Pois.location, Geography(ST_SetSRID(ST_Point(" + userLocation.getX() + ", " + userLocation.getY() + "), 4326)), " + range + ") " + 
+					"GROUP BY Pois.\"4sqExtended\" " +
+					"ORDER BY count(*) DESC) AS rangeQuery " +
+				"WHERE itinerari.\"pois\" ILIKE CONCAT('%', rangeQuery.\"4sqExtended\", '%') " +
+				"GROUP BY poi_list, geom, length, popularity " +
+				"ORDER BY popularity DESC " +
+				"LIMIT " + k);
 			System.out.println("\nExecuted query: " + query);
+			result = statement.executeQuery(query);
 			System.out.println("Itinerari trovati:");
 			while (result.next()) {
 				// Navigate query result
-				LineString linestring = new LineString(result.getString("linestring"));
+				String[] poiList = result.getString("poi_list").split(",");
+				String s = result.getString("linestring");
+				LineString linestring = new LineString(s);
 				Point[] points = linestring.getPoints();
 				List<Poi> pois = new ArrayList<>();
 				for (int i = 0; i < points.length; i++) {
-					// TODO: add query to get id and name of POIs
-					pois.add(new Poi(points[i], "id", "name", 0));
+					Statement statement_subquery = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+					String query_poi_details = "SELECT Pois.\"nome\", Pois.\"indirizzo\", Pois.\"categoria\", count(*) AS num_ckins " +
+							"FROM \"POIs\".\"Checkins4sqManhattan\" AS Ckins INNER JOIN \"POIs\".\"POIsManhattan\" AS Pois ON Ckins.\"4sqExtended\" = Pois.\"4sqExtended\"" +
+							"WHERE Pois.\"4sqExtended\"='" + poiList[i] + "' " +
+							"ORDER BY Ckins.\"time\" DESC";
+					ResultSet result_subquery = statement_subquery.executeQuery(query_poi_details);
+					if (result_subquery.first()) {
+						pois.add(new Poi(points[i], poiList[i], result_subquery.getString("name"), result_subquery.getString("indirizzo"), Integer.parseInt(result_subquery.getString("num_ckins"))));
+					}
 				}
 				itineraryList.add(new Itinerary(linestring, pois, result.getInt("popularity"), result.getDouble("length")));
 				System.out.println("");

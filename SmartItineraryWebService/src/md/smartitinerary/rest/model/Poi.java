@@ -9,14 +9,16 @@ public class Poi {
 	private Point poi;
 	private String id;
 	private String name;
+	private String address;
 	private int popularity;
 	private double latitude;
 	private double longitude;
 	
-	public Poi(Point poi, String id, String name, int popularity) {
+	public Poi(Point poi, String id, String name, String address, int popularity) {
 		this.poi = poi;
 		this.id = id;
 		this.name = name;
+		this.address = address;
 		this.popularity = popularity;
 		this.latitude = poi.getX();
 		this.longitude = poi.getY();
@@ -35,18 +37,14 @@ public class Poi {
 		return id;
 	}
 	
-	public void setId(String id) {
-		this.id = id;
-	}
-	
 	public String getName() {
 		return name;
 	}
 	
-	public void setName(String name) {
-		this.name = name;
+	public String getAddress() {
+		return address;
 	}
-	
+
 	public double getLatitude() {
 		return latitude;
 	}
@@ -59,17 +57,7 @@ public class Poi {
 		return poi;
 	}
 
-	public void setPoi(Point poi) {
-		this.poi = poi;
-		this.latitude = poi.getX();
-		this.longitude = poi.getY();
-	}
-
 	public int getPopularity() {
 		return popularity;
 	}
-
-	public void setPopularity(int popularity) {
-		this.popularity = popularity;
-	}	
 }
