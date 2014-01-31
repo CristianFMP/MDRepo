@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import md.smartitinerary.rest.model.Category;
+import md.smartitinerary.rest.model.Comment;
 import md.smartitinerary.rest.model.Itinerary;
 import md.smartitinerary.rest.model.Poi;
 
@@ -45,9 +46,6 @@ public class Utilities {
 	}
 	
 	/** Returns a list of categories */
-	// in questo modo ritrovo sia macrocategorie che categorie insieme. come faccio a comunicare al client solo macrocategorie?
-	// devo implementare un altro metodo (cioe altro modello e risorsa)?
-	
 	public static List<Category> retrieveCategories() {
 		Connection connection = getConnection();
 		ResultSet result;
@@ -93,7 +91,7 @@ public class Utilities {
 		try {
 			Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			// First part of the query
-			String query = "SELECT itinerari.\"pois\" AS poi_list, geom::geometry AS linestring, itinerari.\"st_length\" AS length, itinerari.\"count\" AS popularity " +
+			String query = "SELECT itinerari.\"pois\" AS poi_list, ST_AsText(geom) AS linestring, itinerari.\"st_length\" AS length, itinerari.\"count\" AS popularity " +
 					"FROM (SELECT POIs, count(*), geom::geography, ST_Length(geom::geography, false), ST_NPoints(geom) " +
 						"FROM (SELECT \"userID\", ST_MakeLine(location::geometry) AS geom, string_agg(\"4sqExtended\", ',') AS POIs, DATE(time) " + 
 							"FROM (SELECT Ckins.\"userID\", Pois.location, Pois.\"4sqExtended\", time " + 
@@ -136,17 +134,16 @@ public class Utilities {
 				List<Poi> pois = new ArrayList<>();
 				for (int i = 0; i < points.length; i++) {
 					Statement statement_subquery = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-					String query_poi_details = "SELECT Pois.\"nome\", Pois.\"indirizzo\", Pois.\"categoria\", count(*) AS num_ckins " +
+					String query_poi_details = "SELECT Pois.\"nome\", Pois.\"indirizzo\", Pois.\"categoria\", count(*) AS num_ckins, Pois.\"4sqExtended\" " +
 							"FROM \"POIs\".\"Checkins4sqManhattan\" AS Ckins INNER JOIN \"POIs\".\"POIsManhattan\" AS Pois ON Ckins.\"4sqExtended\" = Pois.\"4sqExtended\"" +
 							"WHERE Pois.\"4sqExtended\"='" + poiList[i] + "' " +
-							"ORDER BY Ckins.\"time\" DESC";
+							"GROUP BY Pois.\"4sqExtended\"";
 					ResultSet result_subquery = statement_subquery.executeQuery(query_poi_details);
 					if (result_subquery.first()) {
-						pois.add(new Poi(points[i], poiList[i], result_subquery.getString("name"), result_subquery.getString("indirizzo"), Integer.parseInt(result_subquery.getString("num_ckins"))));
+						pois.add(new Poi(points[i], poiList[i], result_subquery.getString("nome"), result_subquery.getString("indirizzo"), Integer.parseInt(result_subquery.getString("num_ckins"))));
 					}
 				}
 				itineraryList.add(new Itinerary(linestring, pois, result.getInt("popularity"), result.getDouble("length")));
-				System.out.println("");
 			}
 			return itineraryList;
 		} catch (SQLException e) {
@@ -154,5 +151,11 @@ public class Utilities {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	/** Returns a list of comments for the provided POI */
+	public static List<Comment> retrieveComments(Poi poi) {
+		// TODO: implementare chiamata a db e gestione della risposta.
+		return null;
 	}
 }

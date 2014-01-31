@@ -1,6 +1,6 @@
 package md.smartitinerary.rest.resource;
 
-import java.sql.SQLException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +15,9 @@ import javax.ws.rs.core.UriInfo;
 import md.smartitinerary.rest.model.Itinerary;
 import md.smartitinerary.util.Utilities;
 
-import org.postgis.LineString;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.postgis.Point;
 
 @Path("/itinerary")
@@ -51,27 +53,37 @@ public class ItineraryResource {
     
     // Use data from the client source to retrieve itineraries
     @GET
-    @Path("/post")
+    @Path("post")
     // @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Itinerary> itineraries() {
+    public String getItineraries() {
         double range = 500.0;
         double maxLength = 1000.0;
-        int k = 10;
+        int k = 5;
         Point userLocation = new Point(-73.979135, 40.759195);
-        try {
-			LineString line = new LineString("0102000020E610000002000000C828CFBC1C7E52C031854178B8604440725CCBE11A7E52C023B679ACBB604440");
-			System.out.println(line.toString());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        System.out.println(userLocation.toString());
         List<String> categories = new ArrayList<>();
         categories.add("Home (private)");
         categories.add("Coworking Space");
         categories.add("Office");
         List<Itinerary> itineraries = Utilities.retrieveItineraries(categories, range, maxLength, userLocation, k);
-        return itineraries;                         
+        for (Itinerary i : itineraries) {
+			System.out.println(i);
+		}
+        ObjectMapper mapper = new ObjectMapper();
+        String json;
+		try {
+			json = mapper.writeValueAsString(itineraries);
+			return json;
+		} catch (JsonGenerationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return "Qualcosa non ha funzionato!";                         
     }
 }

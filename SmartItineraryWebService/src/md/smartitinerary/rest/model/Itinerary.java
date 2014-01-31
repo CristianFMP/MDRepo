@@ -15,7 +15,7 @@ public class Itinerary {
 	
 	public Itinerary(LineString poiLine, List<Poi> pois, int popularity, double length) {
 		this.poiLine = poiLine;
-		this.setPois(pois);
+		this.pois = pois;
 		this.popularity = popularity;
 		this.length = length;
 	}
@@ -31,10 +31,6 @@ public class Itinerary {
 		return popularity;
 	}
 
-	public void setPopularity(int popularity) {
-		this.popularity = popularity;
-	}
-
 	public double getLength() {
 		return length;
 	}
@@ -43,19 +39,15 @@ public class Itinerary {
 		this.length = length;
 	}
 
-	public LineString getPoiLine() {
-		return poiLine;
-	}
-
-	public void setPoiLine(LineString poiLine) {
-		this.poiLine = poiLine;
+	public String getPoiLine() {
+		return poiLine.toString();
 	}
 
 	public List<Poi> getPois() {
 		return pois;
 	}
-
-	public void setPois(List<Poi> pois) {
-		this.pois = pois;
+	
+	public String toString() {
+		return poiLine + ", " + length + ", " + popularity;	
 	}
 }

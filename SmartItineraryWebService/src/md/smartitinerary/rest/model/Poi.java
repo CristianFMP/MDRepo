@@ -53,8 +53,8 @@ public class Poi {
 		return longitude;
 	}
 
-	public Point getPoi() {
-		return poi;
+	public String getPoi() {
+		return poi.toString();
 	}
 
 	public int getPopularity() {
