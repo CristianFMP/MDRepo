@@ -4,7 +4,7 @@ public class Itinerary {
 	private long id;
 	private String nicknameUtente;
 	private String elencoPOI;
-	private int popolarità;
+	private int popolarita;
 	private double lunghezza;
 	private int numPOI;
 	  
@@ -33,12 +33,12 @@ public class Itinerary {
 		this.elencoPOI = elencoPOI;
 	}
 
-	public int getPopolarità() {
-		return popolarità;
+	public int getPopolarita() {
+		return popolarita;
 	}
 
-	public void setPopolarità(int popolarità) {
-		this.popolarità = popolarità;
+	public void setPopolarita(int popolarita) {
+		this.popolarita = popolarita;
 	}
 
 	public double getLunghezza() {

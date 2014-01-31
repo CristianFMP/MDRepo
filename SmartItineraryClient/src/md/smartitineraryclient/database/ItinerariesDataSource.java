@@ -32,11 +32,11 @@ public class ItinerariesDataSource {
 		dbHelper.close();
 	}
 
-	public Itinerary createItinerary(String nicknameUtente, String elencoPOI, int popolarità, double lunghezza, int numPOI) {
+	public Itinerary createItinerary(String nicknameUtente, String elencoPOI, int popolarita, double lunghezza, int numPOI) {
 	    ContentValues values = new ContentValues();
 	    values.put(SISQLiteHelper.ITIN_COLUMN_NICKNAME_UTENTE, nicknameUtente);
 	    values.put(SISQLiteHelper.ITIN_COLUMN_ELENCO_POI, elencoPOI);
-	    values.put(SISQLiteHelper.ITIN_COLUMN_POPOLARITA, popolarità);
+	    values.put(SISQLiteHelper.ITIN_COLUMN_POPOLARITA, popolarita);
 	    values.put(SISQLiteHelper.ITIN_COLUMN_LUNGHEZZA, lunghezza);
 	    values.put(SISQLiteHelper.ITIN_COLUMN_N_POI, numPOI);
 	    long insertId = database.insert(SISQLiteHelper.ITIN_TABLE, null,
@@ -79,7 +79,7 @@ public class ItinerariesDataSource {
 	  itinerary.setId(cursor.getLong(0));
 	  itinerary.setNicknameUtente(cursor.getString(1));
 	  itinerary.setElencoPOI(cursor.getString(2));
-	  itinerary.setPopolarità(cursor.getInt(3));
+	  itinerary.setPopolarita(cursor.getInt(3));
 	  itinerary.setLunghezza(cursor.getDouble(4));
 	  itinerary.setNumPOI(cursor.getInt(5));
 	  return itinerary;

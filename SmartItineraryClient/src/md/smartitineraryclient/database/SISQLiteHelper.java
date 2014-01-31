@@ -12,7 +12,7 @@ public class SISQLiteHelper extends SQLiteOpenHelper {
   	public static final String ITIN_COLUMN_ID = "_id";
   	public static final String ITIN_COLUMN_NICKNAME_UTENTE = "nicknameUtente";
   	public static final String ITIN_COLUMN_ELENCO_POI= "elencoPOI";
-  	public static final String ITIN_COLUMN_POPOLARITA = "popolarità";
+  	public static final String ITIN_COLUMN_POPOLARITA = "popolarita";
   	public static final String ITIN_COLUMN_LUNGHEZZA = "lunghezza";
   	public static final String ITIN_COLUMN_N_POI = "numPOI";
   	
