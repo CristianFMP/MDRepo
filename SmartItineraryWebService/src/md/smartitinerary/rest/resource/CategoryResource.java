@@ -46,18 +46,17 @@ public class CategoryResource {
     	ObjectMapper mapper = new ObjectMapper();
     	String json;
 		try {
-			json = mapper.writeValueAsString(categories);
+			json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(categories);
 			return json;
 		} catch (JsonGenerationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "Qualcosa non ha funzionato!";
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "Qualcosa non ha funzionato!";
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "Qualcosa non ha funzionato!";
 		}
-		return "Qualcosa non ha funzionato!";
     }
 }

@@ -72,18 +72,17 @@ public class ItineraryResource {
         ObjectMapper mapper = new ObjectMapper();
         String json;
 		try {
-			json = mapper.writeValueAsString(itineraries);
+			json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(itineraries);
 			return json;
 		} catch (JsonGenerationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "Qualcosa non ha funzionato!";
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "Qualcosa non ha funzionato!";
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-        return "Qualcosa non ha funzionato!";                         
+			return "Qualcosa non ha funzionato!";
+		}                         
     }
 }

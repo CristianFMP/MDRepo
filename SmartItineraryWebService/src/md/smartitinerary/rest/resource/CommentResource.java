@@ -4,16 +4,16 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
 import md.smartitinerary.rest.model.Comment;
-import md.smartitinerary.rest.model.Poi;
 import md.smartitinerary.util.Utilities;
 
 import org.codehaus.jackson.JsonGenerationException;
@@ -40,28 +40,26 @@ public class CommentResource {
         return "Demo service is ready! Request method is " + req.getMethod();
     }
     
-    @GET
-    @Path("getComments/{poi}")
+    @POST
+    @Path("getComments")
+    @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
-    public String getComments(
-    		@PathParam("poi") Poi poi) { // Probabilmente non funziona; devo gestire la conversione. Probabilmente piu facile inviare solo Poi.id
-    	List<Comment> comments = Utilities.retrieveComments(poi);
+    public String getComments(String param) {
+    	List<Comment> comments = Utilities.retrieveComments(param);
     	ObjectMapper mapper = new ObjectMapper();
     	String json;
 		try {
-			json = mapper.writeValueAsString(comments);
+			json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(comments);
 			return json;
 		} catch (JsonGenerationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "Qualcosa non ha funzionato!";
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "Qualcosa non ha funzionato!";
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		return "Qualcosa non ha funzionato!";
+			return "Qualcosa non ha funzionato!";
+		}	
     }
-    
 }

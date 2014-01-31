@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,9 +50,7 @@ public class Utilities {
 	public static List<Category> retrieveCategories() {
 		Connection connection = getConnection();
 		ResultSet result;
-		
 		List<Category> categoryList = new ArrayList<>();
-		
 		try {
 			Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			String query = "SELECT * " + 
@@ -154,8 +153,26 @@ public class Utilities {
 	}
 	
 	/** Returns a list of comments for the provided POI */
-	public static List<Comment> retrieveComments(Poi poi) {
-		// TODO: implementare chiamata a db e gestione della risposta.
-		return null;
+	public static List<Comment> retrieveComments(String poi) {
+		Connection connection = getConnection();
+		ResultSet result;
+		List<Comment> commentList = new ArrayList<>();
+		try {
+			Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			String query = "SELECT text, time " + 
+					"FROM \"POIs\".\"Checkins4sqManhattan\" " +
+					"WHERE \"4sqExtended\"='" + poi + "' " +
+					"ORDER BY time DESC";
+			System.out.println("\nExecuted query: " + query);
+			result = statement.executeQuery(query);
+			while (result.next()) {
+				commentList.add(new Comment(result.getString("text"), Timestamp.valueOf(result.getString("time"))));
+			}
+			return commentList;
+		} catch (SQLException e) {
+			System.out.println("\nQuery error!");
+			e.printStackTrace();
+			return null;
+		}	
 	}
 }
