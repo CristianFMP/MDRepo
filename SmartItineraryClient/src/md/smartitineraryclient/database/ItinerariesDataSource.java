@@ -32,8 +32,9 @@ public class ItinerariesDataSource {
 		dbHelper.close();
 	}
 
-	public Itinerary createItinerary(String nicknameUtente, String elencoPOI, int popolarita, double lunghezza, int numPOI) {
+	public Itinerary createItinerary(long id, String nicknameUtente, String elencoPOI, int popolarita, double lunghezza, int numPOI) {
 	    ContentValues values = new ContentValues();
+	    values.put(SISQLiteHelper.ITIN_COLUMN_ID, id);
 	    values.put(SISQLiteHelper.ITIN_COLUMN_NICKNAME_UTENTE, nicknameUtente);
 	    values.put(SISQLiteHelper.ITIN_COLUMN_ELENCO_POI, elencoPOI);
 	    values.put(SISQLiteHelper.ITIN_COLUMN_POPOLARITA, popolarita);

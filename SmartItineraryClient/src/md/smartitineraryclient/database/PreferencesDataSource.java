@@ -30,8 +30,9 @@ public class PreferencesDataSource {
 		dbHelper.close();
 	}
 
-	public Preference createPreference(String nicknameUtente, String posUtente, String datetime) {
+	public Preference createPreference(long id, String nicknameUtente, String posUtente, String datetime) {
 	    ContentValues values = new ContentValues();
+	    values.put(SISQLiteHelper.PREF_COLUMN_ID_ITIN, id);
 	    values.put(SISQLiteHelper.PREF_COLUMN_NICKNAME_UTENTE, nicknameUtente);
 	    values.put(SISQLiteHelper.PREF_COLUMN_POS_UTENTE, posUtente);
 	    values.put(SISQLiteHelper.PREF_COLUMN_DATETIME, datetime);

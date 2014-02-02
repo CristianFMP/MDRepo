@@ -31,6 +31,12 @@ public class SISQLiteHelper extends SQLiteOpenHelper {
 	public static final String PREF_COLUMN_POS_UTENTE = "posizioneUtente";
 	public static final String PREF_COLUMN_DATETIME = "datetime";
 
+	// Interessi
+	public static final String INTER_TABLE = "Interessi";
+  	public static final String INTER_COLUMN_NICKNAME_UTENTE = "nicknameUtente";
+  	public static final String INTER_COLUMN_CATEGORIA = "categoria";
+  	public static final String INTER_COLUMN_MACROCATEGORIA = "macrocategoria";
+  	public static final String INTER_COLUMN_DATA_INSERIMENTO = "dataInserimento";
 
     /** CODICE SQL DI CREAZIONE DELLE TABELLE */
 	// Itinerari
@@ -55,6 +61,14 @@ public class SISQLiteHelper extends SQLiteOpenHelper {
     		+ PREF_COLUMN_POS_UTENTE + " text not null, "
     		+ PREF_COLUMN_DATETIME + " datetime not null);";
     
+    // Interessi
+    static final String INTER_TABLE_CREATE = "CREATE TABLE IF NOT EXISTS "
+      		+ INTER_TABLE + " (" 
+      		+ INTER_COLUMN_NICKNAME_UTENTE + " text not null references "
+      			+ ITIN_TABLE + "(" + ITIN_COLUMN_NICKNAME_UTENTE + "), "
+      		+ INTER_COLUMN_CATEGORIA + " text not null, "
+      		+ INTER_COLUMN_MACROCATEGORIA + " text not null, "
+      		+ INTER_COLUMN_DATA_INSERIMENTO + " datetime not null);";
 
 	@Override
 	public void onCreate(SQLiteDatabase database) {
@@ -62,6 +76,8 @@ public class SISQLiteHelper extends SQLiteOpenHelper {
 		System.out.println(ITIN_TABLE_CREATE);
 		database.execSQL(PREF_TABLE_CREATE);
 		System.out.println(PREF_TABLE_CREATE);
+		database.execSQL(INTER_TABLE_CREATE);
+		System.out.println(INTER_TABLE_CREATE);
 	}
 
 	@Override
@@ -70,6 +86,8 @@ public class SISQLiteHelper extends SQLiteOpenHelper {
 				"Upgrading database from version " + oldVersion + " to "
 						+ newVersion + ", which will destroy all old data");
 		db.execSQL("DROP TABLE IF EXISTS " + ITIN_TABLE);
+		db.execSQL("DROP TABLE IF EXISTS " + PREF_TABLE);
+		db.execSQL("DROP TABLE IF EXISTS " + INTER_TABLE);
 		onCreate(db);
 	}
 
