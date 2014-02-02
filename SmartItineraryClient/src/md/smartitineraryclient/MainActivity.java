@@ -1,17 +1,14 @@
 package md.smartitineraryclient;
 
-import java.util.List;
 import md.smartitineraryclient.database.*;
-import android.app.ListActivity;
+import android.app.Activity;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 
-public class MainActivity extends ListActivity {
+public class MainActivity extends Activity {
 	private ItinerariesDataSource datasourceIt;
 	private PreferencesDataSource datasourceP;
 	private InterestsDataSource datasourceIn;
 
-	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.activity_main);
@@ -24,7 +21,7 @@ public class MainActivity extends ListActivity {
 	    
 	    datasourceIn = new InterestsDataSource(this);
 	    datasourceIn.open();
-	
+	    /*
 	    List<Itinerary> valuesIt = datasourceIt.getAllItineraries();
 	    
 	    List<Preference> valuesP = datasourceP.getAllPreferences();
@@ -42,7 +39,7 @@ public class MainActivity extends ListActivity {
 	    
 	    ArrayAdapter<Interest> adapterIn = new ArrayAdapter<Interest>(this, android.R.layout.simple_list_item_1, valuesIn);
 	    setListAdapter(adapterIn);
-        
+        */
   	}
   
   	
