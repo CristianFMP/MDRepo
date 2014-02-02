@@ -7,32 +7,41 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 
 public class MainActivity extends ListActivity {
-	private ItinerariesDataSource datasource;
+	private ItinerariesDataSource datasourceIt;
 	private PreferencesDataSource datasourceP;
+	private InterestsDataSource datasourceIn;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.activity_main);
 	
-	    datasource = new ItinerariesDataSource(this);
-	    datasource.open();
+	    datasourceIt = new ItinerariesDataSource(this);
+	    datasourceIt.open();
 	    
 	    datasourceP = new PreferencesDataSource(this);
 	    datasourceP.open();
+	    
+	    datasourceIn = new InterestsDataSource(this);
+	    datasourceIn.open();
 	
-	    List<Itinerary> values = datasource.getAllItineraries();
+	    List<Itinerary> valuesIt = datasourceIt.getAllItineraries();
 	    
 	    List<Preference> valuesP = datasourceP.getAllPreferences();
+	    
+	    List<Interest> valuesIn = datasourceIn.getAllInterests();
 	
 	    
 	    // use the SimpleCursorAdapter to show the
 	    // elements in a ListView
-	    ArrayAdapter<Itinerary> adapter = new ArrayAdapter<Itinerary>(this, android.R.layout.simple_list_item_1, values);
-	    setListAdapter(adapter);
+	    ArrayAdapter<Itinerary> adapterIt = new ArrayAdapter<Itinerary>(this, android.R.layout.simple_list_item_1, valuesIt);
+	    setListAdapter(adapterIt);
 	    
 	    ArrayAdapter<Preference> adapterP = new ArrayAdapter<Preference>(this, android.R.layout.simple_list_item_1, valuesP);
 	    setListAdapter(adapterP);
+	    
+	    ArrayAdapter<Interest> adapterIn = new ArrayAdapter<Interest>(this, android.R.layout.simple_list_item_1, valuesIn);
+	    setListAdapter(adapterIn);
         
   	}
   
@@ -65,15 +74,17 @@ public class MainActivity extends ListActivity {
 */
   @Override
   protected void onResume() {
-    datasource.open();
+    datasourceIt.open();
     datasourceP.open();
+    datasourceIn.open();
     super.onResume();
   }
 
   @Override
   protected void onPause() {
-    datasource.close();
+    datasourceIt.close();
     datasourceP.close();
+    datasourceIn.close();
     super.onPause();
   }
 
