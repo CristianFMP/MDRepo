@@ -81,6 +81,8 @@ public class Utilities {
 	}
 
 	/** Returns a list of itineraries*/
+	// Possibilita di ricerca in base ad una destinazione, implementabile come range query sul punto richiesto e 
+	// ricerca degli itinerari che passano dalla lista di punti risultante. 
 	public static List<Itinerary> retrieveItineraries(List<String> categories, double range, double maxLength, Point userLocation, int k) {
 		Connection connection = getConnection();
 		ResultSet result;
