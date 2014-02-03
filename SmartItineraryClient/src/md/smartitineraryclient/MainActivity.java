@@ -1,23 +1,23 @@
 package md.smartitineraryclient;
 
-import md.smartitineraryclient.database.*;
+// import md.smartitineraryclient.database.*;
 import android.app.Activity;
 import android.os.Bundle;
 
 public class MainActivity extends Activity {
-	private ItinerariesDataSource datasourceIt;
-	private InterestsDataSource datasourceIn;
+	// private ItinerariesDataSource datasourceIt;
+	// private InterestsDataSource datasourceIn;
 
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.activity_main);
-	
+	    /*
 	    datasourceIt = new ItinerariesDataSource(this);
 	    datasourceIt.open();
 	    
 	    datasourceIn = new InterestsDataSource(this);
 	    datasourceIn.open();
-	    /*
+	    
 	    List<Itinerary> valuesIt = datasourceIt.getAllItineraries();
 	    
 	    List<Preference> valuesP = datasourceP.getAllPreferences();
@@ -64,7 +64,7 @@ public class MainActivity extends Activity {
     }
     adapter.notifyDataSetChanged();
   }
-*/
+
   @Override
   protected void onResume() {
     datasourceIt.open();
@@ -78,5 +78,5 @@ public class MainActivity extends Activity {
     datasourceIn.close();
     super.onPause();
   }
-
+*/
 } 
