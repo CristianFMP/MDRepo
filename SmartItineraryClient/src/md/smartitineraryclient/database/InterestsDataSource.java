@@ -13,10 +13,11 @@ public class InterestsDataSource {
 	// Database fields
 		private SQLiteDatabase database;
 		private SISQLiteHelper dbHelper;
-		private String[] allColumns = { SISQLiteHelper.INTER_COLUMN_NICKNAME_UTENTE,
-			  SISQLiteHelper.INTER_COLUMN_CATEGORIA,
-			  SISQLiteHelper.INTER_COLUMN_MACROCATEGORIA,
-			  SISQLiteHelper.INTER_COLUMN_DATA_INSERIMENTO };
+		private String[] allColumns = { 
+			SISQLiteHelper.INTER_COLUMN_ID,
+			SISQLiteHelper.INTER_COLUMN_CATEGORIA,
+			SISQLiteHelper.INTER_COLUMN_MACROCATEGORIA,
+			SISQLiteHelper.INTER_COLUMN_DATA_INSERIMENTO };
 
 		public InterestsDataSource(Context context) {
 			dbHelper = new SISQLiteHelper(context);
@@ -30,16 +31,15 @@ public class InterestsDataSource {
 			dbHelper.close();
 		}
 
-		public Interest createInterest(String nicknameUtente, String categoria, String macrocategoria, String dataIns) {
+		public Interest createInterest(String categoria, String macrocategoria, String dataIns) {
 		    ContentValues values = new ContentValues();
-		    values.put(SISQLiteHelper.INTER_COLUMN_NICKNAME_UTENTE, nicknameUtente);
 		    values.put(SISQLiteHelper.INTER_COLUMN_CATEGORIA, categoria);
 		    values.put(SISQLiteHelper.INTER_COLUMN_MACROCATEGORIA, macrocategoria);
 		    values.put(SISQLiteHelper.INTER_COLUMN_DATA_INSERIMENTO, dataIns);
-		    long insertId = database.insert(SISQLiteHelper.PREF_TABLE, null,
+		    long insertId = database.insert(SISQLiteHelper.INTER_TABLE, null,
 		        values);
-		    Cursor cursor = database.query(SISQLiteHelper.PREF_TABLE,
-		        allColumns, SISQLiteHelper.PREF_COLUMN_ID_ITIN + " = " + insertId, null,
+		    Cursor cursor = database.query(SISQLiteHelper.INTER_TABLE,
+		        allColumns, SISQLiteHelper.INTER_COLUMN_ID + " = " + insertId, null,
 		        null, null, null);
 		    cursor.moveToFirst();
 		    Interest newInterest = cursorToInterest(cursor);
@@ -73,7 +73,7 @@ public class InterestsDataSource {
 	  
 		private Interest cursorToInterest(Cursor cursor) {
 			Interest interest = new Interest();
-			interest.setNicknameUtente(cursor.getString(0));
+			interest.setId(cursor.getLong(0));
 			interest.setCategoria(cursor.getString(1));
 			interest.setMacrocategoria(cursor.getString(2));
 			interest.setDataInserimento(cursor.getString(3));

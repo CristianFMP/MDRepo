@@ -2,11 +2,12 @@ package md.smartitineraryclient.database;
 
 public class Itinerary {
 	private long id;
-	private String nicknameUtente;
 	private String elencoPOI;
 	private int popolarita;
 	private double lunghezza;
 	private int numPOI;
+	private String posUtente;
+	private String datetime;
 	  
 
 	public long getId() {
@@ -15,14 +16,6 @@ public class Itinerary {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public String getNicknameUtente() {
-		return nicknameUtente;
-	}
-
-	public void setNicknameUtente(String nicknameUtente) {
-		this.nicknameUtente = nicknameUtente;
 	}
 
 	public String getElencoPOI() {
@@ -55,5 +48,21 @@ public class Itinerary {
 
 	public void setNumPOI(int numPOI) {
 		this.numPOI = numPOI;
+	}
+
+	public String getPosUtente() {
+		return posUtente;
+	}
+
+	public void setPosUtente(String posUtente) {
+		this.posUtente = posUtente;
+	}
+
+	public String getDatetime() {
+		return datetime;
+	}
+
+	public void setDatetime(String datetime) {
+		this.datetime = datetime;
 	}
 }

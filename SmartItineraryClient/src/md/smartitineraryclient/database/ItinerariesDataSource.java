@@ -14,11 +14,12 @@ public class ItinerariesDataSource {
 	private SQLiteDatabase database;
 	private SISQLiteHelper dbHelper;
 	private String[] allColumns = { SISQLiteHelper.ITIN_COLUMN_ID,
-		  SISQLiteHelper.ITIN_COLUMN_NICKNAME_UTENTE,
 		  SISQLiteHelper.ITIN_COLUMN_ELENCO_POI,
 		  SISQLiteHelper.ITIN_COLUMN_POPOLARITA,
 		  SISQLiteHelper.ITIN_COLUMN_LUNGHEZZA,
-		  SISQLiteHelper.ITIN_COLUMN_N_POI };
+		  SISQLiteHelper.ITIN_COLUMN_N_POI,
+		  SISQLiteHelper.ITIN_COLUMN_POS_UTENTE,
+		  SISQLiteHelper.ITIN_COLUMN_DATETIME };
 
 	public ItinerariesDataSource(Context context) {
 		dbHelper = new SISQLiteHelper(context);
@@ -32,14 +33,14 @@ public class ItinerariesDataSource {
 		dbHelper.close();
 	}
 
-	public Itinerary createItinerary(long id, String nicknameUtente, String elencoPOI, int popolarita, double lunghezza, int numPOI) {
+	public Itinerary createItinerary(String nicknameUtente, String elencoPOI, int popolarita, double lunghezza, int numPOI, String posUtente, String datetime) {
 	    ContentValues values = new ContentValues();
-	    values.put(SISQLiteHelper.ITIN_COLUMN_ID, id);
-	    values.put(SISQLiteHelper.ITIN_COLUMN_NICKNAME_UTENTE, nicknameUtente);
 	    values.put(SISQLiteHelper.ITIN_COLUMN_ELENCO_POI, elencoPOI);
 	    values.put(SISQLiteHelper.ITIN_COLUMN_POPOLARITA, popolarita);
 	    values.put(SISQLiteHelper.ITIN_COLUMN_LUNGHEZZA, lunghezza);
 	    values.put(SISQLiteHelper.ITIN_COLUMN_N_POI, numPOI);
+	    values.put(SISQLiteHelper.ITIN_COLUMN_POS_UTENTE, posUtente);
+	    values.put(SISQLiteHelper.ITIN_COLUMN_DATETIME, datetime);
 	    long insertId = database.insert(SISQLiteHelper.ITIN_TABLE, null,
 	        values);
 	    Cursor cursor = database.query(SISQLiteHelper.ITIN_TABLE,
@@ -78,11 +79,12 @@ public class ItinerariesDataSource {
 	private Itinerary cursorToItinerary(Cursor cursor) {
 	  Itinerary itinerary = new Itinerary();
 	  itinerary.setId(cursor.getLong(0));
-	  itinerary.setNicknameUtente(cursor.getString(1));
 	  itinerary.setElencoPOI(cursor.getString(2));
 	  itinerary.setPopolarita(cursor.getInt(3));
 	  itinerary.setLunghezza(cursor.getDouble(4));
 	  itinerary.setNumPOI(cursor.getInt(5));
+	  itinerary.setPosUtente(cursor.getString(6));
+	  itinerary.setDatetime(cursor.getString(7));
 	  return itinerary;
 	}
 }

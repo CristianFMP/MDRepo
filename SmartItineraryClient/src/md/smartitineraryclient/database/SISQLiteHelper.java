@@ -18,22 +18,17 @@ public class SISQLiteHelper extends SQLiteOpenHelper {
 	// Itinerari
 	public static final String ITIN_TABLE = "Itinerari";
   	public static final String ITIN_COLUMN_ID = "_id";
-  	public static final String ITIN_COLUMN_NICKNAME_UTENTE = "nicknameUtente";
   	public static final String ITIN_COLUMN_ELENCO_POI= "elencoPOI";
   	public static final String ITIN_COLUMN_POPOLARITA = "popolarita";
   	public static final String ITIN_COLUMN_LUNGHEZZA = "lunghezza";
   	public static final String ITIN_COLUMN_N_POI = "numPOI";
-  	
-  	// Preferenze
-  	public static final String PREF_TABLE = "Preferenze";
-	public static final String PREF_COLUMN_ID_ITIN = "_idItinerario";
-	public static final String PREF_COLUMN_NICKNAME_UTENTE = "nicknameUtente";
-	public static final String PREF_COLUMN_POS_UTENTE = "posizioneUtente";
-	public static final String PREF_COLUMN_DATETIME = "datetime";
+  	public static final String ITIN_COLUMN_POS_UTENTE = "posizioneUtente";
+	public static final String ITIN_COLUMN_DATETIME = "datetime";
+
 
 	// Interessi
 	public static final String INTER_TABLE = "Interessi";
-  	public static final String INTER_COLUMN_NICKNAME_UTENTE = "nicknameUtente";
+  	public static final String INTER_COLUMN_ID = "_id";
   	public static final String INTER_COLUMN_CATEGORIA = "categoria";
   	public static final String INTER_COLUMN_MACROCATEGORIA = "macrocategoria";
   	public static final String INTER_COLUMN_DATA_INSERIMENTO = "dataInserimento";
@@ -42,30 +37,18 @@ public class SISQLiteHelper extends SQLiteOpenHelper {
 	// Itinerari
     private static final String ITIN_TABLE_CREATE = "CREATE TABLE IF NOT EXISTS "  
       		+ ITIN_TABLE + " (" 
-      		+ ITIN_COLUMN_ID + " integer not null, "
-      		+ ITIN_COLUMN_NICKNAME_UTENTE + " text not null, "
+      		+ ITIN_COLUMN_ID + " integer primary key autoincrement, "
       		+ ITIN_COLUMN_ELENCO_POI + " text not null, "
       		+ ITIN_COLUMN_POPOLARITA + " integer not null, "
       		+ ITIN_COLUMN_LUNGHEZZA + " double not null, "
       		+ ITIN_COLUMN_N_POI + " integer not null, "
-      		+ "primary key(" + ITIN_COLUMN_ID + ", " + ITIN_COLUMN_NICKNAME_UTENTE + ")"
-      		+ ");";
-    
-    // Preferenze
-    private static final String PREF_TABLE_CREATE = "CREATE TABLE IF NOT EXISTS "
-    		+ PREF_TABLE + " (" 
-    		+ PREF_COLUMN_ID_ITIN + " integer not null references "
-    			+ ITIN_TABLE + "(" + ITIN_COLUMN_ID + "), "
-    		+ PREF_COLUMN_NICKNAME_UTENTE + " text not null references "
-    			+ ITIN_TABLE + "(" + ITIN_COLUMN_NICKNAME_UTENTE + "), "
-    		+ PREF_COLUMN_POS_UTENTE + " text not null, "
-    		+ PREF_COLUMN_DATETIME + " datetime not null);";
+      		+ ITIN_COLUMN_POS_UTENTE + " text not null, "
+    		+ ITIN_COLUMN_DATETIME + " datetime not null);";
     
     // Interessi
     static final String INTER_TABLE_CREATE = "CREATE TABLE IF NOT EXISTS "
       		+ INTER_TABLE + " (" 
-      		+ INTER_COLUMN_NICKNAME_UTENTE + " text not null references "
-      			+ ITIN_TABLE + "(" + ITIN_COLUMN_NICKNAME_UTENTE + "), "
+      		+ INTER_COLUMN_ID + " integer primary key autoincrement, "
       		+ INTER_COLUMN_CATEGORIA + " text not null, "
       		+ INTER_COLUMN_MACROCATEGORIA + " text not null, "
       		+ INTER_COLUMN_DATA_INSERIMENTO + " datetime not null);";
@@ -74,8 +57,6 @@ public class SISQLiteHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase database) {
 		database.execSQL(ITIN_TABLE_CREATE);
 		System.out.println(ITIN_TABLE_CREATE);
-		database.execSQL(PREF_TABLE_CREATE);
-		System.out.println(PREF_TABLE_CREATE);
 		database.execSQL(INTER_TABLE_CREATE);
 		System.out.println(INTER_TABLE_CREATE);
 	}
@@ -86,7 +67,6 @@ public class SISQLiteHelper extends SQLiteOpenHelper {
 				"Upgrading database from version " + oldVersion + " to "
 						+ newVersion + ", which will destroy all old data");
 		db.execSQL("DROP TABLE IF EXISTS " + ITIN_TABLE);
-		db.execSQL("DROP TABLE IF EXISTS " + PREF_TABLE);
 		db.execSQL("DROP TABLE IF EXISTS " + INTER_TABLE);
 		onCreate(db);
 	}

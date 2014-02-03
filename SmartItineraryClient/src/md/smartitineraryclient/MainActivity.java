@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 public class MainActivity extends Activity {
 	private ItinerariesDataSource datasourceIt;
-	private PreferencesDataSource datasourceP;
 	private InterestsDataSource datasourceIn;
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -15,9 +14,6 @@ public class MainActivity extends Activity {
 	
 	    datasourceIt = new ItinerariesDataSource(this);
 	    datasourceIt.open();
-	    
-	    datasourceP = new PreferencesDataSource(this);
-	    datasourceP.open();
 	    
 	    datasourceIn = new InterestsDataSource(this);
 	    datasourceIn.open();
@@ -72,7 +68,6 @@ public class MainActivity extends Activity {
   @Override
   protected void onResume() {
     datasourceIt.open();
-    datasourceP.open();
     datasourceIn.open();
     super.onResume();
   }
@@ -80,7 +75,6 @@ public class MainActivity extends Activity {
   @Override
   protected void onPause() {
     datasourceIt.close();
-    datasourceP.close();
     datasourceIn.close();
     super.onPause();
   }

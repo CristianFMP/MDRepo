@@ -2,16 +2,16 @@ package md.smartitineraryclient.database;
 
 public class Interest {
 	
-	private String nicknameUtente;
+	private long id;
 	private String categoria;
 	private String macrocategoria;
 	private String dataInserimento;
 	
-	public String getNicknameUtente() {
-		return nicknameUtente;
+	public long getId() {
+		return id;
 	}
-	public void setNicknameUtente(String nicknameUtente) {
-		this.nicknameUtente = nicknameUtente;
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	public String getCategoria() {
@@ -34,5 +34,6 @@ public class Interest {
 	public void setDataInserimento(String dataInserimento) {
 		this.dataInserimento = dataInserimento;
 	}
+	
 	
 }
