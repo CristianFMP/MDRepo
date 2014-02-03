@@ -15,6 +15,7 @@ int attr uiZoomControls 0x7f01000d
 int attr uiZoomGestures 0x7f01000e
 int attr useViewLifecycle 0x7f01000f
 int attr zOrderOnTop 0x7f010010
+int color actionbar 0x7f04000a
 int color common_action_bar_splitter 0x7f040009
 int color common_signin_btn_dark_text_default 0x7f040000
 int color common_signin_btn_dark_text_disabled 0x7f040002
@@ -25,8 +26,8 @@ int color common_signin_btn_light_text_default 0x7f040004
 int color common_signin_btn_light_text_disabled 0x7f040006
 int color common_signin_btn_light_text_focused 0x7f040007
 int color common_signin_btn_light_text_pressed 0x7f040005
-int color common_signin_btn_text_dark 0x7f04000a
-int color common_signin_btn_text_light 0x7f04000b
+int color common_signin_btn_text_dark 0x7f04000b
+int color common_signin_btn_text_light 0x7f04000c
 int dimen activity_horizontal_margin 0x7f080000
 int dimen activity_vertical_margin 0x7f080001
 int drawable common_signin_btn_icon_dark 0x7f020000
@@ -129,6 +130,7 @@ int string result 0x7f06001e
 int string this_itinerary 0x7f06001f
 int string this_poi_comments 0x7f060020
 int string this_pos 0x7f060029
+int style ActionBar 0x7f090002
 int style AppBaseTheme 0x7f090000
 int style AppTheme 0x7f090001
 int[] styleable AdsAttrs { 0x7f010000, 0x7f010001, 0x7f010002 }
