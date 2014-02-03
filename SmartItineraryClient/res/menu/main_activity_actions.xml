@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- Search, appears as action button -->
+    <item android:id="@+id/action_search"
+          android:icon="@drawable/ic_action_search"
+          android:title="@string/action_search"
+          android:showAsAction="always" />
+    
+    <!-- Favourites, appears as action button -->
+    <item android:id="@+id/action_favourites"
+          android:icon="@drawable/ic_fav"
+          android:title="@string/fav"
+          android:showAsAction="always" />
+    
+</menu>

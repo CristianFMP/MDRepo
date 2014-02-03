@@ -3,6 +3,7 @@
 
     <string name="app_name">Smart Itinerary</string>
     
+    <string name="action_search">Cerca</string>
     <string name="action_settings">Settings</string> 
     
     <string name="research">Cerca Itinerario</string>

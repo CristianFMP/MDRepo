@@ -3,6 +3,7 @@ package md.smartitineraryclient;
 // import md.smartitineraryclient.database.*;
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.*;
 
 public class MainActivity extends Activity {
 	// private ItinerariesDataSource datasourceIt;
@@ -11,6 +12,7 @@ public class MainActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.activity_main);
+	    
 	    /*
 	    datasourceIt = new ItinerariesDataSource(this);
 	    datasourceIt.open();
@@ -38,45 +40,53 @@ public class MainActivity extends Activity {
         */
   	}
   
-  	
-/*
-  // Will be called via the onClick attribute
-  // of the buttons in main.xml
-  public void onClick(View view) {
-    @SuppressWarnings("unchecked")
-    ArrayAdapter<Itinerary> adapter = (ArrayAdapter<Itinerary>) getListAdapter();
-    Itinerary itinerary = null;
-    switch (view.getId()) {
-    case R.id.add:
-      String[] comments = new String[] { "Cool", "Very nice", "Hate it" };
-      int nextInt = new Random().nextInt(3);
-      // save the new comment to the database
-      itinerary = datasource.createItinerary(itinerary[nextInt]);
-      adapter.add(itinerary);
-      break;
-    case R.id.delete:
-      if (getListAdapter().getCount() > 0) {
-    	  itinerary = (Itinerary) getListAdapter().getItem(0);
-        datasource.deleteItinerary(itinerary);
-        adapter.remove(itinerary);
-      }
-      break;
-    }
-    adapter.notifyDataSetChanged();
-  }
+	/*
+	  @Override
+	  protected void onResume() {
+	    datasourceIt.open();
+	    datasourceIn.open();
+	    super.onResume();
+	  }
+	
+	  @Override
+	  protected void onPause() {
+	    datasourceIt.close();
+	    datasourceIn.close();
+	    super.onPause();
+	  }
+	*/
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    // Inflate the menu items for use in the action bar
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.main_activity_actions, menu);
+	    return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle presses on the action bar items
+	    switch (item.getItemId()) {
+	        case R.id.action_search:
+	            openSearch();
+	            return true;
+	        case R.id.action_favourites:
+	            openFavourites();
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
 
-  @Override
-  protected void onResume() {
-    datasourceIt.open();
-    datasourceIn.open();
-    super.onResume();
-  }
-
-  @Override
-  protected void onPause() {
-    datasourceIt.close();
-    datasourceIn.close();
-    super.onPause();
-  }
-*/
+	private void openSearch() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private void openFavourites() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 } 

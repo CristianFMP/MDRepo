@@ -26,6 +26,8 @@
         <meta-data
             android:name="com.google.android.gms.version"
            	android:value="@integer/google_play_services_version" />
+        
+        <!-- The main/home activity (it has no parent activity) -->
         <activity
             android:name="md.smartitineraryclient.MainActivity"
             android:label="@string/app_name" >
@@ -34,6 +36,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- A child of the main activity -->
+    	<activity
+        	android:name="md.smartitineraryclient.SearchActivity"
+        	android:label="@string/action_search"
+        	android:parentActivityName="md.smartitineraryclient.MainActivity" >
+        	<!-- Parent activity meta-data to support 4.0 and lower -->
+       		<meta-data
+           		android:name="android.support.PARENT_ACTIVITY"
+            	android:value="md.smartitineraryclient.MainActivity" />
+    	</activity>
+    
         <meta-data
     		android:name="com.google.android.maps.v2.API_KEY"
     		android:value="AIzaSyCM-eWOlcTelH_ZbyN46mPPRBonQ2f-ve4"/>
