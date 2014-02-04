@@ -80,7 +80,7 @@
                 android:value="md.smartitineraryclient.ResultActivity" />
         </activity>
         <activity
-            android:name="md.smartitineraryclient.Comments"
+            android:name="md.smartitineraryclient.CommentsActivity"
             android:label="@string/title_activity_comments"
             android:parentActivityName="md.smartitineraryclient.SelectedItinerary" >
             <meta-data
@@ -88,7 +88,7 @@
                 android:value="md.smartitineraryclient.SelectedItinerary" />
         </activity>
         <activity
-            android:name="md.smartitineraryclient.ModCategories"
+            android:name="md.smartitineraryclient.ModCategoriesActivity"
             android:label="@string/title_activity_mod_categories"
             android:parentActivityName="md.smartitineraryclient.FavouritesActivity" >
             <meta-data
@@ -96,7 +96,7 @@
                 android:value="md.smartitineraryclient.FavouritesActivity" />
         </activity>
         <activity
-            android:name="md.smartitineraryclient.ModItineraries"
+            android:name="md.smartitineraryclient.ModItinerariesActivity"
             android:label="@string/title_activity_mod_itineraries"
             android:parentActivityName="md.smartitineraryclient.FavouritesActivity" >
             <meta-data

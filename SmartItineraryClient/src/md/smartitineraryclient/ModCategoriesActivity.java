@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 
-public class ModCategories extends Activity {
+public class ModCategoriesActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
