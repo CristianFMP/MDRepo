@@ -3,13 +3,13 @@
     <!-- Search, appears as action button -->
     <item android:id="@+id/action_search"
           android:icon="@drawable/ic_action_search"
-          android:title="@string/action_search"
+          android:title="@string/title_activity_search"
           android:showAsAction="always" />
     
     <!-- Favourites, appears as action button -->
     <item android:id="@+id/action_favourites"
-          android:icon="@drawable/ic_fav"
-          android:title="@string/fav"
+          android:icon="@drawable/ic_action_fav"
+          android:title="@string/title_activity_favourites"
           android:showAsAction="always" />
     
 </menu>

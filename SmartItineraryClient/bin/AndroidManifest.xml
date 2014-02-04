@@ -3,55 +3,107 @@
     package="md.smartitineraryclient"
     android:versionCode="1"
     android:versionName="1.0" >
-	
+
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="19" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
     <uses-feature
         android:glEsVersion="0x00020000"
-        android:required="true"/>
-    
-    <application    
+        android:required="true" />
+
+    <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.google.android.gms.version"
-           	android:value="@integer/google_play_services_version" />
-        
+            android:value="@integer/google_play_services_version" />
+
         <!-- The main/home activity (it has no parent activity) -->
         <activity
             android:name="md.smartitineraryclient.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- A child of the main activity -->
-    	<activity
-        	android:name="md.smartitineraryclient.SearchActivity"
-        	android:label="@string/action_search"
-        	android:parentActivityName="md.smartitineraryclient.MainActivity" >
-        	<!-- Parent activity meta-data to support 4.0 and lower -->
-       		<meta-data
-           		android:name="android.support.PARENT_ACTIVITY"
-            	android:value="md.smartitineraryclient.MainActivity" />
-    	</activity>
-    
         <meta-data
-    		android:name="com.google.android.maps.v2.API_KEY"
-    		android:value="AIzaSyCM-eWOlcTelH_ZbyN46mPPRBonQ2f-ve4"/>
-        	<!-- vale: AIzaSyCM-eWOlcTelH_ZbyN46mPPRBonQ2f-ve4 -->
-        	<!-- cris: AIzaSyC3dw7HZITHjbnCggztlyuTK3rAjwOr6Qc -->    
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyCM-eWOlcTelH_ZbyN46mPPRBonQ2f-ve4" />
+        <!-- vale: AIzaSyCM-eWOlcTelH_ZbyN46mPPRBonQ2f-ve4 -->
+        <!-- cris: AIzaSyC3dw7HZITHjbnCggztlyuTK3rAjwOr6Qc -->
+
+
+        <!-- Child activities -->
+        <activity
+            android:name="md.smartitineraryclient.FavouritesActivity"
+            android:label="@string/title_activity_favourites"
+            android:parentActivityName="md.smartitineraryclient.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="md.smartitineraryclient.MainActivity" />
+        </activity>
+        <activity
+            android:name="md.smartitineraryclient.SearchActivity"
+            android:label="@string/title_activity_search"
+            android:parentActivityName="md.smartitineraryclient.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="md.smartitineraryclient.MainActivity" />
+        </activity>
+        <activity
+            android:name="md.smartitineraryclient.ResultActivity"
+            android:label="@string/title_activity_result"
+            android:parentActivityName="md.smartitineraryclient.SearchActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="md.smartitineraryclient.SearchActivity" />
+        </activity>
+        <activity
+            android:name="md.smartitineraryclient.SelectedItinerary"
+            android:label="@string/title_activity_selected_itinerary"
+            android:parentActivityName="md.smartitineraryclient.ResultActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="md.smartitineraryclient.ResultActivity" />
+        </activity>
+        <activity
+            android:name="md.smartitineraryclient.Comments"
+            android:label="@string/title_activity_comments"
+            android:parentActivityName="md.smartitineraryclient.SelectedItinerary" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="md.smartitineraryclient.SelectedItinerary" />
+        </activity>
+        <activity
+            android:name="md.smartitineraryclient.ModCategories"
+            android:label="@string/title_activity_mod_categories"
+            android:parentActivityName="md.smartitineraryclient.FavouritesActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="md.smartitineraryclient.FavouritesActivity" />
+        </activity>
+        <activity
+            android:name="md.smartitineraryclient.ModItineraries"
+            android:label="@string/title_activity_mod_itineraries"
+            android:parentActivityName="md.smartitineraryclient.FavouritesActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="md.smartitineraryclient.FavouritesActivity" />
+        </activity>
+        
     </application>
+
 </manifest>

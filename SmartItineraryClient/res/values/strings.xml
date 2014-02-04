@@ -3,15 +3,13 @@
 
     <string name="app_name">Smart Itinerary</string>
     
-    <string name="action_search">Cerca</string>
-    <string name="action_settings">Settings</string> 
-    
-    <string name="research">Cerca Itinerario</string>
-    <string name="result">Itinerari trovati</string>
-    <string name="this_itinerary">Itinerario Selezionato</string>
-    <string name="this_poi_comments">Commenti punto d\'interesse</string>
-    <string name="categories">Categorie d\'interesse</string>
-    <string name="fav">Preferiti</string>
+    <string name="title_activity_search">Cerca Itinerari</string>
+    <string name="title_activity_result">Itinerari trovati</string>
+    <string name="title_activity_selected_itinerary">Itinerario selezionato</string>
+    <string name="title_activity_comments">Commenti punto d\'interesse</string>
+    <string name="title_activity_favourites">Preferiti</string>
+    <string name="title_activity_mod_categories">Categorie d\'interesse</string>
+    <string name="title_activity_mod_itineraries">Itinerari salvati</string>
     
     <string name="from">Da:</string>
     <string name="max_length">Lunghezza max:</string>
@@ -21,23 +19,18 @@
     <string name="desc_range">(Distanza dal luogo visitabile più vicino)</string>
     <string name="this_pos">Posizione attuale</string>
     <string name="go_search">Cerca!</string>
-    
     <string name="desc_cat">Non hai scelto ancora nessuna categoria</string>
     <string name=":">:</string>
-    
     <string name="itinerary_from">Itinerario da</string>
     <string name="popularity">Popolarità</string>
     <string name="poi">punti d\'interesse</string>
     <string name="length">Lunghezza</string>
-    <string name="alert_delete_research">Attenzione, stai cancellando la ricerca attuale.</string>
-    
     <string name="desc_map">Clicca sui punti di interesse sulla mappa per leggere i dettagli.</string>
     <string name="checkin_poi">check-in effettuati</string>
     <string name="read_comments">Leggi i commenti</string>
-    
     <string name="choose_macrocat">Scegli la macrocategoria:</string>
     <string name="choose_cat">Scegli la categoria:</string>
     
-    <string name="fav_itin">Itinerari preferiti:</string>
+    <string name="hello_world">Hello world!</string> <!-- da canc -->
 
 </resources>
