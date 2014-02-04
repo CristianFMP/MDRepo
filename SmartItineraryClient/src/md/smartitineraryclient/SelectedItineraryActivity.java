@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 
-public class SelectedItinerary extends Activity {
+public class SelectedItineraryActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
