@@ -21,9 +21,7 @@ public class ResultActivity extends Activity {
 	 * Set up the {@link android.app.ActionBar}.
 	 */
 	private void setupActionBar() {
-
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
 	}
 
 	@Override
@@ -55,8 +53,7 @@ public class ResultActivity extends Activity {
 	
 	private void openFavourites() {
 		Intent intent = new Intent(this, FavouritesActivity.class);
-	    startActivity(intent);
-		
+	    startActivity(intent);	
 	}
 
 }

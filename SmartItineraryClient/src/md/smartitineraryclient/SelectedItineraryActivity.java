@@ -20,9 +20,7 @@ public class SelectedItineraryActivity extends Activity {
 	 * Set up the {@link android.app.ActionBar}.
 	 */
 	private void setupActionBar() {
-
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
 	}
 
 	@Override
@@ -48,5 +46,4 @@ public class SelectedItineraryActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
 }
