@@ -30,6 +30,7 @@
     <string name="read_comments">Leggi i commenti</string>
     <string name="choose_macrocat">Scegli la macrocategoria:</string>
     <string name="choose_cat">Scegli la categoria:</string>
+    <string name="fav_added">Itinerario aggiunto ai preferiti!</string>
     
     <string name="hello_world">Hello world!</string> <!-- da canc -->
 
