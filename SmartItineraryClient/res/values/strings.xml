@@ -32,6 +32,8 @@
     <string name="choose_cat">Scegli la categoria:</string>
     <string name="fav_added">Itinerario aggiunto ai preferiti!</string>
     
+    <string name="next_item">Link ad itinerario selezionato</string>
+    
     <string name="hello_world">Hello world!</string> <!-- da canc -->
 
 </resources>
