@@ -41,7 +41,7 @@
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyCM-eWOlcTelH_ZbyN46mPPRBonQ2f-ve4" />
+            android:value="AIzaSyC3dw7HZITHjbnCggztlyuTK3rAjwOr6Qc" />
         <!-- vale: AIzaSyCM-eWOlcTelH_ZbyN46mPPRBonQ2f-ve4 -->
         <!-- cris: AIzaSyC3dw7HZITHjbnCggztlyuTK3rAjwOr6Qc -->
 
@@ -72,7 +72,7 @@
                 android:value="md.smartitineraryclient.SearchActivity" />
         </activity>
         <activity
-            android:name="md.smartitineraryclient.SelectedItinerary"
+            android:name="md.smartitineraryclient.SelectedItineraryActivity"
             android:label="@string/title_activity_selected_itinerary"
             android:parentActivityName="md.smartitineraryclient.ResultActivity" >
             <meta-data
@@ -82,7 +82,7 @@
         <activity
             android:name="md.smartitineraryclient.CommentsActivity"
             android:label="@string/title_activity_comments"
-            android:parentActivityName="md.smartitineraryclient.SelectedItinerary" >
+            android:parentActivityName="md.smartitineraryclient.SelectedItineraryActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="md.smartitineraryclient.SelectedItinerary" />

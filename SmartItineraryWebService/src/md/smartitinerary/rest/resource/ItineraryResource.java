@@ -53,7 +53,7 @@ public class ItineraryResource {
     
     // Use data from the client source to retrieve itineraries
     @GET
-    @Path("post")
+    @Path("/getItineraries")
     // @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     public String getItineraries() {
