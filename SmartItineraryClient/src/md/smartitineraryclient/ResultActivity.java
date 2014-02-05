@@ -47,13 +47,9 @@ public class ResultActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-<<<<<<< HEAD
 	
 	private void openFavourites() {
 		Intent intent = new Intent(this, FavouritesActivity.class);
 	    startActivity(intent);	
 	}
-=======
->>>>>>> 1fdb92d0e314524e7fa2ce1575475d7038fd84fe
-
 }
