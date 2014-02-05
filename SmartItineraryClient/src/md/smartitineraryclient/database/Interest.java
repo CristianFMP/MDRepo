@@ -6,6 +6,7 @@ public class Interest {
 	private String categoria;
 	private String macrocategoria;
 	private String dataInserimento;
+	private String dataCancellazione;
 	
 	public long getId() {
 		return id;
@@ -33,6 +34,13 @@ public class Interest {
 	}
 	public void setDataInserimento(String dataInserimento) {
 		this.dataInserimento = dataInserimento;
+	}
+	
+	public String getDataCancellazione() {
+		return dataCancellazione;
+	}
+	public void setDataCancellazione(String dataCancellazione) {
+		this.dataCancellazione = dataCancellazione;
 	}
 	
 	

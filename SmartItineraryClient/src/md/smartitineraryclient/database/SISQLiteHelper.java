@@ -25,13 +25,13 @@ public class SISQLiteHelper extends SQLiteOpenHelper {
   	public static final String ITIN_COLUMN_POS_UTENTE = "posizioneUtente";
 	public static final String ITIN_COLUMN_DATETIME = "datetime";
 
-
 	// Interessi
 	public static final String INTER_TABLE = "Interessi";
   	public static final String INTER_COLUMN_ID = "_id";
   	public static final String INTER_COLUMN_CATEGORIA = "categoria";
   	public static final String INTER_COLUMN_MACROCATEGORIA = "macrocategoria";
   	public static final String INTER_COLUMN_DATA_INSERIMENTO = "dataInserimento";
+	public static final String INTER_COLUMN_DATA_CANCELLAZIONE = "dataCancellazione";
 
     /** CODICE SQL DI CREAZIONE DELLE TABELLE */
 	// Itinerari
@@ -51,7 +51,8 @@ public class SISQLiteHelper extends SQLiteOpenHelper {
       		+ INTER_COLUMN_ID + " integer primary key autoincrement, "
       		+ INTER_COLUMN_CATEGORIA + " text not null, "
       		+ INTER_COLUMN_MACROCATEGORIA + " text not null, "
-      		+ INTER_COLUMN_DATA_INSERIMENTO + " datetime not null);";
+      		+ INTER_COLUMN_DATA_INSERIMENTO + " datetime not null, "
+			+ INTER_COLUMN_DATA_CANCELLAZIONE + " datetime );";
 
 	@Override
 	public void onCreate(SQLiteDatabase database) {

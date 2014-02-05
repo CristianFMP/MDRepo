@@ -2,6 +2,7 @@ package md.smartitineraryclient.database;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -17,7 +18,8 @@ public class InterestsDataSource {
 			SISQLiteHelper.INTER_COLUMN_ID,
 			SISQLiteHelper.INTER_COLUMN_CATEGORIA,
 			SISQLiteHelper.INTER_COLUMN_MACROCATEGORIA,
-			SISQLiteHelper.INTER_COLUMN_DATA_INSERIMENTO };
+			SISQLiteHelper.INTER_COLUMN_DATA_INSERIMENTO,
+			SISQLiteHelper.INTER_COLUMN_DATA_CANCELLAZIONE };
 
 		public InterestsDataSource(Context context) {
 			dbHelper = new SISQLiteHelper(context);
@@ -31,11 +33,12 @@ public class InterestsDataSource {
 			dbHelper.close();
 		}
 
-		public Interest createInterest(String categoria, String macrocategoria, String dataIns) {
+		public Interest createInterest(String categoria, String macrocategoria, String dataIns, String dataCanc) {
 		    ContentValues values = new ContentValues();
 		    values.put(SISQLiteHelper.INTER_COLUMN_CATEGORIA, categoria);
 		    values.put(SISQLiteHelper.INTER_COLUMN_MACROCATEGORIA, macrocategoria);
 		    values.put(SISQLiteHelper.INTER_COLUMN_DATA_INSERIMENTO, dataIns);
+		    values.put(SISQLiteHelper.INTER_COLUMN_DATA_CANCELLAZIONE, dataCanc);
 		    long insertId = database.insert(SISQLiteHelper.INTER_TABLE, null,
 		        values);
 		    Cursor cursor = database.query(SISQLiteHelper.INTER_TABLE,
@@ -48,10 +51,21 @@ public class InterestsDataSource {
 		  }
 	  
 		public void deleteInterest(Interest interest) {
-		    String cat = interest.getCategoria();
-		    System.out.println("Interest deleted with category: " + cat);
-		    database.delete(SISQLiteHelper.INTER_TABLE, SISQLiteHelper.INTER_COLUMN_CATEGORIA
-		        + " = " + cat, null);
+		    long id = interest.getId();
+		    ContentValues values = new ContentValues();
+		    // TODO: controllare appena possibile se il NOW() funziona
+		    values.put(SISQLiteHelper.INTER_COLUMN_DATA_CANCELLAZIONE, "NOW()");
+		    System.out.println("Interest deleted with category: " + interest.getCategoria());
+		    database.update(SISQLiteHelper.INTER_TABLE, values, "_id "+"="+id, null);
+		}
+		
+		public void restoreInterest(Interest interest) {
+		    long id = interest.getId();
+		    ContentValues values = new ContentValues();
+		    values.putNull(SISQLiteHelper.INTER_COLUMN_DATA_CANCELLAZIONE);
+		    values.put(SISQLiteHelper.INTER_COLUMN_DATA_INSERIMENTO, "NOW()");
+		    System.out.println("Interest restored with category: " + interest.getCategoria());
+		    database.update(SISQLiteHelper.INTER_TABLE, values, "_id "+"="+id, null);
 		}
 		
 		public List<Interest> getAllInterests() {
