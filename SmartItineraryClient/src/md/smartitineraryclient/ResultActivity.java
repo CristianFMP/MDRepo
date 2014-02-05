@@ -46,17 +46,8 @@ public class ResultActivity extends Activity {
 			//
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
-		case R.id.action_favourites:
-            openFavourites();
-            return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-	
-	private void openFavourites() {
-		Intent intent = new Intent(this, FavouritesActivity.class);
-	    startActivity(intent);
-		
 	}
 
 }
