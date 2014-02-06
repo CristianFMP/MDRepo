@@ -138,13 +138,13 @@ public class MainActivity extends FragmentActivity implements LocationListener, 
 	private void openSearch() {
 		Intent intent = new Intent(this, SearchActivity.class);
 	    startActivity(intent);
-		
+	    overridePendingTransition(0,0);
 	}
 	
 	private void openFavourites() {
 		Intent intent = new Intent(this, FavouritesActivity.class);
 	    startActivity(intent);
-		
+	    overridePendingTransition(0,0);
 	}
 
 	/**

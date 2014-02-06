@@ -45,6 +45,7 @@ public class ModCategoriesActivity extends Activity {
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
 			NavUtils.navigateUpFromSameTask(this);
+			overridePendingTransition(0,0);
 			return true;
 		case R.id.action_favourites:
             openFavourites();
@@ -56,7 +57,7 @@ public class ModCategoriesActivity extends Activity {
 	private void openFavourites() {
 		Intent intent = new Intent(this, FavouritesActivity.class);
 	    startActivity(intent);
-		
+	    overridePendingTransition(0,0);
 	}
 
 }

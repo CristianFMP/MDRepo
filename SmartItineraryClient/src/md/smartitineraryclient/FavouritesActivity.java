@@ -44,6 +44,7 @@ public class FavouritesActivity extends Activity {
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
 			NavUtils.navigateUpFromSameTask(this);
+			overridePendingTransition(0,0);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
