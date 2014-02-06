@@ -1,10 +1,12 @@
 package md.smartitineraryclient;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v4.app.NavUtils;
+import android.widget.TextView;
 
 public class SelectedItineraryActivity extends Activity {
 
@@ -14,6 +16,10 @@ public class SelectedItineraryActivity extends Activity {
 		setContentView(R.layout.activity_selected_itinerary);
 		// Show the Up button in the action bar.
 		setupActionBar();
+		Intent intent = getIntent();
+		String poiList = intent.getStringExtra("poiList");
+		TextView tv = (TextView) findViewById(R.id.poiList);
+		tv.setText(poiList);
 	}
 
 	/**
