@@ -1,4 +1,4 @@
-package md.smartitineraryclient;
+package md.smartitineraryclient.model;
 
 import java.util.Date;
 

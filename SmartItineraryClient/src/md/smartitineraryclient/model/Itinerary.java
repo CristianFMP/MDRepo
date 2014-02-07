@@ -1,7 +1,8 @@
-package md.smartitineraryclient;
+package md.smartitineraryclient.model;
 
 import java.text.DecimalFormat;
 import java.util.List;
+
 
 import android.os.Parcel;
 import android.os.Parcelable;
