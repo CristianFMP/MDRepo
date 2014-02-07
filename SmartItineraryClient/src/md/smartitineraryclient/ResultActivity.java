@@ -1,34 +1,16 @@
 package md.smartitineraryclient;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import md.smartitineraryclient.Itinerary;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
@@ -45,8 +27,8 @@ import android.widget.Toast;
 public class ResultActivity extends Activity {
 
 	// TODO: set the ip of your *server* host
-	private static final String SERVICE_URL = "http://77.44.155.79:8080/SmartItineraryWebService/rest/itinerary";
-	private static final String TAG = "MainActivity";
+	private static final String SERVICE_URL = "http://159.149.177.116:8080/SmartItineraryWebService/rest/itinerary";
+	private static final String TAG = "ResultActivity";
 	private static final String TEXT1 = "text1";
 	private static final String TEXT2 = "text2";
 	ArrayList<Itinerary> itineraryList;
@@ -71,6 +53,7 @@ public class ResultActivity extends Activity {
 			toast.show();
 			// execute the call
 			wst.execute(new String[] { url });
+			handleResponse(wst.getResponse());
 		} else {
 			itineraryList = savedInstanceState.getParcelableArrayList("key");
 			updateItineraryList(convertToListItems(itineraryList));
@@ -87,121 +70,6 @@ public class ResultActivity extends Activity {
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 		itineraryList = savedInstanceState.getParcelableArrayList("key");
-	}
-		
-	private class WebServiceTask extends AsyncTask<String, Integer, String> {
-		public static final int POST_TASK = 1;
-		public static final int GET_TASK = 2;	
-		private static final String TAG = "WebServiceTask";
-		// connection timeout, in milliseconds (waiting to connect)
-		private static final int CONN_TIMEOUT = 10000;
-		// socket timeout, in milliseconds (waiting for data)
-		private static final int SOCKET_TIMEOUT = 13000;
-		private int taskType = GET_TASK;
-		private Context mContext = null;
-		private String processMessage = "Processing...";
-
-		// params are used only for UrlEncoded POST requests
-		private ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
-
-		private ProgressDialog pDlg = null;
-
-		public WebServiceTask(int taskType, Context mContext, String processMessage) {
-			this.taskType = taskType;
-			this.mContext = mContext;
-			this.processMessage = processMessage;
-		}
-		
-		private void showProgressDialog() {
-			pDlg = new ProgressDialog(mContext);
-			pDlg.setMessage(processMessage);
-			pDlg.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-			pDlg.setCancelable(false);
-			pDlg.show();
-		}
-		
-		@Override
-		protected void onPreExecute() {
-			showProgressDialog();
-		}
-		
-		@Override
-		protected String doInBackground(String... urls) {
-			String url = urls[0];
-			String result = "";
-
-			HttpResponse response = doResponse(url);
-
-			if (response == null) {
-				return result;
-			} else {
-				try {
-					result = inputStreamToString(response.getEntity().getContent());
-				} catch (IllegalStateException e) {
-					Log.e(TAG, e.getLocalizedMessage(), e);
-				} catch (IOException e) {
-					Log.e(TAG, e.getLocalizedMessage(), e);
-				}
-			}
-			return result;
-		}
-		
-		@Override
-		protected void onPostExecute(String response) {
-			handleResponse(response);
-			pDlg.dismiss();
-		}
-
-		private String inputStreamToString(InputStream content) {
-			String line = "";
-			StringBuilder total = new StringBuilder();
-
-			// Wrap a BufferedReader around the InputStream
-			BufferedReader rd = new BufferedReader(new InputStreamReader(content));
-
-			try {
-				// Read response until the end
-				while ((line = rd.readLine()) != null) {
-					total.append(line);
-				}
-			} catch (IOException e) {
-				Log.e(TAG, e.getLocalizedMessage(), e);
-			}
-			// Return full string
-			return total.toString();
-		}
-
-		private HttpResponse doResponse(String url) {
-			// Use our connection and data timeouts as parameters for our
-			// DefaultHttpClient
-			HttpClient httpclient = new DefaultHttpClient(getHttpParams());
-			HttpResponse response = null;
-
-			try {
-				switch (taskType) {
-					case POST_TASK:
-						HttpPost httppost = new HttpPost(url);
-						// Add parameters
-						httppost.setEntity(new UrlEncodedFormEntity(params));
-						response = httpclient.execute(httppost);
-						break;
-					case GET_TASK:
-						HttpGet httpget = new HttpGet(url);
-						response = httpclient.execute(httpget);
-						break;
-				}
-			} catch (Exception e) {
-				Log.e(TAG, e.getLocalizedMessage(), e);
-			}
-			return response;
-		}
-
-		private HttpParams getHttpParams() {
-			HttpParams htpp = new BasicHttpParams();
-			HttpConnectionParams.setConnectionTimeout(htpp, CONN_TIMEOUT);
-			HttpConnectionParams.setSoTimeout(htpp, SOCKET_TIMEOUT);
-			return htpp;
-		}
 	}
 
 	public void handleResponse(String response) {

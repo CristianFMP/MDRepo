@@ -1,20 +1,37 @@
 package md.smartitineraryclient;
 
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v4.app.NavUtils;
+import android.widget.Toast;
 
 public class CommentsActivity extends Activity {
-
+	private static final String SERVICE_URL = "http://159.149.177.116:8080/SmartItineraryWebService/rest/comment";
+	private static final String TAG = "CommentsActivity";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_comments);
 		// Show the Up button in the action bar.
 		setupActionBar();
+		String url = SERVICE_URL + "/getComments";
+		// web service calls must be executed in a separate thread
+		WebServiceTask wst = new WebServiceTask(WebServiceTask.POST_TASK,
+				this, "Retrieving Comments...");
+		// show toast with reql url
+		Context context = getApplicationContext();
+		CharSequence text = url;
+		int duration = Toast.LENGTH_LONG;
+		Toast toast = Toast.makeText(context, text, duration);
+		toast.show();
+		// execute the call
+		wst.execute(new String[] { url });
+		String response = wst.getResponse();
+		handleResponse(response);
 	}
 
 	/**
@@ -50,15 +67,9 @@ public class CommentsActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	@SuppressWarnings("unused")
-	private class WebServiceTask extends AsyncTask<String, Integer, String> {
 
-		@Override
-		protected String doInBackground(String... params) {
-			// TODO Auto-generated method stub
-			return null;
-		}
+	public void handleResponse(String response) {
+		// TODO Auto-generated method stub
 		
 	}
 }
