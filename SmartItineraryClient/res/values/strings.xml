@@ -20,7 +20,7 @@
     <string name="this_pos">Posizione attuale</string>
     <string name="go_search">Cerca!</string>
     <string name="desc_cat">Non hai scelto ancora nessuna categoria</string>
-    <string name=":">:</string>
+    <string name="duepunti">:</string>
     <string name="itinerary_from">Itinerario da</string>
     <string name="popularity">Popolarità</string>
     <string name="poi">punti d\'interesse</string>
@@ -31,8 +31,9 @@
     <string name="choose_macrocat">Scegli la macrocategoria:</string>
     <string name="choose_cat">Scegli la categoria:</string>
     <string name="fav_added">Itinerario aggiunto ai preferiti!</string>
-    
     <string name="next_item">Link ad itinerario selezionato</string>
+    <string name="desc_button_modCat">Modifica categorie d\'interesse</string>
+    <string name="current_pos">Posizione attuale</string>
     
     <string name="hello_world">Hello world!</string> <!-- da canc -->
 

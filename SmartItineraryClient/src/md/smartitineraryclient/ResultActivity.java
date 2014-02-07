@@ -45,7 +45,7 @@ import android.widget.Toast;
 public class ResultActivity extends Activity {
 
 	// TODO: set the ip of your *server* host
-		private static final String SERVICE_URL = "http://192.168.0.18:8080/SmartItineraryWebService/rest/itinerary";
+		private static final String SERVICE_URL = "http://77.44.155.79:8080/SmartItineraryWebService/rest/itinerary";
 		private static final String TAG = "MainActivity";
 		private static final String TEXT1 = "text1";
 		private static final String TEXT2 = "text2";

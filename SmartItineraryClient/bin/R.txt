@@ -94,7 +94,6 @@ int menu mod_itineraries 0x7f0a0004
 int menu result 0x7f0a0005
 int menu search 0x7f0a0006
 int menu selected_itinerary 0x7f0a0007
-int string _ 0x7f06002b
 int string app_name 0x7f06001a
 int string auth_client_needs_enabling_title 0x7f060015
 int string auth_client_needs_installation_title 0x7f060016
@@ -125,13 +124,16 @@ int string common_google_play_services_update_text 0x7f060008
 int string common_google_play_services_update_title 0x7f060007
 int string common_signin_button_text 0x7f060012
 int string common_signin_button_text_long 0x7f060013
+int string current_pos 0x7f060038
+int string desc_button_modCat 0x7f060037
 int string desc_cat 0x7f06002a
 int string desc_map 0x7f060030
 int string desc_range 0x7f060027
+int string duepunti 0x7f06002b
 int string fav_added 0x7f060035
 int string from 0x7f060022
 int string go_search 0x7f060029
-int string hello_world 0x7f060037
+int string hello_world 0x7f060039
 int string itinerary_from 0x7f06002c
 int string km 0x7f060024
 int string length 0x7f06002f
