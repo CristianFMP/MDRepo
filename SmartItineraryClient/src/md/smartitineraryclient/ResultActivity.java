@@ -132,9 +132,19 @@ public class ResultActivity extends Activity {
 		itineraryListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				String poiList = rows.get(position).get("poiList");
+				String poiIdList = rows.get(position).get("poiIdList");
+				String poiNameList = rows.get(position).get("poiNameList");
+				String poiAddressList = rows.get(position).get("poiAddressList");
+				String poiPopularityList = rows.get(position).get("poiPopularityList");
+				String poiLatitudeList = rows.get(position).get("poiLatitudeList");
+				String poiLongitudeList = rows.get(position).get("poiLongitudeList");
 				Intent intent = new Intent(view.getContext(), SelectedItineraryActivity.class);
-				intent.putExtra("poiList", poiList);
+				intent.putExtra("poiIdList", poiIdList);
+				intent.putExtra("poiNameList", poiNameList);
+				intent.putExtra("poiAddressList", poiAddressList);
+				intent.putExtra("poiPopularityList", poiPopularityList);
+				intent.putExtra("poiLatitudeList", poiLatitudeList);
+				intent.putExtra("poiLongitudeList", poiLongitudeList);
 				startActivityForResult(intent, 0);
 			}
 		});
