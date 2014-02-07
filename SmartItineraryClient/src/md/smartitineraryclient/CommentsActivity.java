@@ -1,18 +1,32 @@
 package md.smartitineraryclient;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 public class CommentsActivity extends Activity {
 	private static final String SERVICE_URL = "http://159.149.177.116:8080/SmartItineraryWebService/rest/comment";
 	private static final String TAG = "CommentsActivity";
+	private static final String TEXT1 = "text1";
+	private static final String TEXT2 = "text2";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -21,13 +35,14 @@ public class CommentsActivity extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		String url = SERVICE_URL + "/getComments";
-		Intent intent = getIntent();
+		// Intent intent = getIntent();
 		// se si usa POST verificare di inviare anche la/e stringa/e di parametri oltre all'url
-		String param = intent.getStringExtra("poiId");
+		// String param = intent.getStringExtra("poiId");
+		String param = "https://foursquare.com/v/1-world-financial-center/4b95354af964a520249534e3";
 		// web service calls must be executed in a separate thread
 		WebServiceTask wst = new WebServiceTask(WebServiceTask.POST_TASK,
 				this, "Retrieving Comments...");
-		// show toast with reql url
+		// show toast with real url
 		Context context = getApplicationContext();
 		CharSequence text = url;
 		int duration = Toast.LENGTH_LONG;
@@ -73,9 +88,42 @@ public class CommentsActivity extends Activity {
 
 	public void handleResponse(String response) {
 		try {
-			
+			List<Comment> commentList = new ArrayList<Comment>();
+			JSONArray jArray = new JSONArray(response);
+			// TODO: handle JSONexceptions
+			for (int i = 0; i < jArray.length(); i++) {
+				JSONObject tmpJObj = jArray.getJSONObject(i);
+				String comment = tmpJObj.getString("comment");
+				Long timestamp = tmpJObj.getLong("timestamp");
+				commentList.add(new Comment(comment, new Timestamp(timestamp)));
+			}
+			updateCommentList(updateListToItem(commentList));
 		} catch (Exception e) {
 			Log.e(TAG, e.getLocalizedMessage(), e);
 		}
+	}
+
+	private void updateCommentList(List<Map<String, String>> updateListToItem) {
+		final List<Map<String, String>> rows = updateListToItem;		
+		// Comment ListView
+		final String[] fromMapKey = new String[] {TEXT1, TEXT2};
+	    final int[] toLayoutId = new int[] {android.R.id.text1, android.R.id.text2};
+		ListView commentListView = (ListView) findViewById(R.id.commentList);
+		ListAdapter commentAdapter = new SimpleAdapter(this, rows, android.R.layout.simple_list_item_2, fromMapKey, toLayoutId);
+		commentListView.setAdapter(commentAdapter);
+	}
+
+	private List<Map<String, String>> updateListToItem(List<Comment> commentList) {
+		List<Map<String, String>> listItem = new ArrayList<Map<String, String>>();
+		for (int i = 0; i < commentList.size(); i++) {
+			Comment tmpComment = commentList.get(i);
+			String comment = tmpComment.getComment();
+			String date = DateFormat.getDateTimeInstance().format(commentList.get(i).getDate());
+			Map<String, String> listItemMap = new HashMap<String, String>();
+			listItemMap.put(TEXT1, comment);
+			listItemMap.put(TEXT2, date);
+			listItem.add(listItemMap);
+		}
+		return listItem;
 	}
 }
