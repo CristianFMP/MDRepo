@@ -2,8 +2,10 @@ package md.smartitineraryclient;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -19,6 +21,9 @@ public class CommentsActivity extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		String url = SERVICE_URL + "/getComments";
+		Intent intent = getIntent();
+		// se si usa POST verificare di inviare anche la/e stringa/e di parametri oltre all'url
+		String param = intent.getStringExtra("poiId");
 		// web service calls must be executed in a separate thread
 		WebServiceTask wst = new WebServiceTask(WebServiceTask.POST_TASK,
 				this, "Retrieving Comments...");
@@ -29,7 +34,7 @@ public class CommentsActivity extends Activity {
 		Toast toast = Toast.makeText(context, text, duration);
 		toast.show();
 		// execute the call
-		wst.execute(new String[] { url });
+		wst.execute(new String[] { url, param });
 		String response = wst.getResponse();
 		handleResponse(response);
 	}
@@ -38,9 +43,7 @@ public class CommentsActivity extends Activity {
 	 * Set up the {@link android.app.ActionBar}.
 	 */
 	private void setupActionBar() {
-
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
 	}
 
 	@Override
@@ -69,7 +72,10 @@ public class CommentsActivity extends Activity {
 	}
 
 	public void handleResponse(String response) {
-		// TODO Auto-generated method stub
-		
+		try {
+			
+		} catch (Exception e) {
+			Log.e(TAG, e.getLocalizedMessage(), e);
+		}
 	}
 }
