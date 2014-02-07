@@ -27,6 +27,7 @@
 	    	android:layout_alignStart="@android:id/text1"
 			android:textAppearance="?android:attr/textAppearanceSmall" />
 	</TwoLineListItem>
+	
 	<ImageView 
 	 	android:id="@+id/nextItem"
 	   	android:layout_width="48dp"

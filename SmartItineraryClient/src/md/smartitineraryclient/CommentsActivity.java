@@ -1,5 +1,6 @@
 package md.smartitineraryclient;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -49,5 +50,15 @@ public class CommentsActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	@SuppressWarnings("unused")
+	private class WebServiceTask extends AsyncTask<String, Integer, String> {
 
+		@Override
+		protected String doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
+	}
 }
