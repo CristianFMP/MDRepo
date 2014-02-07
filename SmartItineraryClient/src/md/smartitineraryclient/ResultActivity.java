@@ -45,19 +45,11 @@ import android.widget.Toast;
 public class ResultActivity extends Activity {
 
 	// TODO: set the ip of your *server* host
-<<<<<<< HEAD
-		private static final String SERVICE_URL = "http://77.44.155.79:8080/SmartItineraryWebService/rest/itinerary";
-		private static final String TAG = "MainActivity";
-		private static final String TEXT1 = "text1";
-		private static final String TEXT2 = "text2";
-		ArrayList<Itinerary> itineraryList;
-=======
-	private static final String SERVICE_URL = "http://192.168.0.18:8080/SmartItineraryWebService/rest/itinerary";
+	private static final String SERVICE_URL = "http://77.44.155.79:8080/SmartItineraryWebService/rest/itinerary";
 	private static final String TAG = "MainActivity";
 	private static final String TEXT1 = "text1";
 	private static final String TEXT2 = "text2";
 	ArrayList<Itinerary> itineraryList;
->>>>>>> 1cf234993b77d96f4f0a02780e40985f432a279a
 		
 	/** Called when the activity is first created. */
 	@Override

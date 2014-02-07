@@ -227,16 +227,17 @@ containing a value of this type.
         public static final int ic_plusone_tall_off_client=0x7f020021;
     }
     public static final class id {
-        public static final int action_add_fav=0x7f05000b;
-        public static final int action_favourites=0x7f050009;
-        public static final int action_result=0x7f05000a;
-        public static final int action_search=0x7f050008;
+        public static final int action_add_fav=0x7f05000c;
+        public static final int action_favourites=0x7f05000a;
+        public static final int action_result=0x7f05000b;
+        public static final int action_search=0x7f050009;
         public static final int hybrid=0x7f050004;
         public static final int itineraryList=0x7f050006;
         public static final int map=0x7f050005;
-        public static final int nextItem=0x7f050007;
+        public static final int nextItem=0x7f050008;
         public static final int none=0x7f050000;
         public static final int normal=0x7f050001;
+        public static final int poiList=0x7f050007;
         public static final int satellite=0x7f050002;
         public static final int terrain=0x7f050003;
     }
