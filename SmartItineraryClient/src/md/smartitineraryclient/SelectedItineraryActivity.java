@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 public class SelectedItineraryActivity extends Activity {
 
@@ -17,9 +19,15 @@ public class SelectedItineraryActivity extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		Intent intent = getIntent();
-		String poiList = intent.getStringExtra("poiList");
-		TextView tv = (TextView) findViewById(R.id.poiList);
-		tv.setText(poiList);
+		String[] poiIdArr = intent.getStringExtra("poiIdList").split(",");
+		String[] poiNameArr = intent.getStringExtra("poiNameList").split(",");
+		String[] poiAddressArr = intent.getStringExtra("poiAddressList").split(",");
+		String[] poiPopularityArr = intent.getStringExtra("poiPopularityList").split(",");
+		String[] poiLatitudeArr = intent.getStringExtra("poiLatitudeList").split(",");
+		String[] poiLongitudeArr = intent.getStringExtra("poiLongitudeList").split(",");
+		ListView lv = (ListView) findViewById(R.id.poiList);
+		ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, poiNameArr);
+		lv.setAdapter(adapter);
 	}
 
 	/**

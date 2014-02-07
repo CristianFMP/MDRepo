@@ -47,7 +47,7 @@ import android.widget.Toast;
 public class ResultActivity extends Activity {
 
 	// TODO: set the ip of your *server* host
-	private static final String SERVICE_URL = "http://192.168.43.80:8080/SmartItineraryWebService/rest/itinerary";
+	private static final String SERVICE_URL = "http://192.168.0.18:8080/SmartItineraryWebService/rest/itinerary";
 	private static final String TAG = "ResultActivity";
 	private static final String TEXT1 = "text1";
 	private static final String TEXT2 = "text2";
@@ -81,8 +81,8 @@ public class ResultActivity extends Activity {
 		
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		outState.putParcelableArrayList("key", itineraryList);
 		super.onSaveInstanceState(outState);
+		outState.putParcelableArrayList("key", itineraryList);
 	}
 		
 	@Override
@@ -149,26 +149,42 @@ public class ResultActivity extends Activity {
 			Itinerary tmpItinerary = itineraryList.get(n);
 			String title = "Itinerario da " + tmpItinerary.getPois().get(0).getName();
 			String info = "Popolarita " + tmpItinerary.getPopularity() + ", " + tmpItinerary.getPois().size() + " points of interest, ";
-			String poiList = "";
+			String poiIdList = "";
+			String poiNameList = "";
+			String poiAddressList = "";
+			String poiPopularityList = "";
+			String poiLatitudeList = "";
+			String poiLongitudeList = "";
 			for (int i = 0; i < tmpItinerary.getPois().size(); i++) {
-				if (i == tmpItinerary.getPois().size() - 1)
-					poiList += tmpItinerary.getPois().get(i).getId();
-				else
-					poiList += tmpItinerary.getPois().get(i).getId() + ",";
+				if (i == tmpItinerary.getPois().size() - 1) {
+					poiIdList += tmpItinerary.getPois().get(i).getId();
+					poiNameList += tmpItinerary.getPois().get(i).getName();
+					poiAddressList += tmpItinerary.getPois().get(i).getAddress();
+					poiPopularityList += tmpItinerary.getPois().get(i).getPopularity();
+					poiLatitudeList += tmpItinerary.getPois().get(i).getLatitude();
+					poiLongitudeList += tmpItinerary.getPois().get(i).getLongitude();
+				} else {
+					poiIdList += tmpItinerary.getPois().get(i).getId() + ",";
+					poiNameList += tmpItinerary.getPois().get(i).getName() + ",";
+					poiAddressList += tmpItinerary.getPois().get(i).getAddress() + ",";
+					poiPopularityList += tmpItinerary.getPois().get(i).getPopularity() + ",";
+					poiLatitudeList += tmpItinerary.getPois().get(i).getLatitude() + ",";
+					poiLongitudeList += tmpItinerary.getPois().get(i).getLongitude() + ",";
+				}
 			}
-			if (tmpItinerary.getLength() < 1000) {
-				Map<String, String> listItemMap = new HashMap<String, String>();
-				listItemMap.put(TEXT1, title);
-				listItemMap.put(TEXT2, info + tmpItinerary.getLengthMeters() + " m");
-				listItemMap.put("poiList", poiList);
-				listItem.add(listItemMap);
-			} else {
-				Map<String, String> listItemMap = new HashMap<String, String>();
-				listItemMap.put(TEXT1, title);
-				listItemMap.put(TEXT2, info + tmpItinerary.getLengthKm() + " km");
-				listItemMap.put("poiList", poiList);
-				listItem.add(listItemMap);
-			}
+			Map<String, String> listItemMap = new HashMap<String, String>();
+			listItemMap.put(TEXT1, title);
+			if (tmpItinerary.getLength() < 1000) 				
+				listItemMap.put(TEXT2, info + tmpItinerary.getLengthMeters() + " m");				
+			else
+				listItemMap.put(TEXT2, info + tmpItinerary.getLengthKm() + " km");		
+			listItemMap.put("poiIdList", poiIdList);
+			listItemMap.put("poiNameList", poiNameList);
+			listItemMap.put("poiAddressList", poiAddressList);
+			listItemMap.put("poiPopularityList", poiPopularityList);
+			listItemMap.put("poiLatitudeList", poiLatitudeList);
+			listItemMap.put("poiLongitudeList", poiLongitudeList);
+			listItem.add(listItemMap);
 		}
 		return listItem;
 	}
