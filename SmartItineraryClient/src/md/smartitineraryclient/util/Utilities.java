@@ -4,9 +4,6 @@ import android.app.*;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.util.*;
-
-import com.google.android.gms.common.*;
 
 public class Utilities {
 	

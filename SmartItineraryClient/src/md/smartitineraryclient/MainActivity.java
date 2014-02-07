@@ -8,16 +8,12 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -38,8 +34,9 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationSource {
     Location mCurrentLocation;
     private LocationManager locationManager;
     private String provider;
-    private boolean gps_enabled,network_enabled;
     private OnLocationChangedListener mListener;
+    @SuppressWarnings("unused")
+	private boolean gps_enabled,network_enabled;
     
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
@@ -67,7 +64,8 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationSource {
 	                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000L, 10F, this);
 	            	provider = "LocationManager.GPS_PROVIDER";
 	            	gps_enabled = true;
-	            } else if(networkIsEnabled) {
+	            }
+	            if(networkIsEnabled) {
 	                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000L, 10F, this);
 	                provider = "LocationManager.NETWORK_PROVIDER";
 	                network_enabled = true;
@@ -81,7 +79,7 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationSource {
             System.err.println("Error with location manager.");
 
         }
-	    //mCurrentLocation = mLocationClient.getLastLocation(); // TODO: runtime exception
+	    
 	    setUpMapIfNeeded();
 	    
 	    // Set the SQLite client DB
@@ -171,8 +169,8 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationSource {
             return false;
         }
     }
-    
-    /** Handle results returned to the FragmentActivity by Google Play services */
+    /*
+    // Handle results returned to the FragmentActivity by Google Play services
     @Override
     protected void onActivityResult(
         int requestCode, int resultCode, Intent data) {
@@ -180,21 +178,17 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationSource {
         switch (requestCode) {
             //...
             case Utilities.CONNECTION_FAILURE_RESOLUTION_REQUEST :
-            /*
-             * If the result code is Activity.RESULT_OK, try
-             * to connect again
-             */
+            // If the result code is Activity.RESULT_OK, try to connect again
                 switch (resultCode) {
                     case Activity.RESULT_OK :
-                    /*
-                     * Try the request again
-                     */
+                    // Try the request again
                     //...
                     break;
                 }
             //...
         }
      }
+    */
     
     /** Gets the coordinates of the current location */
     protected LatLng CurrentLocation(String provider) {
@@ -285,6 +279,7 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationSource {
 
 	@Override
 	public void onConnected(Bundle bundle) {
+		mCurrentLocation = mLocationClient.getLastLocation();
 		// Display the connection status
         Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
 		
