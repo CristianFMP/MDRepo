@@ -64,7 +64,7 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationSource {
 	                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000L, 10F, this);
 	            	provider = "LocationManager.GPS_PROVIDER";
 	            	gps_enabled = true;
-	            }
+	            } // TODO: rimettere else e impostare un timeout per aggirare ricerca tramite gps dopo un po' che cerca
 	            if(networkIsEnabled) {
 	                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000L, 10F, this);
 	                provider = "LocationManager.NETWORK_PROVIDER";
