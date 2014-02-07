@@ -74,7 +74,7 @@
             android:name="md.smartitineraryclient.SelectedItineraryActivity"
             android:label="@string/title_activity_selected_itinerary"
             android:parentActivityName="md.smartitineraryclient.ResultActivity"
-            android:launchMode="singleTop" >
+            android:launchMode="singleInstance" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="md.smartitineraryclient.ResultActivity" />

@@ -146,6 +146,7 @@ public class ResultActivity extends Activity {
 				intent.putExtra("poiLatitudeList", poiLatitudeList);
 				intent.putExtra("poiLongitudeList", poiLongitudeList);
 				startActivityForResult(intent, 0);
+				overridePendingTransition(0,0);
 			}
 		});
 		ListAdapter itineraryAdapter = new SimpleAdapter(this, rows, R.layout.rowlayout, fromMapKey, toLayoutId);
