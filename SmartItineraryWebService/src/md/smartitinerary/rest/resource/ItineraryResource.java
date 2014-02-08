@@ -1,7 +1,6 @@
 package md.smartitinerary.rest.resource;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -54,14 +53,14 @@ public class ItineraryResource {
     		@PathParam("kcategories") String kcategories) {
     	System.out.println("Parametri: pos. "+kposition+", lunghezza "+klength+", raggio "+krange);
         double range = Double.parseDouble(krange);
-        double maxLength = Double.parseDouble(klength);
+        double maxLength = Double.parseDouble(klength)*1000;
         int k = 5;
         String[] pos = kposition.split(",");
-        double lat = Double.parseDouble(pos[0]);
-        double lng = Double.parseDouble(pos[1]);
+        double lng = Double.parseDouble(pos[0]);
+        double lat = Double.parseDouble(pos[1]);
         String[] categoryArr = kcategories.split(",");  
         for (int i = 0; i < categoryArr.length; i++) {
-        	categoryArr[i] = categoryArr[i].replace("%", " ");
+        	categoryArr[i] = categoryArr[i].replace(".", " ");
         }
         List<String> categories = Arrays.asList(categoryArr);
         Point userLocation = new Point(lat, lng);

@@ -125,7 +125,7 @@ public class SearchActivity extends Activity implements LocationListener {
         }
         
         /** Recupera gli interessi memorizzati in locale */
-        String cat = "Home%(private),Coworking%Space,Office";
+        String cat = "Home.(private),Coworking.Space,Office";
         // TODO: ci sto lavorando in locale
         
         pos = pos.replace(",", ".");
