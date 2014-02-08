@@ -42,7 +42,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 public class CommentsActivity extends Activity {
-	private static final String SERVICE_URL = "http://192.168.0.18:8080/SmartItineraryWebService/rest/comment";
+	private static final String SERVICE_URL = "http://192.168.0.13:8080/SmartItineraryWebService/rest/comment";
 	private static final String TAG = "CommentsActivity";
 	private static final String TEXT1 = "text1";
 	private static final String TEXT2 = "text2";
