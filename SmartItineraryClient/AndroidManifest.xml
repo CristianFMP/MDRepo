@@ -104,5 +104,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="md.smartitineraryclient.FavouritesActivity" />
         </activity>
+        
     </application>
+    
 </manifest>

@@ -9,8 +9,129 @@
     tools:context=".SearchActivity" >
 
     <TextView
+        android:id="@+id/textView_from"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="26dp"
+        android:layout_marginTop="19dp"
+        android:text="@string/from"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/editText_pos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBaseline="@+id/textView_from"
+        android:layout_alignBottom="@+id/textView_from"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/textView_from"
+        android:ems="10"
+        android:hint="@string/current_pos" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/textView_maxLength"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView_from"
+        android:layout_below="@+id/editText_pos"
+        android:layout_marginTop="18dp"
+        android:text="@string/max_length"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView_km"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView_maxLength"
+        android:layout_toRightOf="@+id/editText_maxLength"
+        android:text="@string/km"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textView_range"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView_maxLength"
+        android:layout_below="@+id/editText_maxLength"
+        android:layout_marginTop="16dp"
+        android:text="@string/range"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView_descRange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView_range"
+        android:layout_below="@+id/editText_range"
+        android:layout_marginTop="14dp"
+        android:text="@string/desc_range"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textView_modCat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView_descRange"
+        android:layout_below="@+id/textView_descRange"
+        android:layout_marginTop="35dp"
+        android:text="@string/title_activity_mod_categories"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ImageButton
+        android:id="@+id/imageButton_modCat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView_modCat"
+        android:layout_alignParentRight="true"
+        android:contentDescription="@string/desc_button_modCat"
+        android:src="@drawable/ic_action_edit" />
+
+    <ListView
+        android:id="@+id/listView_cat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView_modCat"
+        android:layout_below="@+id/textView_modCat"
+        tools:listitem="@android:layout/test_list_item" >
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/textView_m"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/editText_range"
+        android:layout_alignLeft="@+id/textView_km"
+        android:text="@string/m"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/editText_maxLength"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView_km"
+        android:layout_alignBottom="@+id/textView_km"
+        android:layout_toRightOf="@+id/textView_range"
+        android:ems="10"
+        android:hint="@string/five"
+        android:inputType="number"
+        tools:ignore="LabelFor" />
+
+    <EditText
+        android:id="@+id/editText_range"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editText_maxLength"
+        android:layout_below="@+id/editText_maxLength"
+        android:layout_toLeftOf="@+id/textView_m"
+        android:ems="10"
+        android:hint="@string/mille"
+        android:inputType="number"
+        tools:ignore="LabelFor" />
 
 </RelativeLayout>
