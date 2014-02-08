@@ -200,8 +200,6 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationSource {
 	
 	@Override
 	protected void onPause() {
-		datasourceIt.close();
-	    datasourceIn.close();
 	    
 	    if(locationManager != null)
         {
@@ -211,6 +209,13 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationSource {
         super.onPause();
 	}
     
+	@Override
+	protected void onDestroy() {
+	    super.onDestroy();
+		datasourceIt.close();
+	    datasourceIn.close();
+	}
+	
     @Override
 	public void onConnectionFailed(ConnectionResult connectionResult) {
     	/*
