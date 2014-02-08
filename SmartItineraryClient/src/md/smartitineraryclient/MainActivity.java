@@ -31,7 +31,7 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationSource {
 	
     private GoogleMap mMap;
     private LocationClient mLocationClient;
-    Location mCurrentLocation;
+    static Location mCurrentLocation;
     private LocationManager locationManager;
     private String provider;
     private OnLocationChangedListener mListener;

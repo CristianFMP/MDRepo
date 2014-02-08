@@ -34,6 +34,8 @@
     <string name="next_item">Link ad itinerario selezionato</string>
     <string name="desc_button_modCat">Modifica categorie d\'interesse</string>
     <string name="current_pos">Posizione attuale</string>
+    <string name="mille">1000</string>
+    <string name="five">5</string>
     
     <string name="hello_world">Hello world!</string> <!-- da canc -->
 
