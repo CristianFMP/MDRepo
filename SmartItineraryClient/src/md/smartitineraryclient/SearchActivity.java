@@ -3,15 +3,14 @@ package md.smartitineraryclient;
 import java.io.IOException;
 import java.util.List;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
-import android.app.Activity;
-import android.content.Intent;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -124,7 +123,7 @@ public class SearchActivity extends Activity implements LocationListener {
         if(rag.equals("")){
         	rag = "1000";
         }
-        
+        pos.replace(" ", ",");
         Bundle bundle = new Bundle();
         bundle.putString("posizione", pos);
         bundle.putString("lunghezza", lun);

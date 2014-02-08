@@ -47,7 +47,7 @@ import android.widget.Toast;
 public class ResultActivity extends Activity {
 
 	// TODO: set the ip of your *server* host
-	private static final String SERVICE_URL = "http://192.168.0.13:8080/SmartItineraryWebService/rest/itinerary";
+	private static final String SERVICE_URL = "http://192.168.0.18:8080/SmartItineraryWebService/rest/itinerary";
 	private static final String TAG = "ResultActivity";
 	private static final String TEXT1 = "text1";
 	private static final String TEXT2 = "text2";
@@ -59,9 +59,13 @@ public class ResultActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_result);
 		setupActionBar();
-		if (savedInstanceState == null) {		
+		if (savedInstanceState == null) {	
+			Intent intent = getIntent();
+			String position = intent.getStringExtra("posizione");
+			String length = intent.getStringExtra("lunghezza");
+			String range = intent.getStringExtra("raggio");
 			// url of the web service
-			String url = SERVICE_URL + "/getItineraries";
+			String url = SERVICE_URL + "/getItineraries/"+position+"/"+length+"/"+range;
 			// web service calls must be executed in a separate thread
 			WebServiceTask wst = new WebServiceTask(WebServiceTask.GET_TASK,
 					this, "Retrieving Itineraries...");

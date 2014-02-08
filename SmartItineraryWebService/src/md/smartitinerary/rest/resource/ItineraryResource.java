@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -40,46 +41,41 @@ public class ItineraryResource {
         return "Demo service is ready! Request method is " + req.getMethod();
     }
     
-    /*
-    @GET
-    @Path("getItineraries/{categories}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Itinerary> getItineraries(
-    		@PathParam("categories") List<String> categories) {
-    	List<Itinerary> itineraries = Utilities.retrieveItineraries(categories);
-		return itineraries;
-    }
-    */
-    
     // Use data from the client source to retrieve itineraries
     @GET
-    @Path("/getItineraries")
+    @Path("/getItineraries/{kposition}/{klength}/{krange}")
     // @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public String getItineraries() {
-        double range = 500.0;
-        double maxLength = 1000.0;
+    public String getItineraries(
+    		@PathParam("kposition") String kposition,
+    		@PathParam("klength") String klength,
+    		@PathParam("krange") String krange) {
+    	System.out.println("Parametri: pos. "+kposition+", lunghezza "+klength+", raggio "+krange);
+        double range = Double.parseDouble(krange);
+        double maxLength = Double.parseDouble(klength);
         int k = 5;
-        Point userLocation = new Point(-73.979135, 40.759195);
+        String[] pos = kposition.split(",");
+        double lat = Double.parseDouble(pos[0]);
+        double lng = Double.parseDouble(pos[1]);
         List<String> categories = new ArrayList<>();
         categories.add("Home (private)");
         categories.add("Coworking Space");
         categories.add("Office");
-        List<Itinerary> itineraries = Utilities.retrieveItineraries(categories, range, maxLength, userLocation, k);
-        for (Itinerary i : itineraries) {
+        Point userLocation = new Point(lat, lng);
+		List<Itinerary> itineraries = Utilities.retrieveItineraries(categories, range, maxLength, userLocation, k);
+		for (Itinerary i : itineraries) {
 			System.out.println(i);
 		}
-        ObjectMapper mapper = new ObjectMapper();
-        String json;
-		try {
-			json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(itineraries);
+		try {		
+			ObjectMapper mapper = new ObjectMapper();
+			String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(itineraries);
 			return json;
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
-			return "Qualcosa non ha funzionato!";
+			return "JSON mapper non ha funzionato!";
 		} catch (JsonMappingException e) {
 			e.printStackTrace();
-			return "Qualcosa non ha funzionato!";
+			return "JSON mapper non ha funzionato!";
 		} catch (IOException e) {
 			e.printStackTrace();
 			return "Qualcosa non ha funzionato!";
