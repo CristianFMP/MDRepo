@@ -231,6 +231,7 @@ public class ResultActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
 	private class WebServiceTask extends AsyncTask<String, Integer, String> {
 		public static final int POST_TASK = 1;
 		public static final int GET_TASK = 2;	
