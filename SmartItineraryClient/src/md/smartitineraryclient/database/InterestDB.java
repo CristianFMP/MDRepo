@@ -1,6 +1,6 @@
 package md.smartitineraryclient.database;
 
-public class Interest {
+public class InterestDB {
 	
 	private long id;
 	private String categoria;

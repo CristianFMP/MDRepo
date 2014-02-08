@@ -33,7 +33,7 @@ public class InterestsDataSource {
 			dbHelper.close();
 		}
 
-		public Interest createInterest(String categoria, String macrocategoria, String dataIns, String dataCanc) {
+		public InterestDB createInterest(String categoria, String macrocategoria, String dataIns, String dataCanc) {
 		    ContentValues values = new ContentValues();
 		    values.put(SISQLiteHelper.INTER_COLUMN_CATEGORIA, categoria);
 		    values.put(SISQLiteHelper.INTER_COLUMN_MACROCATEGORIA, macrocategoria);
@@ -45,12 +45,12 @@ public class InterestsDataSource {
 		        allColumns, SISQLiteHelper.INTER_COLUMN_ID + " = " + insertId, null,
 		        null, null, null);
 		    cursor.moveToFirst();
-		    Interest newInterest = cursorToInterest(cursor);
+		    InterestDB newInterest = cursorToInterest(cursor);
 		    cursor.close();
 		    return newInterest;
 		  }
 	  
-		public void deleteInterest(Interest interest) {
+		public void deleteInterest(InterestDB interest) {
 		    long id = interest.getId();
 		    ContentValues values = new ContentValues();
 		    // TODO: controllare appena possibile se il NOW() funziona
@@ -59,7 +59,7 @@ public class InterestsDataSource {
 		    database.update(SISQLiteHelper.INTER_TABLE, values, "_id "+"="+id, null);
 		}
 		
-		public void restoreInterest(Interest interest) {
+		public void restoreInterest(InterestDB interest) {
 		    long id = interest.getId();
 		    ContentValues values = new ContentValues();
 		    values.putNull(SISQLiteHelper.INTER_COLUMN_DATA_CANCELLAZIONE);
@@ -68,15 +68,15 @@ public class InterestsDataSource {
 		    database.update(SISQLiteHelper.INTER_TABLE, values, "_id "+"="+id, null);
 		}
 		
-		public List<Interest> getAllInterests() {
-		    List<Interest> interests = new ArrayList<Interest>();
+		public List<InterestDB> getAllInterests() {
+		    List<InterestDB> interests = new ArrayList<InterestDB>();
 
 		    Cursor cursor = database.query(SISQLiteHelper.INTER_TABLE,
 		        allColumns, null, null, null, null, null);
 
 		    cursor.moveToFirst();
 		    while (!cursor.isAfterLast()) {
-		    	Interest interest = cursorToInterest(cursor);
+		    	InterestDB interest = cursorToInterest(cursor);
 		    	interests.add(interest);
 		    	cursor.moveToNext();
 		    }
@@ -85,8 +85,8 @@ public class InterestsDataSource {
 		    return interests;
 		}
 	  
-		private Interest cursorToInterest(Cursor cursor) {
-			Interest interest = new Interest();
+		private InterestDB cursorToInterest(Cursor cursor) {
+			InterestDB interest = new InterestDB();
 			interest.setId(cursor.getLong(0));
 			interest.setCategoria(cursor.getString(1));
 			interest.setMacrocategoria(cursor.getString(2));

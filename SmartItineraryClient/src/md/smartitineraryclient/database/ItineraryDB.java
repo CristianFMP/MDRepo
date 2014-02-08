@@ -1,6 +1,6 @@
 package md.smartitineraryclient.database;
 
-public class Itinerary {
+public class ItineraryDB {
 	private long id;
 	private String elencoPOI;
 	private int popolarita;

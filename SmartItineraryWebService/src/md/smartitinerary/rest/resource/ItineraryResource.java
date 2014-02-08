@@ -2,6 +2,7 @@ package md.smartitinerary.rest.resource;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,13 +44,14 @@ public class ItineraryResource {
     
     // Use data from the client source to retrieve itineraries
     @GET
-    @Path("/getItineraries/{kposition}/{klength}/{krange}")
+    @Path("/getItineraries/{kposition}/{klength}/{krange}/{kcategories}")
     // @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     public String getItineraries(
     		@PathParam("kposition") String kposition,
     		@PathParam("klength") String klength,
-    		@PathParam("krange") String krange) {
+    		@PathParam("krange") String krange,
+    		@PathParam("kcategories") String kcategories) {
     	System.out.println("Parametri: pos. "+kposition+", lunghezza "+klength+", raggio "+krange);
         double range = Double.parseDouble(krange);
         double maxLength = Double.parseDouble(klength);
@@ -57,10 +59,11 @@ public class ItineraryResource {
         String[] pos = kposition.split(",");
         double lat = Double.parseDouble(pos[0]);
         double lng = Double.parseDouble(pos[1]);
-        List<String> categories = new ArrayList<>();
-        categories.add("Home (private)");
-        categories.add("Coworking Space");
-        categories.add("Office");
+        String[] categoryArr = kcategories.split(",");  
+        for (int i = 0; i < categoryArr.length; i++) {
+        	categoryArr[i] = categoryArr[i].replace("%", " ");
+        }
+        List<String> categories = Arrays.asList(categoryArr);
         Point userLocation = new Point(lat, lng);
 		List<Itinerary> itineraries = Utilities.retrieveItineraries(categories, range, maxLength, userLocation, k);
 		for (Itinerary i : itineraries) {

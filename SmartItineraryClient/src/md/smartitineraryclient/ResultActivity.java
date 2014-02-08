@@ -64,8 +64,9 @@ public class ResultActivity extends Activity {
 			String position = intent.getStringExtra("posizione");
 			String length = intent.getStringExtra("lunghezza");
 			String range = intent.getStringExtra("raggio");
+			String categories = intent.getStringExtra("interessi");
 			// url of the web service
-			String url = SERVICE_URL + "/getItineraries/"+position+"/"+length+"/"+range;
+			String url = SERVICE_URL + "/getItineraries/"+position+"/"+length+"/"+range+"/"+categories;
 			// web service calls must be executed in a separate thread
 			WebServiceTask wst = new WebServiceTask(WebServiceTask.GET_TASK,
 					this, "Retrieving Itineraries...");
@@ -243,7 +244,7 @@ public class ResultActivity extends Activity {
 		// connection timeout, in milliseconds (waiting to connect)
 		private static final int CONN_TIMEOUT = 3000;
 		// socket timeout, in milliseconds (waiting for data)
-		private static final int SOCKET_TIMEOUT = 13000;
+		private static final int SOCKET_TIMEOUT = 50000;
 		private int taskType = GET_TASK;
 		private Context mContext = null;
 		private String processMessage = "Processing...";

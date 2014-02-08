@@ -33,7 +33,7 @@ public class ItinerariesDataSource {
 		dbHelper.close();
 	}
 
-	public Itinerary createItinerary(String nicknameUtente, String elencoPOI, int popolarita, double lunghezza, int numPOI, String posUtente, String datetime) {
+	public ItineraryDB createItinerary(String nicknameUtente, String elencoPOI, int popolarita, double lunghezza, int numPOI, String posUtente, String datetime) {
 	    ContentValues values = new ContentValues();
 	    values.put(SISQLiteHelper.ITIN_COLUMN_ELENCO_POI, elencoPOI);
 	    values.put(SISQLiteHelper.ITIN_COLUMN_POPOLARITA, popolarita);
@@ -47,27 +47,27 @@ public class ItinerariesDataSource {
 	        allColumns, SISQLiteHelper.ITIN_COLUMN_ID + " = " + insertId, null,
 	        null, null, null);
 	    cursor.moveToFirst();
-	    Itinerary newItinerary = cursorToItinerary(cursor);
+	    ItineraryDB newItinerary = cursorToItinerary(cursor);
 	    cursor.close();
 	    return newItinerary;
 	  }
   
-	public void deleteItinerary(Itinerary itinerary) {
+	public void deleteItinerary(ItineraryDB itinerary) {
 	    long id = itinerary.getId();
 	    System.out.println("Itinerary deleted with id: " + id);
 	    database.delete(SISQLiteHelper.ITIN_TABLE, SISQLiteHelper.ITIN_COLUMN_ID
 	        + " = " + id, null);
 	}
 	
-	public List<Itinerary> getAllItineraries() {
-	    List<Itinerary> itineraries = new ArrayList<Itinerary>();
+	public List<ItineraryDB> getAllItineraries() {
+	    List<ItineraryDB> itineraries = new ArrayList<ItineraryDB>();
 
 	    Cursor cursor = database.query(SISQLiteHelper.ITIN_TABLE,
 	        allColumns, null, null, null, null, null);
 
 	    cursor.moveToFirst();
 	    while (!cursor.isAfterLast()) {
-	    	Itinerary itinerary = cursorToItinerary(cursor);
+	    	ItineraryDB itinerary = cursorToItinerary(cursor);
 	    	itineraries.add(itinerary);
 	    	cursor.moveToNext();
 	    }
@@ -76,8 +76,8 @@ public class ItinerariesDataSource {
 	    return itineraries;
 	}
   
-	private Itinerary cursorToItinerary(Cursor cursor) {
-	  Itinerary itinerary = new Itinerary();
+	private ItineraryDB cursorToItinerary(Cursor cursor) {
+	  ItineraryDB itinerary = new ItineraryDB();
 	  itinerary.setId(cursor.getLong(0));
 	  itinerary.setElencoPOI(cursor.getString(2));
 	  itinerary.setPopolarita(cursor.getInt(3));
