@@ -38,7 +38,7 @@ public class Itinerary implements Parcelable {
 	}
 	
 	public double getLengthKm() {
-		return Double.valueOf(new DecimalFormat("#.#").format(length/1000));
+		return Double.valueOf(new DecimalFormat("#,#").format(length/1000));
 	}
 	
 	public int getLengthMeters() {
