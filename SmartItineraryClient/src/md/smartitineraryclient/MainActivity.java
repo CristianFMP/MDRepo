@@ -1,6 +1,5 @@
 package md.smartitineraryclient;
 
-import md.smartitineraryclient.database.*;
 import md.smartitineraryclient.util.*;
 import md.smartitineraryclient.util.Utilities.ErrorDialogFragment;
 
@@ -25,9 +24,6 @@ import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements LocationListener, GooglePlayServicesClient.ConnectionCallbacks,
 GooglePlayServicesClient.OnConnectionFailedListener, LocationSource {
-	
-	static ItinerariesDataSource datasourceIt;
-	static InterestsDataSource datasourceIn;
 	
     private GoogleMap mMap;
     private LocationClient mLocationClient;
@@ -81,13 +77,6 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationSource {
         }
 	    
 	    setUpMapIfNeeded();
-	    
-	    // Set the SQLite client DB
-	    datasourceIt = new ItinerariesDataSource(this);
-	    datasourceIt.open();
-	    
-	    datasourceIn = new InterestsDataSource(this);
-	    datasourceIn.open();
 	    
   	}
 	
@@ -186,8 +175,6 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationSource {
 	
 	@Override
 	protected void onResume() {
-		datasourceIt.open();
-		datasourceIn.open();
 		super.onResume();
 		
 		setUpMapIfNeeded();
@@ -212,8 +199,6 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationSource {
 	@Override
 	protected void onDestroy() {
 	    super.onDestroy();
-		datasourceIt.close();
-	    datasourceIn.close();
 	}
 	
     @Override

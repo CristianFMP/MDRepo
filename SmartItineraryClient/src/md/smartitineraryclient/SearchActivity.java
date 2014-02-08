@@ -3,20 +3,28 @@ package md.smartitineraryclient;
 import java.io.IOException;
 import java.util.List;
 
+import md.smartitineraryclient.db.DatabaseHelper;
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
 public class SearchActivity extends Activity implements LocationListener {
+	
+	//private ListView interests_listview;
+	
+	// stringa contenete la l'elenco di interessi da passare all'activity successiva
+    private String cat = "Home.(private),Coworking.Space,Office"; // TODO
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +33,16 @@ public class SearchActivity extends Activity implements LocationListener {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
+		/** Recupera gli interessi memorizzati in locale, e li mostra */ // TODO: continuato in locale
+		DatabaseHelper databaseHelper = new DatabaseHelper(this);
+		Cursor c = databaseHelper.getAllInterests();
+		try {
+			while (c.moveToNext()) {
+				Log.d("SmartItinerary", c.getLong(0) + " " + c.getString(1) + " " + c.getString(2) + " " + c.getString(3) + " " + c.getString(4));
+			}
+		} finally {
+			c.close();
+		}
 	}
 
 	/**
@@ -61,8 +79,7 @@ public class SearchActivity extends Activity implements LocationListener {
 			try {
 				openResult();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log.d("IOException", e.toString());
 			}
 			overridePendingTransition(0,0);
 			return true;
@@ -124,9 +141,8 @@ public class SearchActivity extends Activity implements LocationListener {
         	rag = "1000";
         }
         
-        /** Recupera gli interessi memorizzati in locale */
-        String cat = "Home.(private),Coworking.Space,Office";
-        // TODO: ci sto lavorando in locale
+        
+        
         
         pos = pos.replace(",", ".");
         pos = pos.replace(" ", ",");
