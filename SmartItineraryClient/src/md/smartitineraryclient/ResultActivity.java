@@ -67,6 +67,7 @@ public class ResultActivity extends Activity {
 			String categories = intent.getStringExtra("interessi");
 			// url of the web service
 			String url = SERVICE_URL + "/getItineraries/"+position+"/"+length+"/"+range+"/"+categories;
+			Log.i(TAG, url);
 			// web service calls must be executed in a separate thread
 			WebServiceTask wst = new WebServiceTask(WebServiceTask.GET_TASK,
 					this, "Retrieving Itineraries...");
