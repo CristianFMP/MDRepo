@@ -30,6 +30,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -54,10 +55,10 @@ public class CommentsActivity extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		String url = SERVICE_URL + "/getComments";
-		// Intent intent = getIntent();
+		Intent intent = getIntent();
 		// se si usa POST verificare di inviare anche la/e stringa/e di parametri oltre all'url
-		// String param = intent.getStringExtra("poiId");
-		String param = "https://foursquare.com/v/1-world-financial-center/4b95354af964a520249534e3";
+		String param = intent.getStringExtra("poiId");
+		// String param = "https://foursquare.com/v/1-world-financial-center/4b95354af964a520249534e3";
 		// web service calls must be executed in a separate thread
 		WebServiceTask wst = new WebServiceTask(WebServiceTask.POST_TASK,
 				this, "Retrieving Comments...");

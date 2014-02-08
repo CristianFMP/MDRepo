@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 public class SelectedItineraryActivity extends Activity {
 
+	@SuppressWarnings("unused")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -21,7 +22,7 @@ public class SelectedItineraryActivity extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		Intent intent = getIntent();
-		String[] poiIdArr = intent.getStringExtra("poiIdList").split(",");
+		final String[] poiIdArr = intent.getStringExtra("poiIdList").split(",");
 		String[] poiNameArr = intent.getStringExtra("poiNameList").split(",");
 		String[] poiAddressArr = intent.getStringExtra("poiAddressList").split(",");
 		String[] poiPopularityArr = intent.getStringExtra("poiPopularityList").split(",");
@@ -31,9 +32,11 @@ public class SelectedItineraryActivity extends Activity {
 		lv.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position,
-					long id) {
-				// TODO Auto-generated method stub
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Intent intent = new Intent(view.getContext(), CommentsActivity.class);
+				intent.putExtra("poiIdList", poiIdArr[position]);
+				startActivityForResult(intent, 0);
+				overridePendingTransition(0,0);
 			}
 		});
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, poiNameArr);
