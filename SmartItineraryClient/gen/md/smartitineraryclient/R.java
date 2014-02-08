@@ -217,15 +217,16 @@ containing a value of this type.
         public static final int common_signin_btn_text_pressed_light=0x7f020017;
         public static final int ic_action_accept=0x7f020018;
         public static final int ic_action_add_fav=0x7f020019;
-        public static final int ic_action_fav=0x7f02001a;
-        public static final int ic_action_next_item=0x7f02001b;
-        public static final int ic_action_search=0x7f02001c;
-        public static final int ic_launcher=0x7f02001d;
-        public static final int ic_logo=0x7f02001e;
-        public static final int ic_plusone_medium_off_client=0x7f02001f;
-        public static final int ic_plusone_small_off_client=0x7f020020;
-        public static final int ic_plusone_standard_off_client=0x7f020021;
-        public static final int ic_plusone_tall_off_client=0x7f020022;
+        public static final int ic_action_edit=0x7f02001a;
+        public static final int ic_action_fav=0x7f02001b;
+        public static final int ic_action_next_item=0x7f02001c;
+        public static final int ic_action_search=0x7f02001d;
+        public static final int ic_launcher=0x7f02001e;
+        public static final int ic_logo=0x7f02001f;
+        public static final int ic_plusone_medium_off_client=0x7f020020;
+        public static final int ic_plusone_small_off_client=0x7f020021;
+        public static final int ic_plusone_standard_off_client=0x7f020022;
+        public static final int ic_plusone_tall_off_client=0x7f020023;
     }
     public static final class id {
         public static final int action_add_fav=0x7f05000d;
@@ -373,14 +374,16 @@ containing a value of this type.
         public static final int desc_range=0x7f060027;
         public static final int duepunti=0x7f06002b;
         public static final int fav_added=0x7f060035;
+        public static final int five=0x7f06003a;
         public static final int from=0x7f060022;
         public static final int go_search=0x7f060029;
-        public static final int hello_world=0x7f060039;
+        public static final int hello_world=0x7f06003b;
         public static final int itinerary_from=0x7f06002c;
         public static final int km=0x7f060024;
         public static final int length=0x7f06002f;
         public static final int m=0x7f060025;
         public static final int max_length=0x7f060023;
+        public static final int mille=0x7f060039;
         public static final int next_item=0x7f060036;
         public static final int poi=0x7f06002e;
         public static final int popularity=0x7f06002d;
