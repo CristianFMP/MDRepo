@@ -124,12 +124,17 @@ public class SearchActivity extends Activity implements LocationListener {
         	rag = "1000";
         }
         
+        /** Recupera gli interessi memorizzati in locale */
+        String cat = "";
+        // TODO: ci sto lavorando in locale
+        
         pos = pos.replace(",", ".");
         pos = pos.replace(" ", ",");
         Bundle bundle = new Bundle();
         bundle.putString("posizione", pos);
         bundle.putString("lunghezza", lun);
         bundle.putString("raggio", rag);
+        bundle.putString("interessi", cat);
         
 		Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
         intent.putExtras(bundle);
