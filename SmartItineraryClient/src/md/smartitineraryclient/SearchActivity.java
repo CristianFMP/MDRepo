@@ -123,7 +123,9 @@ public class SearchActivity extends Activity implements LocationListener {
         if(rag.equals("")){
         	rag = "1000";
         }
-        pos.replace(" ", ",");
+        
+        pos = pos.replace(",", ".");
+        pos = pos.replace(" ", ",");
         Bundle bundle = new Bundle();
         bundle.putString("posizione", pos);
         bundle.putString("lunghezza", lun);
