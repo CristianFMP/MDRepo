@@ -11,6 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
 import md.smartitinerary.rest.model.Comment;
@@ -22,6 +23,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 @Path("/comment")
 public class CommentResource {
+	private final static String ID = "Param";
 	// The @Context annotation allows us to have certain contextual objects
     // injected into this class.
     @Context
@@ -42,10 +44,11 @@ public class CommentResource {
     
     @POST
     @Path("getComments")
-    @Consumes(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public String getComments(String param) {
-    	List<Comment> comments = Utilities.retrieveComments(param);
+    public String getComments(MultivaluedMap<String, String> param) {
+    	System.out.println("id poi: "+ param.getFirst(ID));
+    	List<Comment> comments = Utilities.retrieveComments(param.getFirst(ID));
     	ObjectMapper mapper = new ObjectMapper();
     	String json;
 		try {

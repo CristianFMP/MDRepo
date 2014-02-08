@@ -2,8 +2,6 @@ package md.smartitineraryclient.db;
 
 import java.text.MessageFormat;
 
-import md.smartitineraryclient.database.InterestDB;
-import md.smartitineraryclient.database.SISQLiteHelper;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -38,7 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	/*
 	 * es. di inserimento: insertInterest(db, "categoria", "macrocategoria", "adesso", null);
-	 * (dove db è il nome del database del tipo SQLiteDatabase
+	 * (dove db �� il nome del database del tipo SQLiteDatabase
 	 */
 	public void insertInterest(SQLiteDatabase db, String cat, String macrocat, String dataIns, String dataCanc) {
 		ContentValues v = new ContentValues();

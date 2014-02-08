@@ -57,7 +57,7 @@ public class CommentsActivity extends Activity {
 		String url = SERVICE_URL + "/getComments";
 		Intent intent = getIntent();
 		// se si usa POST verificare di inviare anche la/e stringa/e di parametri oltre all'url
-		String param = intent.getStringExtra("poiId");
+		String param = intent.getStringExtra("poiIdList");
 		// String param = "https://foursquare.com/v/1-world-financial-center/4b95354af964a520249534e3";
 		// web service calls must be executed in a separate thread
 		WebServiceTask wst = new WebServiceTask(WebServiceTask.POST_TASK,
@@ -157,7 +157,7 @@ public class CommentsActivity extends Activity {
 		private String processMessage = "Processing...";
 
 		// params are used only for UrlEncoded POST requests
-		private ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
+		private ArrayList<NameValuePair> params = new ArrayList<NameValuePair>(1);
 
 		private ProgressDialog pDlg = null;
 
@@ -184,13 +184,8 @@ public class CommentsActivity extends Activity {
 		protected String doInBackground(String... params) {
 			String url = params[0];
 			String result = "";
-			if (params.length > 1) {
-				for (int i = 1; i < params.length; i++) {
-					this.params.add(new BasicNameValuePair("Param" + i, params[i]));
-				}
-			}
+			this.params.add(new BasicNameValuePair("Param", params[1]));
 			HttpResponse response = doResponse(url);
-
 			if (response == null) {
 				return result;
 			} else {
@@ -241,6 +236,7 @@ public class CommentsActivity extends Activity {
 					case POST_TASK:
 						HttpPost httppost = new HttpPost(url);
 						// Add parameters
+						Log.d(TAG, params.get(0).getValue());
 						httppost.setEntity(new UrlEncodedFormEntity(params));
 						response = httpclient.execute(httppost);
 						break;
