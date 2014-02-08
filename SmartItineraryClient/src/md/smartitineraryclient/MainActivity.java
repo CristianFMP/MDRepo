@@ -26,8 +26,8 @@ import android.widget.Toast;
 public class MainActivity extends FragmentActivity implements LocationListener, GooglePlayServicesClient.ConnectionCallbacks,
 GooglePlayServicesClient.OnConnectionFailedListener, LocationSource {
 	
-	private ItinerariesDataSource datasourceIt;
-	private InterestsDataSource datasourceIn;
+	static ItinerariesDataSource datasourceIt;
+	static InterestsDataSource datasourceIn;
 	
     private GoogleMap mMap;
     private LocationClient mLocationClient;
@@ -89,21 +89,6 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationSource {
 	    datasourceIn = new InterestsDataSource(this);
 	    datasourceIn.open();
 	    
-	    /*
-	    List<Itinerary> valuesIt = datasourceIt.getAllItineraries();
-	    
-	    List<Interest> valuesIn = datasourceIn.getAllInterests();
-	
-	    
-	    // use the SimpleCursorAdapter to show the
-	    // elements in a ListView
-	    ArrayAdapter<Itinerary> adapterIt = new ArrayAdapter<Itinerary>(this, android.R.layout.simple_list_item_1, valuesIt);
-	    setListAdapter(adapterIt);
-	    
-	    
-	    ArrayAdapter<Interest> adapterIn = new ArrayAdapter<Interest>(this, android.R.layout.simple_list_item_1, valuesIn);
-	    setListAdapter(adapterIn);
-        */
   	}
 	
 	/**
@@ -169,26 +154,7 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationSource {
             return false;
         }
     }
-    /*
-    // Handle results returned to the FragmentActivity by Google Play services
-    @Override
-    protected void onActivityResult(
-        int requestCode, int resultCode, Intent data) {
-        // Decide what to do based on the original request code
-        switch (requestCode) {
-            //...
-            case Utilities.CONNECTION_FAILURE_RESOLUTION_REQUEST :
-            // If the result code is Activity.RESULT_OK, try to connect again
-                switch (resultCode) {
-                    case Activity.RESULT_OK :
-                    // Try the request again
-                    //...
-                    break;
-                }
-            //...
-        }
-     }
-    */
+    
     
     /** Gets the coordinates of the current location */
     protected LatLng CurrentLocation(String provider) {
