@@ -281,15 +281,14 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationSource {
 	public void onConnected(Bundle bundle) {
 		mCurrentLocation = mLocationClient.getLastLocation();
 		// Display the connection status
-        Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
 		
 	}
 
 	@Override
 	public void onDisconnected() {
 		// Display the connection status
-        Toast.makeText(this, "Disconnected. Please re-connect.",
-                Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Disconnected. Please re-connect.", Toast.LENGTH_SHORT).show();
 	}
     
     @Override
@@ -301,13 +300,13 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationSource {
     @Override
     public void onProviderEnabled(String provider) {
     	Log.d("Latitude","enable");
-        Toast.makeText(this, "provider enabled", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "provider enabled", Toast.LENGTH_SHORT).show();
     }
  
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
     	Log.d("Latitude","status");
-        Toast.makeText(this, "status changed", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "status changed", Toast.LENGTH_SHORT).show();
     }
 	
     

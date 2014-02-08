@@ -10,20 +10,22 @@ import android.location.LocationListener;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.support.v4.app.NavUtils;
 
 public class SearchActivity extends Activity implements LocationListener {
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search);
 		// Show the Up button in the action bar.
 		setupActionBar();
+		
 	}
 
 	/**
@@ -79,22 +81,50 @@ public class SearchActivity extends Activity implements LocationListener {
         String rag = raggio.getText().toString();
         Location location = MainActivity.mCurrentLocation; // Prende la posizione corrente
         /** Controlla se l'utente ha inserito la posizione, e sovrascrive pos */
-        if(!(pos.equals(""))){ // Posizione inserita manualmente
-        	// TODO: controllo sull'indirizzo o sul luogo inserito dall'utente
-        	Geocoder gc = new Geocoder(this);
-        	List<Address> list = gc.getFromLocationName(pos, 1);
-        	Address add = list.get(0);
-        	// TODO: inviare qualcosa più precisa della locality
+        Geocoder gc = new Geocoder(this);
+        List<Address> list;
+        Address add = null;
+        if(pos.equals("")) { 		// Posizione attuale
+        	// Trasforma la posizione da Location a String
+        	pos = locationStringFromLocation(location);
+        	
+	        String Pos[] = pos.split(" ");
+	        double lat = Double.parseDouble(Pos[0].replace(",", "."));
+	        double lng = Double.parseDouble(Pos[1].replace(",", "."));
+	        list = gc.getFromLocation(lat, lng, 1);
+	        add = list.get(0);
+        } else { 					// Posizione inserita manualmente
+        	list = gc.getFromLocationName(pos, 1);
+        	add = list.get(0);
         	double lat = add.getLatitude();
         	double lng = add.getLongitude();
         	location.setLatitude(lat);
         	location.setLongitude(lng);
-        	//String locality = add.getLocality();
-        	//Toast.makeText(this, locality, Toast.LENGTH_LONG).show();
+        	// Trasforma la posizione da Location a String
+        	pos = locationStringFromLocation(location);
         }
-        /** Trasforma la posizione da Location a String */
-        pos = locationStringFromLocation(location);
-		// TODO: informare l'utente di ciò che google localizzerà (toast oppure alert "intendevi ...?")
+        
+        // Mostra tramite toast l'indirizzo sul quale avverà la ricerca
+        //Log.d("Address found", add.toString());
+        String address_found = "";
+        for(int i=0; i<=add.getMaxAddressLineIndex(); i++){
+        	if(i!=0){
+        		address_found += "\n";
+        	}
+        	address_found += add.getAddressLine(i);
+        }
+        Toast.makeText(this, address_found, Toast.LENGTH_LONG).show();
+        // TODO: eventualmente prossimamente
+        
+        /** Controlla se l'utente ha inserito la lunghezza, e sovrascrive lun */
+        if(lun.equals("")){
+        	lun = "5";
+        }
+        /** Controlla se l'utente ha inserito il raggio, e sovrascrive rag */
+        if(rag.equals("")){
+        	rag = "1000";
+        }
+        
         Bundle bundle = new Bundle();
         bundle.putString("posizione", pos);
         bundle.putString("lunghezza", lun);
@@ -111,6 +141,7 @@ public class SearchActivity extends Activity implements LocationListener {
 		double lng = location.getLongitude();
         return Location.convert(lat, Location.FORMAT_DEGREES) + " " + Location.convert(lng, Location.FORMAT_DEGREES);
     }
+	
 	
 	@Override
 	public void onLocationChanged(Location location) {
@@ -135,5 +166,5 @@ public class SearchActivity extends Activity implements LocationListener {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 }
