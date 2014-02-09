@@ -1,9 +1,13 @@
 package md.smartitineraryclient;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import md.smartitineraryclient.db.DatabaseHelper;
+import md.smartitineraryclient.model.Interest;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -17,15 +21,21 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 public class SearchActivity extends Activity implements LocationListener {
 	
-	//private ListView interests_listview;
+	DatabaseHelper databaseHelper;
 	
-	// stringa contenete la l'elenco di interessi da passare all'activity successiva
+	// stringa contenente l'elenco di interessi da passare all'activity successiva
     private String cat = "Home.(private),Coworking.Space,Office"; // TODO
-	
+	private static final String TAG = "SearchActivity";
+	private static final String TEXT1 = "text1";
+	private static final String TEXT2 = "text2";
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,16 +43,46 @@ public class SearchActivity extends Activity implements LocationListener {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
-		/** Recupera gli interessi memorizzati in locale, e li mostra */ // TODO: continuato in locale
-		DatabaseHelper databaseHelper = new DatabaseHelper(this);
+		/** Recupera gli interessi memorizzati in locale, e li mostra */
+		// vedo spunto da handleresposnse di cristian
+		List<Interest> catList = new ArrayList<Interest>();
+		databaseHelper = new DatabaseHelper(this);
 		Cursor c = databaseHelper.getAllInterests();
 		try {
 			while (c.moveToNext()) {
-				Log.d("SmartItinerary", c.getLong(0) + " " + c.getString(1) + " " + c.getString(2) + " " + c.getString(3) + " " + c.getString(4));
+				Log.d(TAG, c.getLong(0) + " " + c.getString(1) + " " + c.getString(2) + " " + c.getString(3) + " " + c.getString(4));
+				// TODO: controllo se la data di cancellazione è null, in tal caso non aggiungo alla lista
+				catList.add(new Interest(c.getString(1),c.getString(2))); // TODO: inserisco anche le altre informazioni non solo cat e macrocat
 			}
 		} finally {
 			c.close();
 		}
+		updateCategoryList(updateListToItem(catList)); 
+		
+	}
+
+	private void updateCategoryList(List<Map<String, String>> updateListToItem) {
+		final List<Map<String, String>> rows = updateListToItem;		
+		// Category ListView
+		final String[] fromMapKey = new String[] {TEXT1, TEXT2};
+	    final int[] toLayoutId = new int[] {android.R.id.text1, android.R.id.text2};
+		ListView catListView = (ListView) findViewById(R.id.catList);
+		ListAdapter catAdapter = new SimpleAdapter(this, rows, android.R.layout.simple_list_item_2, fromMapKey, toLayoutId);
+		catListView.setAdapter(catAdapter);
+	}
+
+	private List<Map<String, String>> updateListToItem(List<Interest> catList) {
+		List<Map<String, String>> listItem = new ArrayList<Map<String, String>>();
+		for (int i = 0; i < catList.size(); i++) {
+			Interest tmpInterest = catList.get(i);
+			String category = tmpInterest.getCategoria();
+			String macrocat = tmpInterest.getMacrocategoria();
+			Map<String, String> listItemMap = new HashMap<String, String>();
+			listItemMap.put(TEXT1, category);
+			listItemMap.put(TEXT2, macrocat);
+			listItem.add(listItemMap);
+		}
+		return listItem;
 	}
 
 	/**
@@ -53,7 +93,7 @@ public class SearchActivity extends Activity implements LocationListener {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -79,7 +119,7 @@ public class SearchActivity extends Activity implements LocationListener {
 			try {
 				openResult();
 			} catch (IOException e) {
-				Log.d("IOException", e.toString());
+				Log.d(TAG, e.toString());
 			}
 			overridePendingTransition(0,0);
 			return true;
@@ -130,7 +170,7 @@ public class SearchActivity extends Activity implements LocationListener {
         	address_found += add.getAddressLine(i);
         }
         Toast.makeText(this, address_found, Toast.LENGTH_LONG).show();
-        // TODO: eventualmente prossimamente
+        // TODO: eventualmente prossimamente si può chiedere all'utente se è corretto l'indirizzo trovato
         
         /** Controlla se l'utente ha inserito la lunghezza, e sovrascrive lun */
         if(lun.equals("")){
@@ -140,8 +180,6 @@ public class SearchActivity extends Activity implements LocationListener {
         if(rag.equals("")){
         	rag = "1000";
         }
-        
-        
         
         
         pos = pos.replace(",", ".");
@@ -164,29 +202,26 @@ public class SearchActivity extends Activity implements LocationListener {
         return Location.convert(lat, Location.FORMAT_DEGREES) + " " + Location.convert(lng, Location.FORMAT_DEGREES);
     }
 	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		databaseHelper.close();
+	}
 	
 	@Override
 	public void onLocationChanged(Location location) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void onProviderDisabled(String provider) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void onProviderEnabled(String provider) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 }

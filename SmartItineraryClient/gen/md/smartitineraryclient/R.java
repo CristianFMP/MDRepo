@@ -233,6 +233,7 @@ containing a value of this type.
         public static final int action_favourites=0x7f050017;
         public static final int action_result=0x7f050018;
         public static final int action_search=0x7f050016;
+        public static final int catList=0x7f050012;
         public static final int commentList=0x7f050005;
         public static final int editText_maxLength=0x7f05000c;
         public static final int editText_pos=0x7f050009;
@@ -240,7 +241,6 @@ containing a value of this type.
         public static final int hybrid=0x7f050004;
         public static final int imageButton_modCat=0x7f050011;
         public static final int itineraryList=0x7f050007;
-        public static final int listView_cat=0x7f050012;
         public static final int map=0x7f050006;
         public static final int nextItem=0x7f050015;
         public static final int none=0x7f050000;

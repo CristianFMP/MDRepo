@@ -30,7 +30,7 @@ public class Utilities {
 		Connection connection = null; 
 		try { 
 			connection = DriverManager.getConnection(					
-					"jdbc:postgresql://localhost:5432/progetto_md", "postgres", "password"); 
+					"jdbc:postgresql://localhost:5432/progetto_md", "valeriaalampi", ""); 
 		} catch (SQLException e) {
 			System.out.println("Connection Failed! Check output console");
 			e.printStackTrace();

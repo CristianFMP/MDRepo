@@ -70,6 +70,7 @@ int id action_add_fav 0x7f050019
 int id action_favourites 0x7f050017
 int id action_result 0x7f050018
 int id action_search 0x7f050016
+int id catList 0x7f050012
 int id commentList 0x7f050005
 int id editText_maxLength 0x7f05000c
 int id editText_pos 0x7f050009
@@ -77,7 +78,6 @@ int id editText_range 0x7f05000f
 int id hybrid 0x7f050004
 int id imageButton_modCat 0x7f050011
 int id itineraryList 0x7f050007
-int id listView_cat 0x7f050012
 int id map 0x7f050006
 int id nextItem 0x7f050015
 int id none 0x7f050000

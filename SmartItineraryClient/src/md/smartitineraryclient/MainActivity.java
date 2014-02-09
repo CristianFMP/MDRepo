@@ -77,7 +77,6 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationSource {
         }
 	    
 	    setUpMapIfNeeded();
-	    
   	}
 	
 	/**

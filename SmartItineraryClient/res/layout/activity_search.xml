@@ -92,12 +92,11 @@
         android:src="@drawable/ic_action_edit" />
 
     <ListView
-        android:id="@+id/listView_cat"
+        android:id="@+id/catList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView_modCat"
-        android:layout_below="@+id/textView_modCat"
-        tools:listitem="@android:layout/test_list_item" >
+        android:layout_below="@+id/textView_modCat" >
 
     </ListView>
 
