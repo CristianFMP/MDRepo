@@ -4,6 +4,7 @@
     <string name="app_name">Smart Itinerary</string>
     <string name="title_activity_search">Cerca Itinerari</string>
     <string name="title_activity_result">Itinerari trovati</string>
+    <string name="title_activity_map_itinerary">Mappa Itinerario</string>
     <string name="title_activity_selected_itinerary">Itinerario selezionato</string>
     <string name="title_activity_comments">Commenti punto d\'interesse</string>
     <string name="title_activity_favourites">Preferiti</string>
@@ -35,9 +36,10 @@
     <string name="mille">1000</string>
     <string name="five">5</string>
     <string name="comments">Vai ai commenti</string>
+    <string name="show_interests">I tuoi interessi:</string>
+    
     <string name="hello_world">Hello world!</string> <!-- da canc -->
 
-    <string name="title_activity_map_itinerary">Mappa Itinerario</string>
-    <string name="action_settings">Settings</string>
+
 
 </resources>

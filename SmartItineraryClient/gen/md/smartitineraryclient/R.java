@@ -217,26 +217,28 @@ containing a value of this type.
         public static final int common_signin_btn_text_pressed_light=0x7f020017;
         public static final int ic_action_accept=0x7f020018;
         public static final int ic_action_add_fav=0x7f020019;
-        public static final int ic_action_edit=0x7f02001a;
-        public static final int ic_action_fav=0x7f02001b;
-        public static final int ic_action_next_item=0x7f02001c;
-        public static final int ic_action_search=0x7f02001d;
-        public static final int ic_action_view_as_list=0x7f02001e;
-        public static final int ic_launcher=0x7f02001f;
-        public static final int ic_logo=0x7f020020;
-        public static final int ic_plusone_medium_off_client=0x7f020021;
-        public static final int ic_plusone_small_off_client=0x7f020022;
-        public static final int ic_plusone_standard_off_client=0x7f020023;
-        public static final int ic_plusone_tall_off_client=0x7f020024;
+        public static final int ic_action_chat=0x7f02001a;
+        public static final int ic_action_edit=0x7f02001b;
+        public static final int ic_action_fav=0x7f02001c;
+        public static final int ic_action_next_item=0x7f02001d;
+        public static final int ic_action_search=0x7f02001e;
+        public static final int ic_action_view_as_list=0x7f02001f;
+        public static final int ic_launcher=0x7f020020;
+        public static final int ic_logo=0x7f020021;
+        public static final int ic_plusone_medium_off_client=0x7f020022;
+        public static final int ic_plusone_small_off_client=0x7f020023;
+        public static final int ic_plusone_standard_off_client=0x7f020024;
+        public static final int ic_plusone_tall_off_client=0x7f020025;
     }
     public static final class id {
-        public static final int action_add_fav=0x7f050019;
-        public static final int action_favourites=0x7f050017;
-        public static final int action_itinerary_as_list=0x7f050018;
-        public static final int action_result=0x7f05001a;
-        public static final int action_search=0x7f050016;
+        public static final int action_add_fav=0x7f05001a;
+        public static final int action_favourites=0x7f050018;
+        public static final int action_itinerary_as_list=0x7f050019;
+        public static final int action_result=0x7f05001b;
+        public static final int action_search=0x7f050017;
         public static final int catList=0x7f050012;
         public static final int commentList=0x7f050005;
+        public static final int comments=0x7f050016;
         public static final int editText_maxLength=0x7f05000c;
         public static final int editText_pos=0x7f050009;
         public static final int editText_range=0x7f05000f;
@@ -272,6 +274,7 @@ containing a value of this type.
         public static final int activity_search=0x7f030007;
         public static final int activity_selected_itinerary=0x7f030008;
         public static final int rowlayout=0x7f030009;
+        public static final int simple_list_item_1_custom=0x7f03000a;
     }
     public static final class menu {
         public static final int comments=0x7f0a0000;
@@ -285,7 +288,6 @@ containing a value of this type.
         public static final int selected_itinerary=0x7f0a0008;
     }
     public static final class string {
-        public static final int action_settings=0x7f06003d;
         public static final int app_name=0x7f06001a;
         /**   Title for notification shown when GooglePlayServices needs to be
         enabled for a application to work. [CHAR LIMIT=70] 
@@ -310,9 +312,10 @@ containing a value of this type.
         [CHAR LIMIT=70] 
          */
         public static final int auth_client_using_bad_version_title=0x7f060014;
-        public static final int checkin_poi=0x7f060031;
-        public static final int choose_cat=0x7f060034;
-        public static final int choose_macrocat=0x7f060033;
+        public static final int checkin_poi=0x7f060032;
+        public static final int choose_cat=0x7f060035;
+        public static final int choose_macrocat=0x7f060034;
+        public static final int comments=0x7f06003c;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
         can enable it [CHAR LIMIT=40] 
@@ -384,39 +387,38 @@ containing a value of this type.
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
         public static final int common_signin_button_text_long=0x7f060013;
-        public static final int current_pos=0x7f060038;
-        public static final int desc_button_modCat=0x7f060037;
-        public static final int desc_cat=0x7f06002a;
-        public static final int desc_map=0x7f060030;
-        public static final int desc_range=0x7f060027;
-        public static final int duepunti=0x7f06002b;
-        public static final int fav_added=0x7f060035;
-        public static final int five=0x7f06003a;
-        public static final int from=0x7f060022;
-        public static final int go_search=0x7f060029;
-        public static final int hello_world=0x7f06003b;
-        public static final int itinerary_from=0x7f06002c;
-        public static final int km=0x7f060024;
-        public static final int length=0x7f06002f;
-        public static final int m=0x7f060025;
-        public static final int max_length=0x7f060023;
-        public static final int mille=0x7f060039;
-        public static final int next_item=0x7f060036;
-        public static final int poi=0x7f06002e;
-        public static final int popularity=0x7f06002d;
-        public static final int range=0x7f060026;
-        public static final int read_comments=0x7f060032;
-        public static final int this_pos=0x7f060028;
-        public static final int title_activity_comments=0x7f06001e;
-        public static final int title_activity_favourites=0x7f06001f;
-        /**  da canc 
-         */
-        public static final int title_activity_map_itinerary=0x7f06003c;
-        public static final int title_activity_mod_categories=0x7f060020;
-        public static final int title_activity_mod_itineraries=0x7f060021;
+        public static final int current_pos=0x7f060039;
+        public static final int desc_button_modCat=0x7f060038;
+        public static final int desc_cat=0x7f06002b;
+        public static final int desc_map=0x7f060031;
+        public static final int desc_range=0x7f060028;
+        public static final int duepunti=0x7f06002c;
+        public static final int fav_added=0x7f060036;
+        public static final int five=0x7f06003b;
+        public static final int from=0x7f060023;
+        public static final int go_search=0x7f06002a;
+        public static final int hello_world=0x7f06003e;
+        public static final int itinerary_from=0x7f06002d;
+        public static final int km=0x7f060025;
+        public static final int length=0x7f060030;
+        public static final int m=0x7f060026;
+        public static final int max_length=0x7f060024;
+        public static final int mille=0x7f06003a;
+        public static final int next_item=0x7f060037;
+        public static final int poi=0x7f06002f;
+        public static final int popularity=0x7f06002e;
+        public static final int range=0x7f060027;
+        public static final int read_comments=0x7f060033;
+        public static final int show_interests=0x7f06003d;
+        public static final int this_pos=0x7f060029;
+        public static final int title_activity_comments=0x7f06001f;
+        public static final int title_activity_favourites=0x7f060020;
+        public static final int title_activity_map_itinerary=0x7f06001d;
+        public static final int title_activity_mod_categories=0x7f060021;
+        public static final int title_activity_mod_itineraries=0x7f060022;
         public static final int title_activity_result=0x7f06001c;
         public static final int title_activity_search=0x7f06001b;
-        public static final int title_activity_selected_itinerary=0x7f06001d;
+        public static final int title_activity_selected_itinerary=0x7f06001e;
     }
     public static final class style {
         public static final int ActionBar=0x7f090002;

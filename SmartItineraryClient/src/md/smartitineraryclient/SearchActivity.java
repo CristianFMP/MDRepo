@@ -31,7 +31,7 @@ public class SearchActivity extends Activity implements LocationListener {
 	DatabaseHelper databaseHelper;
 	
 	// stringa contenente l'elenco di interessi da passare all'activity successiva
-    private String cat = "Home.(private),Coworking.Space,Office"; // TODO
+    private String cat = "";
 	private static final String TAG = "SearchActivity";
 	private static final String TEXT1 = "text1";
 	private static final String TEXT2 = "text2";
@@ -50,16 +50,29 @@ public class SearchActivity extends Activity implements LocationListener {
 		Cursor c = databaseHelper.getAllInterests();
 		try {
 			while (c.moveToNext()) {
-				Log.d(TAG, c.getLong(0) + " " + c.getString(1) + " " + c.getString(2) + " " + c.getString(3) + " " + c.getString(4));
-				// TODO: controllo se la data di cancellazione è null, in tal caso non aggiungo alla lista
-				catList.add(new Interest(c.getString(1),c.getString(2))); // TODO: inserisco anche le altre informazioni non solo cat e macrocat
+				Long id = c.getLong(0);
+				String categ = c.getString(1);
+				String macroc = c.getString(2);
+				String ins = c.getString(3);
+				String canc = c.getString(4);
+				Log.d(TAG, id + " " + categ + " " + macroc + " " + ins + " " + canc);
+				if(canc==null) {
+					catList.add(new Interest(categ, macroc, ins, canc));
+					cat += categ+",";
+				}
 			}
+			if(cat.length()!=0){
+				cat = cat.substring(0, cat.length()-1);
+			}
+			
 		} finally {
 			c.close();
 		}
 		updateCategoryList(updateListToItem(catList)); 
 		
 	}
+	
+	// TODO: mostrare testo indicante che non c'è ancora nessuna categoria negli interessi
 
 	private void updateCategoryList(List<Map<String, String>> updateListToItem) {
 		final List<Map<String, String>> rows = updateListToItem;		
@@ -67,7 +80,7 @@ public class SearchActivity extends Activity implements LocationListener {
 		final String[] fromMapKey = new String[] {TEXT1, TEXT2};
 	    final int[] toLayoutId = new int[] {android.R.id.text1, android.R.id.text2};
 		ListView catListView = (ListView) findViewById(R.id.catList);
-		ListAdapter catAdapter = new SimpleAdapter(this, rows, android.R.layout.simple_list_item_2, fromMapKey, toLayoutId);
+		ListAdapter catAdapter = new SimpleAdapter(this, rows, android.R.layout.test_list_item, fromMapKey, toLayoutId);
 		catListView.setAdapter(catAdapter);
 	}
 
@@ -79,7 +92,7 @@ public class SearchActivity extends Activity implements LocationListener {
 			String macrocat = tmpInterest.getMacrocategoria();
 			Map<String, String> listItemMap = new HashMap<String, String>();
 			listItemMap.put(TEXT1, category);
-			listItemMap.put(TEXT2, macrocat);
+			listItemMap.put(TEXT2, macrocat); // per ora non viene mostrato
 			listItem.add(listItemMap);
 		}
 		return listItem;
@@ -181,7 +194,9 @@ public class SearchActivity extends Activity implements LocationListener {
         	rag = "1000";
         }
         
-        
+        cat = "Home (private),Coworking Space,Office"; // TODO: eliminare questo valore fisso - intera line
+        // TODO: capire se crea problemi nel caso in cui non ci siano spazi da riampiazzare
+        cat = cat.replace(" ", ".");
         pos = pos.replace(",", ".");
         pos = pos.replace(" ", ",");
         Bundle bundle = new Bundle();

@@ -31,6 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 					InterestTable.DATA_CANCELLAZIONE));
 			insertInterest(db, "categoria", "macrocategoria", "adesso", null); // TODO: poi tolgo queste linee
 			insertInterest(db, "bar", "food", "23-01-2014,23:34:12", null);
+			insertInterest(db, "provaCat", "provaMacro", "una data...", "ieri");
 	}
 
 	

@@ -8,9 +8,11 @@ public class Interest {
 	private String dataInserimento;
 	private String dataCancellazione;
 	
-	public Interest(String cat, String macrocat) {
+	public Interest(String cat, String macrocat, String dataIns, String dataCanc) {
 		this.categoria = cat;
 		this.macrocategoria = macrocat;
+		this.dataInserimento = dataIns;
+		this.dataCancellazione = dataCanc;
 	}
 	
 	public long getId() {

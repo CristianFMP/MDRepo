@@ -79,8 +79,9 @@
         android:layout_alignLeft="@+id/textView_descRange"
         android:layout_below="@+id/textView_descRange"
         android:layout_marginTop="35dp"
-        android:text="@string/title_activity_mod_categories"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:text="@string/show_interests"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="20sp" />
 
     <ImageButton
         android:id="@+id/imageButton_modCat"
@@ -96,7 +97,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView_modCat"
-        android:layout_below="@+id/textView_modCat" >
+        android:layout_below="@+id/textView_modCat"
+        tools:listitem="@android:layout/test_list_item" >
 
     </ListView>
 
