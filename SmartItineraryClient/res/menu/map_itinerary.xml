@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+	
+	<item android:id="@+id/action_itinerary_as_list" 
+	      android:icon="@drawable/ic_action_view_as_list" 
+	      android:title="@string/title_activity_selected_itinerary"
+	      android:showAsAction="always" />
+	
+		<item android:id="@+id/action_add_fav"
+          android:icon="@drawable/ic_action_add_fav"
+          android:title="@string/fav_added"
+          android:showAsAction="always" />
+		
+</menu>

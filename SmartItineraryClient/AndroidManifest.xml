@@ -22,8 +22,8 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:logo="@drawable/ic_logo"
         android:label="@string/app_name"
+        android:logo="@drawable/ic_logo"
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.google.android.gms.version"
@@ -45,6 +45,7 @@
             android:value="AIzaSyCM-eWOlcTelH_ZbyN46mPPRBonQ2f-ve4" />
         <!-- vale: AIzaSyCM-eWOlcTelH_ZbyN46mPPRBonQ2f-ve4 -->
         <!-- cris: AIzaSyC3dw7HZITHjbnCggztlyuTK3rAjwOr6Qc -->
+
 
         <!-- Child activities -->
         <activity
@@ -72,13 +73,21 @@
                 android:value="md.smartitineraryclient.SearchActivity" />
         </activity>
         <activity
-            android:name="md.smartitineraryclient.SelectedItineraryActivity"
-            android:label="@string/title_activity_selected_itinerary"
-            android:parentActivityName="md.smartitineraryclient.ResultActivity"
-            android:launchMode="singleInstance" >
+            android:name="md.smartitineraryclient.MapItineraryActivity"
+            android:label="@string/title_activity_map_itinerary"
+            android:parentActivityName="md.smartitineraryclient.ResultActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="md.smartitineraryclient.ResultActivity" />
+        </activity>
+        <activity
+            android:name="md.smartitineraryclient.SelectedItineraryActivity"
+            android:label="@string/title_activity_selected_itinerary"
+            android:launchMode="singleInstance"
+            android:parentActivityName="md.smartitineraryclient.MapItineraryActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="md.smartitineraryclient.MapItineraryActivity" />
         </activity>
         <activity
             android:name="md.smartitineraryclient.CommentsActivity"
@@ -86,7 +95,7 @@
             android:parentActivityName="md.smartitineraryclient.SelectedItineraryActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="md.smartitineraryclient.SelectedItinerary" />
+                android:value="md.smartitineraryclient.SelectedItineraryActivity" />
         </activity>
         <activity
             android:name="md.smartitineraryclient.ModCategoriesActivity"
@@ -104,7 +113,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="md.smartitineraryclient.FavouritesActivity" />
         </activity>
-        
+
     </application>
 
 </manifest>

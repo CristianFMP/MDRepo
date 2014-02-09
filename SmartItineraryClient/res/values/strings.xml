@@ -2,7 +2,6 @@
 <resources>
 
     <string name="app_name">Smart Itinerary</string>
-    
     <string name="title_activity_search">Cerca Itinerari</string>
     <string name="title_activity_result">Itinerari trovati</string>
     <string name="title_activity_selected_itinerary">Itinerario selezionato</string>
@@ -10,7 +9,6 @@
     <string name="title_activity_favourites">Preferiti</string>
     <string name="title_activity_mod_categories">Categorie d\'interesse</string>
     <string name="title_activity_mod_itineraries">Itinerari salvati</string>
-    
     <string name="from">Da:</string>
     <string name="max_length">Lunghezza max:</string>
     <string name="km">km</string>
@@ -36,7 +34,9 @@
     <string name="current_pos">Posizione attuale</string>
     <string name="mille">1000</string>
     <string name="five">5</string>
-    
     <string name="hello_world">Hello world!</string> <!-- da canc -->
-    
+
+    <string name="title_activity_map_itinerary">Mappa Itinerario</string>
+    <string name="action_settings">Settings</string>
+
 </resources>

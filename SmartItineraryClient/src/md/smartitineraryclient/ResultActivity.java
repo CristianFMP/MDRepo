@@ -47,7 +47,7 @@ import android.widget.Toast;
 public class ResultActivity extends Activity {
 
 	// TODO: set the ip of your *server* host
-	private static final String SERVICE_URL = "http://192.168.0.18:8080/SmartItineraryWebService/rest/itinerary";
+	private static final String SERVICE_URL = "http://192.168.0.13:8080/SmartItineraryWebService/rest/itinerary";
 	private static final String TAG = "ResultActivity";
 	private static final String TEXT1 = "text1";
 	private static final String TEXT2 = "text2";
@@ -144,7 +144,7 @@ public class ResultActivity extends Activity {
 				String poiPopularityList = rows.get(position).get("poiPopularityList");
 				String poiLatitudeList = rows.get(position).get("poiLatitudeList");
 				String poiLongitudeList = rows.get(position).get("poiLongitudeList");
-				Intent intent = new Intent(view.getContext(), SelectedItineraryActivity.class);
+				Intent intent = new Intent(view.getContext(), MapItineraryActivity.class);
 				intent.putExtra("poiIdList", poiIdList);
 				intent.putExtra("poiNameList", poiNameList);
 				intent.putExtra("poiAddressList", poiAddressList);

@@ -221,17 +221,19 @@ containing a value of this type.
         public static final int ic_action_fav=0x7f02001b;
         public static final int ic_action_next_item=0x7f02001c;
         public static final int ic_action_search=0x7f02001d;
-        public static final int ic_launcher=0x7f02001e;
-        public static final int ic_logo=0x7f02001f;
-        public static final int ic_plusone_medium_off_client=0x7f020020;
-        public static final int ic_plusone_small_off_client=0x7f020021;
-        public static final int ic_plusone_standard_off_client=0x7f020022;
-        public static final int ic_plusone_tall_off_client=0x7f020023;
+        public static final int ic_action_view_as_list=0x7f02001e;
+        public static final int ic_launcher=0x7f02001f;
+        public static final int ic_logo=0x7f020020;
+        public static final int ic_plusone_medium_off_client=0x7f020021;
+        public static final int ic_plusone_small_off_client=0x7f020022;
+        public static final int ic_plusone_standard_off_client=0x7f020023;
+        public static final int ic_plusone_tall_off_client=0x7f020024;
     }
     public static final class id {
         public static final int action_add_fav=0x7f050019;
         public static final int action_favourites=0x7f050017;
-        public static final int action_result=0x7f050018;
+        public static final int action_itinerary_as_list=0x7f050018;
+        public static final int action_result=0x7f05001a;
         public static final int action_search=0x7f050016;
         public static final int catList=0x7f050012;
         public static final int commentList=0x7f050005;
@@ -263,24 +265,27 @@ containing a value of this type.
         public static final int activity_comments=0x7f030000;
         public static final int activity_favourites=0x7f030001;
         public static final int activity_main=0x7f030002;
-        public static final int activity_mod_categories=0x7f030003;
-        public static final int activity_mod_itineraries=0x7f030004;
-        public static final int activity_result=0x7f030005;
-        public static final int activity_search=0x7f030006;
-        public static final int activity_selected_itinerary=0x7f030007;
-        public static final int rowlayout=0x7f030008;
+        public static final int activity_map_itinerary=0x7f030003;
+        public static final int activity_mod_categories=0x7f030004;
+        public static final int activity_mod_itineraries=0x7f030005;
+        public static final int activity_result=0x7f030006;
+        public static final int activity_search=0x7f030007;
+        public static final int activity_selected_itinerary=0x7f030008;
+        public static final int rowlayout=0x7f030009;
     }
     public static final class menu {
         public static final int comments=0x7f0a0000;
         public static final int favourites=0x7f0a0001;
         public static final int main=0x7f0a0002;
-        public static final int mod_categories=0x7f0a0003;
-        public static final int mod_itineraries=0x7f0a0004;
-        public static final int result=0x7f0a0005;
-        public static final int search=0x7f0a0006;
-        public static final int selected_itinerary=0x7f0a0007;
+        public static final int map_itinerary=0x7f0a0003;
+        public static final int mod_categories=0x7f0a0004;
+        public static final int mod_itineraries=0x7f0a0005;
+        public static final int result=0x7f0a0006;
+        public static final int search=0x7f0a0007;
+        public static final int selected_itinerary=0x7f0a0008;
     }
     public static final class string {
+        public static final int action_settings=0x7f06003d;
         public static final int app_name=0x7f06001a;
         /**   Title for notification shown when GooglePlayServices needs to be
         enabled for a application to work. [CHAR LIMIT=70] 
@@ -404,6 +409,9 @@ containing a value of this type.
         public static final int this_pos=0x7f060028;
         public static final int title_activity_comments=0x7f06001e;
         public static final int title_activity_favourites=0x7f06001f;
+        /**  da canc 
+         */
+        public static final int title_activity_map_itinerary=0x7f06003c;
         public static final int title_activity_mod_categories=0x7f060020;
         public static final int title_activity_mod_itineraries=0x7f060021;
         public static final int title_activity_result=0x7f06001c;

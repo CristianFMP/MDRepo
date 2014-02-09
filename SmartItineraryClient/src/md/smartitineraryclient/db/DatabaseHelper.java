@@ -36,7 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	/*
 	 * es. di inserimento: insertInterest(db, "categoria", "macrocategoria", "adesso", null);
-	 * (dove db �� il nome del database del tipo SQLiteDatabase
+	 * (dove db è il nome del database del tipo SQLiteDatabase
 	 */
 	public void insertInterest(SQLiteDatabase db, String cat, String macrocat, String dataIns, String dataCanc) {
 		ContentValues v = new ContentValues();
@@ -77,5 +77,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		String query;
+		query = "DROP TABLE IF EXISTS " + InterestTable.TABLE_NAME;
+		db.execSQL(query);
+		onCreate(db);
 	}
 }
