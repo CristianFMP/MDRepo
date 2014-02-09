@@ -13,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class SelectedItineraryActivity extends Activity {
-
 	@SuppressWarnings("unused")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +38,7 @@ public class SelectedItineraryActivity extends Activity {
 				overridePendingTransition(0,0);
 			}
 		});
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, poiNameArr);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.simple_list_item_1_custom, poiNameArr);
 		lv.setAdapter(adapter);
 	}
 
