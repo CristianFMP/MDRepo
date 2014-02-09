@@ -22,22 +22,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		String sql = "CREATE TABLE {0} ({1} INTEGER PRIMARY KEY AUTOINCREMENT," + 
-				" {2} TEXT NOT NULL,{3} TEXT NOT NULL,{4} DATETIME NOT NULL,{5} DATETIME);";
-			db.execSQL(MessageFormat.format(sql, InterestTable.TABLE_NAME, InterestTable._ID,
-					InterestTable.CATEGORIA, 
-					InterestTable.MACROCATEGORIA, 
-					InterestTable.DATA_INSERIMENTO, 
-					InterestTable.DATA_CANCELLAZIONE));
-			insertInterest(db, "categoria", "macrocategoria", "adesso", null); // TODO: poi tolgo queste linee
-			insertInterest(db, "bar", "food", "23-01-2014,23:34:12", null);
-			insertInterest(db, "provaCat", "provaMacro", "una data...", "ieri");
+		String sql = "CREATE TABLE {0} ({1} INTEGER PRIMARY KEY AUTOINCREMENT, "
+				+ "{2} TEXT NOT NULL,{3} TEXT NOT NULL,{4} DATETIME NOT NULL,{5} DATETIME);";
+		db.execSQL(MessageFormat.format(sql, InterestTable.TABLE_NAME, 
+				InterestTable._ID,
+				InterestTable.CATEGORIA, 
+				InterestTable.MACROCATEGORIA, 
+				InterestTable.DATA_INSERIMENTO, 
+				InterestTable.DATA_CANCELLAZIONE));
+		
+		sql = "CREATE TABLE {0} ({1} INTEGER PRIMARY KEY AUTOINCREMENT, "
+				+ "{2} TEXT NOT NULL, {3} INTEGER NOT NULL, {4} DOUBLE NOT NULL, {5} INTEGER NOT NULL, "
+				+ "{6} TEXT NOT NULL, {7} DATETIME NOT NULL);";
+		db.execSQL(MessageFormat.format(sql, ItineraryTable.TABLE_NAME,
+				ItineraryTable._ID,
+				ItineraryTable.ELENCO_POI,
+				ItineraryTable.POPOLARITA,
+				ItineraryTable.LUNGHEZZA,
+				ItineraryTable.NUM_POI,
+				ItineraryTable.POS_UTENTE,
+				ItineraryTable.DATA_PREFERENZA));
+		
+		insertInterest(db, "categoria", "macrocategoria", "adesso", null); // TODO: poi tolgo queste linee
+		insertInterest(db, "bar", "food", "23-01-2014,23:34:12", null);
+		insertInterest(db, "provaCat", "provaMacro", "una data...", "ieri");
+		insertItinerary(db, "poi1,poi2,poi3", 4, 1200.35426, 3, "45.56236,9.14552", "l'altroieri");
 	}
 
 	
 	/*
 	 * es. di inserimento: insertInterest(db, "categoria", "macrocategoria", "adesso", null);
-	 * (dove db è il nome del database del tipo SQLiteDatabase
+	 * (dove db è il nome del database del tipo SQLiteDatabase)
 	 */
 	public void insertInterest(SQLiteDatabase db, String cat, String macrocat, String dataIns, String dataCanc) {
 		ContentValues v = new ContentValues();
@@ -76,10 +91,43 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	    db.update(InterestTable.TABLE_NAME, v, InterestTable.CATEGORIA + "=" + cat, null);
 	}
 	
+	/*
+	 * es. di inserimento: insertItinerary(db, "poi1,poi2,poi3", "4", "1200.35426", "3", "45.56236,9.14552");
+	 * (dove db è il nome del database del tipo SQLiteDatabase)
+	 */
+	public void insertItinerary(SQLiteDatabase db, String poi, int popolar, double lung, int numpoi, String posiz, String datapref) {
+		ContentValues v = new ContentValues();
+		v.put(ItineraryTable.ELENCO_POI, poi);
+		v.put(ItineraryTable.POPOLARITA, popolar);
+		v.put(ItineraryTable.LUNGHEZZA, lung);
+		v.put(ItineraryTable.NUM_POI, numpoi);
+		v.put(ItineraryTable.POS_UTENTE, posiz);
+		v.put(ItineraryTable.DATA_PREFERENZA, datapref);
+		db.insert(ItineraryTable.TABLE_NAME, null, v);
+	}
+	
+	public Cursor getAllItineraries(){
+		return (getReadableDatabase().query(
+			ItineraryTable.TABLE_NAME, 		// nome della tabella
+			ItineraryTable.COLUMNS, 		// array dei nomi delle colonne da ritornare
+			null, 							// filtro da applicare ai dati (where)
+			null,							// argomenti su cui filtrare i dati (nel caso in cui nel filtro siano presenti parametri)
+			null, 							// group by da eseguire
+			null, 							// clausola having da usare
+			InterestTable._ID));			// ordinamento da applicare ai dati
+	}
+	
+	public void deleteIitnerary(SQLiteDatabase db, long id) {
+	    Log.d("Itinerary deleted with id:", id+"");
+	    db.delete(ItineraryTable.TABLE_NAME, ItineraryTable._ID + "=" + id, null);
+	}
+	
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		String query;
 		query = "DROP TABLE IF EXISTS " + InterestTable.TABLE_NAME;
+		db.execSQL(query);
+		query = "DROP TABLE IF EXISTS " + ItineraryTable.TABLE_NAME;
 		db.execSQL(query);
 		onCreate(db);
 	}
