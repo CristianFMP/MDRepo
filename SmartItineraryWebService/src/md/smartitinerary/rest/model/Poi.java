@@ -20,8 +20,8 @@ public class Poi {
 		this.name = name;
 		this.address = address;
 		this.popularity = popularity;
-		this.latitude = poi.getX();
-		this.longitude = poi.getY();
+		this.longitude = poi.getX();
+		this.latitude = poi.getY();
 	}
 	
 	public Poi() {

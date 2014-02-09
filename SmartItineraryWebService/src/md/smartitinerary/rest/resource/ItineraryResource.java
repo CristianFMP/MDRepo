@@ -56,14 +56,14 @@ public class ItineraryResource {
         double maxLength = Double.parseDouble(klength)*1000;
         int k = 5;
         String[] pos = kposition.split(",");
-        double lng = Double.parseDouble(pos[0]);
-        double lat = Double.parseDouble(pos[1]);
+        double lat = Double.parseDouble(pos[0]);
+        double lng = Double.parseDouble(pos[1]);
         String[] categoryArr = kcategories.split(",");  
         for (int i = 0; i < categoryArr.length; i++) {
         	categoryArr[i] = categoryArr[i].replace(".", " ");
         }
         List<String> categories = Arrays.asList(categoryArr);
-        Point userLocation = new Point(lat, lng);
+        Point userLocation = new Point(lng, lat);
 		List<Itinerary> itineraries = Utilities.retrieveItineraries(categories, range, maxLength, userLocation, k);
 		for (Itinerary i : itineraries) {
 			System.out.println(i);
