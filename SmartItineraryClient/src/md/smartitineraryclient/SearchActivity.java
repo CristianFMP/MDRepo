@@ -20,6 +20,7 @@ import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -70,6 +71,12 @@ public class SearchActivity extends Activity implements LocationListener {
 		}
 		updateCategoryList(updateListToItem(catList)); 
 		
+	}
+	
+	public void openInterests(View view) {
+		Intent intent = new Intent(view.getContext(), ModCategoriesActivity.class);
+		startActivityForResult(intent, 0);
+		overridePendingTransition(0,0);
 	}
 	
 	// TODO: mostrare testo indicante che non c'è ancora nessuna categoria negli interessi

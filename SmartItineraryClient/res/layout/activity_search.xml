@@ -90,6 +90,7 @@
         android:layout_alignBottom="@+id/textView_modCat"
         android:layout_alignParentRight="true"
         android:contentDescription="@string/desc_button_modCat"
+        android:onClick="openInterests"
         android:src="@drawable/ic_action_edit" />
 
     <ListView
