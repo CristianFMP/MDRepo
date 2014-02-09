@@ -34,6 +34,7 @@
     <string name="current_pos">Posizione attuale</string>
     <string name="mille">1000</string>
     <string name="five">5</string>
+    <string name="comments">Vai ai commenti</string>
     <string name="hello_world">Hello world!</string> <!-- da canc -->
 
     <string name="title_activity_map_itinerary">Mappa Itinerario</string>

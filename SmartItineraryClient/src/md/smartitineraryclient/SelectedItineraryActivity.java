@@ -1,5 +1,10 @@
 package md.smartitineraryclient;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +14,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 public class SelectedItineraryActivity extends Activity {
+	private static final String TEXT1 = "text1";
+	private static final String TEXT2 = "text2";
 	@SuppressWarnings("unused")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +33,10 @@ public class SelectedItineraryActivity extends Activity {
 		String[] poiNameArr = intent.getStringExtra("poiNameList").split(",");
 		String[] poiAddressArr = intent.getStringExtra("poiAddressList").split(",");
 		String[] poiPopularityArr = intent.getStringExtra("poiPopularityList").split(",");
-		String[] poiLatitudeArr = intent.getStringExtra("poiLatitudeList").split(",");
-		String[] poiLongitudeArr = intent.getStringExtra("poiLongitudeList").split(",");
+		// String[] poiLatitudeArr = intent.getStringExtra("poiLatitudeList").split(",");
+		// String[] poiLongitudeArr = intent.getStringExtra("poiLongitudeList").split(",");
 		ListView lv = (ListView) findViewById(R.id.poiList);
 		lv.setOnItemClickListener(new OnItemClickListener() {
-
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Intent intent = new Intent(view.getContext(), CommentsActivity.class);
@@ -38,7 +45,10 @@ public class SelectedItineraryActivity extends Activity {
 				overridePendingTransition(0,0);
 			}
 		});
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.simple_list_item_1_custom, poiNameArr);
+		final String[] fromMapKey = new String[] {TEXT1, TEXT2};
+	    final int[] toLayoutId = new int[] {android.R.id.text1, android.R.id.text2};
+		List<Map<String, String>> listItem = convertToListItems(poiNameArr, poiAddressArr, poiPopularityArr);
+		ListAdapter adapter = new SimpleAdapter(this, listItem, R.layout.simple_list_item_1_custom, fromMapKey, toLayoutId);
 		lv.setAdapter(adapter);
 	}
 
@@ -72,5 +82,18 @@ public class SelectedItineraryActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public List<Map<String, String>> convertToListItems(String[] names, String[] addresses, String[] popularities) {
+		List<Map<String, String>> listItem = new ArrayList<Map<String, String>>();
+		for (int i = 0; i < names.length; i++) {
+			Map<String, String> listItemMap = new HashMap<String, String>();
+			String title = names[i];
+			String info = addresses[i] + "\n" + popularities[i] + " check-in effettuati"; 
+			listItemMap.put(TEXT1, title);
+			listItemMap.put(TEXT2, info);
+			listItem.add(listItemMap);
+		}
+		return listItem;
 	}
 }
