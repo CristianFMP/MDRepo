@@ -1,16 +1,19 @@
 package md.smartitineraryclient;
 
+import com.google.android.gms.maps.*;
+import com.google.android.gms.maps.model.*;
+
 import android.os.Bundle;
-import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 
-public class MapItineraryActivity extends Activity {
+public class MapItineraryActivity extends FragmentActivity {
 
 	Intent old_intent;
+	private GoogleMap mMap;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +29,23 @@ public class MapItineraryActivity extends Activity {
 		String[] poiPopularityArr = old_intent.getStringExtra("poiPopularityList").split(",");
 		String[] poiLatitudeArr = old_intent.getStringExtra("poiLatitudeList").split(",");
 		String[] poiLongitudeArr = old_intent.getStringExtra("poiLongitudeList").split(",");
-		ListView lv = (ListView) findViewById(R.id.poiList);
+
+		mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+		
+		/** Per ogni POI dell'itinerario metto un marker con le relative info nel title */
+		for(int i=0; i< poiIdArr.length; i++){
+			double lat = Double.parseDouble(poiLatitudeArr[i]);
+			double lng = Double.parseDouble(poiLongitudeArr[i]);
+			String desc = poiAddressArr[i] + "\n (" + poiPopularityArr[i] + " check-ins)";
+			mMap.addMarker(new MarkerOptions()
+	        	.position(new LatLng(lat, lng))
+	        	.title(poiNameArr[i])
+	        	.snippet(desc)
+	        	.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker)));
+		}
+		
+		mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(poiLatitudeArr[0]), Double.parseDouble(poiLongitudeArr[0])), 15));
+		
 	}
 
 	/**
@@ -74,7 +93,6 @@ public class MapItineraryActivity extends Activity {
 		new_intent.putExtras(old_intent);
 	    startActivity(new_intent);
 	    overridePendingTransition(0,0);
-		
 	}
 
 	private void addToFav() {
