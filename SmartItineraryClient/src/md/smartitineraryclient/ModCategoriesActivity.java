@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -16,6 +19,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -27,11 +33,14 @@ import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class ModCategoriesActivity extends Activity {
-	private static final String SERVICE_URL = "http://192.168.0.18:8080/SmartItineraryWebService/rest/comment";
+	private static final String SERVICE_URL = "http://192.168.0.18:8080/SmartItineraryWebService/rest/category";
 	private static final String TAG = "ModCategoriesActivity";
+	private Map<String, List<String>> categories;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -93,10 +102,34 @@ public class ModCategoriesActivity extends Activity {
 	}
 	
 	public void handleResponse(String response) {
-		// TODO Auto-generated method stub
-		
+		categories = new HashMap<String, List<String>>();
+		List<String> subCats = new ArrayList<String>();
+		try {
+			JSONArray jArray = new JSONArray(response);
+			// TODO: handle JSONexceptions
+			for (int i = 0; i < jArray.length(); i++) {
+				JSONObject tmpJObj = jArray.getJSONObject(i);
+				String macro_cat = tmpJObj.getString("category");
+				JSONArray subJArray = tmpJObj.getJSONArray("subCategories");
+				for (int j = 0; j < subJArray.length(); j++) {
+					subCats.add(subJArray.getString(j));
+				}
+				categories.put(macro_cat, subCats);
+			}
+			updateMacroCatsSpinner();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
+	private void updateMacroCatsSpinner() {
+		String[] macro_cats = (String[]) categories.keySet().toArray();
+		Spinner spMacroCats = (Spinner) findViewById(R.layout.activity_mod_categories);
+		ArrayAdapter<String> mcAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, macro_cats);
+		spMacroCats.setAdapter(mcAdapter);
+	}
+
 	private class WebServiceTask extends AsyncTask<String, Integer, String> {
 		public static final int POST_TASK = 1;
 		public static final int GET_TASK = 2;	
