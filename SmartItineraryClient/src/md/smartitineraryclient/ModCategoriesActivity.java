@@ -12,6 +12,7 @@ import java.util.Set;
 
 import md.smartitineraryclient.db.DatabaseHelper;
 import md.smartitineraryclient.model.Category;
+import md.smartitineraryclient.model.Interest;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -31,6 +32,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -51,7 +53,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ModCategoriesActivity extends Activity {
-	private static final String SERVICE_URL = "http://192.168.0.18:8080/SmartItineraryWebService/rest/category";
+	private static final String SERVICE_URL = "http://192.168.0.13:8080/SmartItineraryWebService/rest/category";
 	@SuppressWarnings("unused")
 	private static final String TAG = "ModCategoriesActivity";
 	private Map<String, List<Category>> categories;
@@ -120,17 +122,15 @@ public class ModCategoriesActivity extends Activity {
 	private void onSaveCategories() {
 		String cat = "";
 		String macrocat = "";
-		String text = "";
 		for (String s : updatedcategories.keySet()) {
+			macrocat = s;
 			for (int i = 0; i < updatedcategories.get(s).size(); i++) {
-				text += updatedcategories.get(s).get(i) + "\n";
+				cat = updatedcategories.get(s).get(i);
+				DbH.insertInterest(db, cat, macrocat);
 			}
+			
 		}
-		int duration = Toast.LENGTH_LONG;
-		Toast toast = Toast.makeText(this, text, duration);
-		toast.show();	
-		long id = DbH.insertInterest(db, cat, macrocat);
-    	
+		// TODO: rimuovo le categorie che sono state deselezionate
 		NavUtils.navigateUpFromSameTask(this);
 		overridePendingTransition(0,0);
 	}
@@ -225,6 +225,8 @@ public class ModCategoriesActivity extends Activity {
 						category.setSelected(cb.isChecked());
 						if (cb.isChecked()) {
 							updatedcategories.get(macro_cat).add(category.getCategory());
+						} else {
+							updatedcategories.get(macro_cat).remove(category.getCategory());
 						}
 					}
 				});
