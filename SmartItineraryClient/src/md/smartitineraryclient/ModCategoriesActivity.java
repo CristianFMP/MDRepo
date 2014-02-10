@@ -49,7 +49,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ModCategoriesActivity extends Activity {
-	private static final String SERVICE_URL = "http://192.168.0.18:8080/SmartItineraryWebService/rest/category";
+	private static final String SERVICE_URL = "http://192.168.0.13:8080/SmartItineraryWebService/rest/category";
 	@SuppressWarnings("unused")
 	private static final String TAG = "ModCategoriesActivity";
 	private Map<String, List<Category>> categories;

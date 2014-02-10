@@ -72,7 +72,8 @@ int drawable ic_plusone_tall_off_client 0x7f020026
 int id action_add_fav 0x7f05001d
 int id action_favourites 0x7f05001b
 int id action_itinerary_as_list 0x7f05001c
-int id action_result 0x7f05001e
+int id action_result 0x7f05001f
+int id action_save_categories 0x7f05001e
 int id action_search 0x7f05001a
 int id catList 0x7f050014
 int id category_list 0x7f050008
@@ -122,6 +123,7 @@ int menu mod_itineraries 0x7f0a0005
 int menu result 0x7f0a0006
 int menu search 0x7f0a0007
 int menu selected_itinerary 0x7f0a0008
+int string add_fav 0x7f06003e
 int string app_name 0x7f06001a
 int string auth_client_needs_enabling_title 0x7f060015
 int string auth_client_needs_installation_title 0x7f060016
@@ -163,7 +165,7 @@ int string fav_added 0x7f060036
 int string five 0x7f06003b
 int string from 0x7f060023
 int string go_search 0x7f06002a
-int string hello_world 0x7f06003e
+int string hello_world 0x7f060040
 int string itinerary_from 0x7f06002d
 int string km 0x7f060025
 int string length 0x7f060030
@@ -175,6 +177,7 @@ int string poi 0x7f06002f
 int string popularity 0x7f06002e
 int string range 0x7f060027
 int string read_comments 0x7f060033
+int string save 0x7f06003f
 int string show_interests 0x7f06003d
 int string this_pos 0x7f060029
 int string title_activity_comments 0x7f06001f

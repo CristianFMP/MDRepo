@@ -29,10 +29,8 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationSource {
     private LocationClient mLocationClient;
     static Location mCurrentLocation;
     private LocationManager locationManager;
-    private String provider;
+    static String provider;
     private OnLocationChangedListener mListener;
-    @SuppressWarnings("unused")
-	private boolean gps_enabled,network_enabled;
     
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
@@ -56,15 +54,12 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationSource {
             }
             
             if(gpsIsEnabled || networkIsEnabled) {
-	            if(gpsIsEnabled) {
-	                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000L, 10F, this);
-	            	provider = "LocationManager.GPS_PROVIDER";
-	            	gps_enabled = true;
-	            } // TODO: rimettere else e impostare un timeout per aggirare ricerca tramite gps dopo un po' che cerca
 	            if(networkIsEnabled) {
 	                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000L, 10F, this);
 	                provider = "LocationManager.NETWORK_PROVIDER";
-	                network_enabled = true;
+	            } else if(gpsIsEnabled) {
+	                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000L, 10F, this);
+	            	provider = "LocationManager.GPS_PROVIDER";
 	            }
             } else {
             	Toast.makeText(this, "Abilita il GPS o la rete internet per rilevare la posizione.", Toast.LENGTH_LONG).show();
@@ -145,7 +140,7 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationSource {
     
     
     /** Gets the coordinates of the current location */
-    protected LatLng CurrentLocation(String provider) {
+    protected static LatLng CurrentLocation(String provider) {
 		LatLng current_location;
         if (mCurrentLocation != null) {
         	current_location = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());

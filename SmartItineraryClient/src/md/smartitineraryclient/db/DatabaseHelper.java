@@ -43,24 +43,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				ItineraryTable.POS_UTENTE,
 				ItineraryTable.DATA_PREFERENZA));
 		
-		insertInterest(db, "categoria", "macrocategoria", "adesso", null); // TODO: poi tolgo queste linee
-		insertInterest(db, "bar", "food", "23-01-2014,23:34:12", null);
-		insertInterest(db, "provaCat", "provaMacro", "una data...", "ieri");
-		insertItinerary(db, "poi1,poi2,poi3", 4, 1200.35426, 3, "45.56236,9.14552", "l'altroieri");
+		// TODO: poi cancellare questi linee
+		insertInterest(db, "Accessories Store", "Shop");
+		insertInterest(db, "Bar", "Nightlife");
+		insertInterest(db, "Bed & Breakfast", "Travel");
+		insertInterest(db, "Bookstore", "Shop");
+		insertInterest(db, "Hotel", "Travel");
+		insertInterest(db, "Music Store", "Shop");
+		insertInterest(db, "Restaurant", "Food");
 	}
 
 	
 	/*
-	 * es. di inserimento: insertInterest(db, "categoria", "macrocategoria", "adesso", null);
-	 * (dove db è il nome del database del tipo SQLiteDatabase)
+	 * es. di inserimento: insertInterest(db, "categoria", "macrocategoria");
+	 * (dove db e' il nome del database del tipo SQLiteDatabase)
 	 */
-	public void insertInterest(SQLiteDatabase db, String cat, String macrocat, String dataIns, String dataCanc) {
+	public long insertInterest(SQLiteDatabase db, String cat, String macrocat) {
 		ContentValues v = new ContentValues();
 		v.put(InterestTable.CATEGORIA, cat);
 		v.put(InterestTable.MACROCATEGORIA, macrocat);
-		v.put(InterestTable.DATA_INSERIMENTO, dataIns);
-		v.put(InterestTable.DATA_CANCELLAZIONE, dataCanc);
-		db.insert(InterestTable.TABLE_NAME, null, v);
+	    // TODO: controllare appena possibile se il NOW() funziona
+		v.put(InterestTable.DATA_INSERIMENTO, "NOW()");
+		long id = db.insert(InterestTable.TABLE_NAME, null, v);
+		Log.d("Interest inserted", "with id: " + id);
+		return id;
 	}
 	
 	public Cursor getAllInterests(){
@@ -74,36 +80,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			InterestTable.CATEGORIA));		// ordinamento da applicare ai dati
 	}
 	
-	public void deleteInterest(SQLiteDatabase db, String cat) {
+	public int deleteInterest(SQLiteDatabase db, String cat) {
 	    ContentValues v = new ContentValues();
 	    // TODO: controllare appena possibile se il NOW() funziona
 	    v.put(InterestTable.DATA_CANCELLAZIONE, "NOW()");
-	    Log.d("Interest deleted", cat);
-	    db.update(InterestTable.TABLE_NAME, v, InterestTable.CATEGORIA + "=" + cat, null);
+	    int idCanc = db.update(InterestTable.TABLE_NAME, v, InterestTable.CATEGORIA + "=" + cat, null);
+	    Log.d("Interest deleted", "with id: " + idCanc);
+	    return idCanc;
 	}
 	
-	public void restoreInterest(SQLiteDatabase db, String cat) {
+	public int restoreInterest(SQLiteDatabase db, String cat) {
 		ContentValues v = new ContentValues();
 	    v.putNull(InterestTable.DATA_CANCELLAZIONE);
 	    // TODO: controllare appena possibile se il NOW() funziona
 	    v.put(InterestTable.DATA_INSERIMENTO, "NOW()");
-	    Log.d("Interest restored", cat);
-	    db.update(InterestTable.TABLE_NAME, v, InterestTable.CATEGORIA + "=" + cat, null);
+	    int idRes = db.update(InterestTable.TABLE_NAME, v, InterestTable.CATEGORIA + "=" + cat, null);
+	    Log.d("Interest restored", "with id: " + idRes);
+	    return idRes;
 	}
 	
 	/*
 	 * es. di inserimento: insertItinerary(db, "poi1,poi2,poi3", "4", "1200.35426", "3", "45.56236,9.14552");
-	 * (dove db è il nome del database del tipo SQLiteDatabase)
+	 * (dove db e' il nome del database del tipo SQLiteDatabase)
 	 */
-	public void insertItinerary(SQLiteDatabase db, String poi, int popolar, double lung, int numpoi, String posiz, String datapref) {
+	public long insertItinerary(SQLiteDatabase db, String poi, int popolar, double lung, int numpoi, String posiz) {
 		ContentValues v = new ContentValues();
 		v.put(ItineraryTable.ELENCO_POI, poi);
 		v.put(ItineraryTable.POPOLARITA, popolar);
 		v.put(ItineraryTable.LUNGHEZZA, lung);
 		v.put(ItineraryTable.NUM_POI, numpoi);
 		v.put(ItineraryTable.POS_UTENTE, posiz);
-		v.put(ItineraryTable.DATA_PREFERENZA, datapref);
-		db.insert(ItineraryTable.TABLE_NAME, null, v);
+	    // TODO: controllare appena possibile se il NOW() funziona
+		v.put(ItineraryTable.DATA_PREFERENZA, "NOW()");
+		long id = db.insert(ItineraryTable.TABLE_NAME, null, v);
+		Log.d("Itinerary inserted", "with id: " + id);
+		return id;
 	}
 	
 	public Cursor getAllItineraries(){
@@ -117,9 +128,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			InterestTable._ID));			// ordinamento da applicare ai dati
 	}
 	
-	public void deleteIitnerary(SQLiteDatabase db, long id) {
+	public int deleteIitnerary(SQLiteDatabase db, long id) {
+	    int idCanc = db.delete(ItineraryTable.TABLE_NAME, ItineraryTable._ID + "=" + id, null);
 	    Log.d("Itinerary deleted with id:", id+"");
-	    db.delete(ItineraryTable.TABLE_NAME, ItineraryTable._ID + "=" + id, null);
+	    return idCanc;
 	}
 	
 	@Override

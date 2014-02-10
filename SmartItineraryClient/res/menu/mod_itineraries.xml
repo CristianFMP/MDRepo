@@ -4,6 +4,6 @@
         android:id="@+id/action_favourites"
         android:showAsAction="always"
         android:icon="@drawable/ic_action_accept"
-        android:title="@string/title_activity_favourites"/>
+        android:title="@string/save"/>
 
 </menu>

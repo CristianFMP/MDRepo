@@ -4,6 +4,6 @@
         android:id="@+id/action_result"
         android:showAsAction="always"
         android:icon="@drawable/ic_action_accept"
-        android:title="@string/title_activity_result"/>
+        android:title="@string/go_search"/>
 
 </menu>

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import md.smartitineraryclient.db.*;
 import md.smartitineraryclient.util.GMapV2Direction;
 import md.smartitineraryclient.util.GetDirectionsAsyncTask;
 
@@ -12,11 +13,14 @@ import com.google.android.gms.maps.model.*;
 
 import android.os.Bundle;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 
@@ -24,10 +28,17 @@ public class MapItineraryActivity extends FragmentActivity {
 
 	Intent old_intent;
 	private GoogleMap mMap;
+	String[] poiNameArr;
+	String[] poiAddressArr;
+	String[] poiPopularityArr;
+	int itinPopularity;
+	double itinLength;
 	private static LatLng[] POIs_COORD;
-	private int width, height;
 	private int numPOI;
+	private int width, height;
 	private LatLngBounds latlngBounds;
+	DatabaseHelper DbH;
+	SQLiteDatabase db ;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +49,14 @@ public class MapItineraryActivity extends FragmentActivity {
 		
 		old_intent = getIntent();
 		final String[] poiIdArr = old_intent.getStringExtra("poiIdList").split(",");
-		String[] poiNameArr = old_intent.getStringExtra("poiNameList").split(",");
-		String[] poiAddressArr = old_intent.getStringExtra("poiAddressList").split(",");
-		String[] poiPopularityArr = old_intent.getStringExtra("poiPopularityList").split(",");
+		poiNameArr = old_intent.getStringExtra("poiNameList").split(",");
+		poiAddressArr = old_intent.getStringExtra("poiAddressList").split(",");
+		poiPopularityArr = old_intent.getStringExtra("poiPopularityList").split(",");
 		String[] poiLatitudeArr = old_intent.getStringExtra("poiLatitudeList").split(",");
 		String[] poiLongitudeArr = old_intent.getStringExtra("poiLongitudeList").split(",");
+		itinPopularity = old_intent.getIntExtra("itinPopularity", 0);
+		itinLength = old_intent.getDoubleExtra("itinLength", 0);
+		
 
 		getScreenDimensions();
 		mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
@@ -71,6 +85,10 @@ public class MapItineraryActivity extends FragmentActivity {
 					POIs_COORD[i+1].latitude, POIs_COORD[i+1].longitude, 
 					GMapV2Direction.MODE_DRIVING );
         }
+        
+        /** Apro il database, redendolo scrivibile */
+    	DbH = new DatabaseHelper(this);
+    	db = DbH.getWritableDatabase();
 	}
 
 
@@ -111,8 +129,19 @@ public class MapItineraryActivity extends FragmentActivity {
 	}
 
 	private void addToFav() {
-		// TODO 
-		
+		String poi = "(";
+		for(int i=0; i<numPOI; i++){
+			poi +=  POIs_COORD[i].longitude + " " + POIs_COORD[i].latitude;
+			poi += ",";
+		}
+		poi = poi.substring(0, poi.length()-1);
+		poi += ")";
+		String posutente = MainActivity.CurrentLocation(MainActivity.provider).toString();
+		long id = DbH.insertItinerary(db, poi, itinPopularity, itinLength, numPOI, posutente);
+		if(id != -1){
+			Toast.makeText(this, "Itinerario aggiunto ai preferiti", Toast.LENGTH_LONG).show();
+		}
+		Log.d("Itinerario aggiunto ai preferiti", "id: " + id + ", elenco poi: " + poi + ", popolarità: " + itinPopularity + ", lungh: " + itinLength);
 	}
 
 	private void getScreenDimensions(){

@@ -37,6 +37,8 @@
     <string name="five">5</string>
     <string name="comments">Vai ai commenti</string>
     <string name="show_interests">I tuoi interessi:</string>
+    <string name="add_fav">Aggiungi ai preferiti</string>
+    <string name="save">Salva modifiche</string>
     
     <string name="hello_world">Hello world!</string> <!-- da canc -->
 

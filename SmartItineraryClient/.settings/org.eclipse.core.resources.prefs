@@ -1,4 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/md/smartitineraryclient/MainActivity.java=UTF-8
+encoding//src/md/smartitineraryclient/MapItineraryActivity.java=UTF-8
 encoding//src/md/smartitineraryclient/SearchActivity.java=UTF-8
+encoding//src/md/smartitineraryclient/SelectedItineraryActivity.java=UTF-8
 encoding//src/md/smartitineraryclient/db/DatabaseHelper.java=UTF-8

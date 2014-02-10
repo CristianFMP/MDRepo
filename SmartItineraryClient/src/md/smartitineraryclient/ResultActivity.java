@@ -47,7 +47,7 @@ import android.widget.Toast;
 public class ResultActivity extends Activity {
 
 	// TODO: set the ip of your *server* host
-	private static final String SERVICE_URL = "http://192.168.0.18:8080/SmartItineraryWebService/rest/itinerary";
+	private static final String SERVICE_URL = "http://192.168.0.13:8080/SmartItineraryWebService/rest/itinerary";
 	private static final String TAG = "ResultActivity";
 	private static final String TEXT1 = "text1";
 	private static final String TEXT2 = "text2";
@@ -144,6 +144,8 @@ public class ResultActivity extends Activity {
 				String poiPopularityList = rows.get(position).get("poiPopularityList");
 				String poiLatitudeList = rows.get(position).get("poiLatitudeList");
 				String poiLongitudeList = rows.get(position).get("poiLongitudeList");
+				int itinPopularity = itineraryList.get(position).getPopularity();
+				double itinLength = itineraryList.get(position).getLength();
 				Intent intent = new Intent(view.getContext(), MapItineraryActivity.class);
 				intent.putExtra("poiIdList", poiIdList);
 				intent.putExtra("poiNameList", poiNameList);
@@ -151,6 +153,8 @@ public class ResultActivity extends Activity {
 				intent.putExtra("poiPopularityList", poiPopularityList);
 				intent.putExtra("poiLatitudeList", poiLatitudeList);
 				intent.putExtra("poiLongitudeList", poiLongitudeList);
+				intent.putExtra("itinPopularity", itinPopularity);
+				intent.putExtra("itinLength", itinLength);
 				startActivityForResult(intent, 0);
 				overridePendingTransition(0,0);
 			}
@@ -245,7 +249,7 @@ public class ResultActivity extends Activity {
 		// connection timeout, in milliseconds (waiting to connect)
 		private static final int CONN_TIMEOUT = 3000;
 		// socket timeout, in milliseconds (waiting for data)
-		private static final int SOCKET_TIMEOUT = 50000;
+		private static final int SOCKET_TIMEOUT = 90000;
 		private int taskType = GET_TASK;
 		private Context mContext = null;
 		private String processMessage = "Processing...";

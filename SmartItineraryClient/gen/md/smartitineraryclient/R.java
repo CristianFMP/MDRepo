@@ -235,7 +235,8 @@ containing a value of this type.
         public static final int action_add_fav=0x7f05001d;
         public static final int action_favourites=0x7f05001b;
         public static final int action_itinerary_as_list=0x7f05001c;
-        public static final int action_result=0x7f05001e;
+        public static final int action_result=0x7f05001f;
+        public static final int action_save_categories=0x7f05001e;
         public static final int action_search=0x7f05001a;
         public static final int catList=0x7f050014;
         public static final int category_list=0x7f050008;
@@ -293,6 +294,7 @@ containing a value of this type.
         public static final int selected_itinerary=0x7f0a0008;
     }
     public static final class string {
+        public static final int add_fav=0x7f06003e;
         public static final int app_name=0x7f06001a;
         /**   Title for notification shown when GooglePlayServices needs to be
         enabled for a application to work. [CHAR LIMIT=70] 
@@ -402,7 +404,7 @@ containing a value of this type.
         public static final int five=0x7f06003b;
         public static final int from=0x7f060023;
         public static final int go_search=0x7f06002a;
-        public static final int hello_world=0x7f06003e;
+        public static final int hello_world=0x7f060040;
         public static final int itinerary_from=0x7f06002d;
         public static final int km=0x7f060025;
         public static final int length=0x7f060030;
@@ -414,6 +416,7 @@ containing a value of this type.
         public static final int popularity=0x7f06002e;
         public static final int range=0x7f060027;
         public static final int read_comments=0x7f060033;
+        public static final int save=0x7f06003f;
         public static final int show_interests=0x7f06003d;
         public static final int this_pos=0x7f060029;
         public static final int title_activity_comments=0x7f06001f;
