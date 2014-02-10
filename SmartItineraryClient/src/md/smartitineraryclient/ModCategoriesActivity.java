@@ -35,7 +35,11 @@ import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -43,6 +47,10 @@ public class ModCategoriesActivity extends Activity {
 	private static final String SERVICE_URL = "http://192.168.0.18:8080/SmartItineraryWebService/rest/category";
 	private static final String TAG = "ModCategoriesActivity";
 	private Map<String, List<String>> categories;
+	private ArrayAdapter<String> adapter, listadapter;
+	private List<String> cats;
+	private Spinner spMacroCats;
+	ListView lv;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -104,8 +112,7 @@ public class ModCategoriesActivity extends Activity {
 	}
 	
 	public void handleResponse(String response) {
-		categories = new HashMap<String, List<String>>();
-		List<String> subCats = new ArrayList<String>();
+		categories = new HashMap<String, List<String>>();	
 		try {
 			JSONArray jArray = new JSONArray(response);
 			// TODO: handle JSONexceptions
@@ -113,12 +120,12 @@ public class ModCategoriesActivity extends Activity {
 				JSONObject tmpJObj = jArray.getJSONObject(i);
 				String macro_cat = tmpJObj.getString("category");
 				JSONArray subJArray = tmpJObj.getJSONArray("subCategories");
+				List<String> subCats = new ArrayList<String>();
 				for (int j = 0; j < subJArray.length(); j++) {
 					subCats.add(subJArray.getString(j));
 				}
 				categories.put(macro_cat, subCats);
 			}
-			Log.d(TAG, categories.size()+"");
 			updateMacroCatsSpinner();
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -130,12 +137,26 @@ public class ModCategoriesActivity extends Activity {
 		Set<String> macro_cats_set = categories.keySet();
 		String[] macro_cats = new String[8];
 		macro_cats_set.toArray(macro_cats);
-		List<String> list = Arrays.asList(macro_cats);
-		for (String s : list)
-			Log.d(TAG, s);
-		Spinner spMacroCats = (Spinner) findViewById(R.id.macro_categories_spinner);
-		ArrayAdapter<String> mcAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, macro_cats);
-		spMacroCats.setAdapter(mcAdapter);
+		spMacroCats = (Spinner) findViewById(R.id.macro_categories_spinner);
+		lv = (ListView) findViewById(R.id.category_list);
+		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, macro_cats);		
+		spMacroCats.setAdapter(adapter);
+		spMacroCats.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+				String macro_category = spMacroCats.getItemAtPosition(pos).toString();
+				cats = categories.get(macro_category);
+				listadapter = new ArrayAdapter<String>(parent.getContext(), android.R.layout.simple_list_item_1, cats);
+				lv.setAdapter(listadapter);
+				listadapter.notifyDataSetChanged();
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 
 	private class WebServiceTask extends AsyncTask<String, Integer, String> {
