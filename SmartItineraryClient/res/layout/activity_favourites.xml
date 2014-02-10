@@ -55,6 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/listView_categories"
         android:layout_alignTop="@+id/textView_interessi"
+        android:onClick="openInterests"
         android:src="@drawable/ic_action_edit" />
 
     <ImageButton

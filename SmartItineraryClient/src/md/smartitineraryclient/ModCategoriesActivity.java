@@ -130,9 +130,9 @@ public class ModCategoriesActivity extends Activity {
 		}
 		// TODO: rimuovo le categorie che sono state deselezionate
 		Category categ;
-		boolean presente = false;
-		boolean checked = false;
 		for (String r : saved_categories) {
+			boolean presente = false;
+			boolean checked = false;
 			for (String s : categories.keySet()) {
 				macrocat = s;
 				for (int i = 0; i < categories.get(s).size(); i++) {
@@ -145,9 +145,9 @@ public class ModCategoriesActivity extends Activity {
 						}
 					}
 				}
-				if (!presente){
-					DbH.deleteInterest(db, r);
-				}
+			}
+			if (!presente){
+				DbH.deleteInterest(db, r);
 			}
 		}
 		NavUtils.navigateUpFromSameTask(this);
