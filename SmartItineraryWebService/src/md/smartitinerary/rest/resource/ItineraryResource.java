@@ -54,7 +54,7 @@ public class ItineraryResource {
     	System.out.println("Parametri: pos. "+kposition+", lunghezza "+klength+", raggio "+krange);
         double range = Double.parseDouble(krange);
         double maxLength = Double.parseDouble(klength)*1000;
-        int k = 5;
+        int k = 20; // TODO: decidere che numero inserire
         String[] pos = kposition.split(",");
         double lat = Double.parseDouble(pos[0]);
         double lng = Double.parseDouble(pos[1]);
