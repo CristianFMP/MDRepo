@@ -9,8 +9,60 @@
     tools:context=".FavouritesActivity" >
 
     <TextView
+        android:id="@+id/textView_interessi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/show_interests"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textView_itinerari"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView_interessi"
+        android:layout_centerVertical="true"
+        android:text="@string/saved_itin"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="24sp" />
+
+    <ListView
+        android:id="@+id/listView_categories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView_itinerari"
+        android:layout_alignLeft="@+id/textView_interessi"
+        android:layout_below="@+id/textView_interessi"
+        tools:listitem="@android:layout/simple_list_item_2" >
+
+    </ListView>
+
+    <ListView
+        android:id="@+id/listView_itineraries"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView_itinerari"
+        android:layout_below="@+id/textView_itinerari"
+        tools:listitem="@layout/rowlayout" >
+
+    </ListView>
+
+    <ImageButton
+        android:id="@+id/button_mod_cat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/listView_categories"
+        android:layout_alignTop="@+id/textView_interessi"
+        android:src="@drawable/ic_action_edit" />
+
+    <ImageButton
+        android:id="@+id/button_mod_itin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button_mod_cat"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_action_edit" />
 
 </RelativeLayout>
