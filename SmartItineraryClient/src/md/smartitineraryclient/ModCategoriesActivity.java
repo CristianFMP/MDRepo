@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -116,6 +118,7 @@ public class ModCategoriesActivity extends Activity {
 				}
 				categories.put(macro_cat, subCats);
 			}
+			Log.d(TAG, categories.size()+"");
 			updateMacroCatsSpinner();
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -124,8 +127,13 @@ public class ModCategoriesActivity extends Activity {
 	}
 	
 	private void updateMacroCatsSpinner() {
-		String[] macro_cats = (String[]) categories.keySet().toArray();
-		Spinner spMacroCats = (Spinner) findViewById(R.layout.activity_mod_categories);
+		Set<String> macro_cats_set = categories.keySet();
+		String[] macro_cats = new String[8];
+		macro_cats_set.toArray(macro_cats);
+		List<String> list = Arrays.asList(macro_cats);
+		for (String s : list)
+			Log.d(TAG, s);
+		Spinner spMacroCats = (Spinner) findViewById(R.id.macro_categories_spinner);
 		ArrayAdapter<String> mcAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, macro_cats);
 		spMacroCats.setAdapter(mcAdapter);
 	}
