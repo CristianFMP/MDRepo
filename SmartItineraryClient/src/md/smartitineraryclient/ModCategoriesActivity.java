@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import md.smartitineraryclient.model.Category;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -31,16 +34,30 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ModCategoriesActivity extends Activity {
 	private static final String SERVICE_URL = "http://192.168.0.18:8080/SmartItineraryWebService/rest/category";
+	@SuppressWarnings("unused")
 	private static final String TAG = "ModCategoriesActivity";
-	private Map<String, List<String>> categories;
+	private Map<String, List<Category>> categories;
+	private ArrayAdapter<String> adapter;
+	ArrayAdapter<Category> listadapter;
+	private List<Category> cats;
+	private Spinner spMacroCats;
+	ListView lv;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -101,9 +118,9 @@ public class ModCategoriesActivity extends Activity {
 	    overridePendingTransition(0,0);
 	}
 	
+	// Riceve formato JSON, ne crea una rappresentazione utilizzando una Mappa
 	public void handleResponse(String response) {
-		categories = new HashMap<String, List<String>>();
-		List<String> subCats = new ArrayList<String>();
+		categories = new HashMap<String, List<Category>>();	
 		try {
 			JSONArray jArray = new JSONArray(response);
 			// TODO: handle JSONexceptions
@@ -111,23 +128,89 @@ public class ModCategoriesActivity extends Activity {
 				JSONObject tmpJObj = jArray.getJSONObject(i);
 				String macro_cat = tmpJObj.getString("category");
 				JSONArray subJArray = tmpJObj.getJSONArray("subCategories");
+				List<Category> subCats = new ArrayList<Category>();
 				for (int j = 0; j < subJArray.length(); j++) {
-					subCats.add(subJArray.getString(j));
+					subCats.add(new Category(subJArray.getString(j), false));
 				}
 				categories.put(macro_cat, subCats);
 			}
 			updateMacroCatsSpinner();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+			// TODO
 			e.printStackTrace();
 		}
 	}
 	
+	// Gestione dimamica di Spinner e listview
 	private void updateMacroCatsSpinner() {
-		String[] macro_cats = (String[]) categories.keySet().toArray();
-		Spinner spMacroCats = (Spinner) findViewById(R.layout.activity_mod_categories);
-		ArrayAdapter<String> mcAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, macro_cats);
-		spMacroCats.setAdapter(mcAdapter);
+		Set<String> macro_cats_set = categories.keySet();
+		String[] macro_cats = new String[8];
+		macro_cats_set.toArray(macro_cats);
+		spMacroCats = (Spinner) findViewById(R.id.macro_categories_spinner);
+		lv = (ListView) findViewById(R.id.category_list);
+		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, macro_cats);		
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spMacroCats.setAdapter(adapter);
+		spMacroCats.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+				String macro_category = spMacroCats.getItemAtPosition(pos).toString();
+				cats = categories.get(macro_category);
+				listadapter = new MyCustomAdapter(parent.getContext(), R.layout.rowcheckbox, cats);
+				lv.setAdapter(listadapter);
+				listadapter.notifyDataSetChanged();
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// TODO
+			}
+		});
+	}
+	
+	// Adapter customizzato per gestire oggetti Category ed i checkbox associati
+	private class MyCustomAdapter extends ArrayAdapter<Category> {
+		private List<Category> list;
+		public MyCustomAdapter(Context context, int textViewResourceId, List<Category> list) {
+			super(context, textViewResourceId, list);
+			this.list = new ArrayList<Category>();
+			this.list.addAll(list);
+		}
+		
+		private class ViewHolder {
+			TextView code;
+			CheckBox name;
+		}
+		
+		public View getView(int position, View convertView, ViewGroup parent) {
+			ViewHolder holder = null;
+			if (convertView == null) {
+				LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				convertView = vi.inflate(R.layout.rowcheckbox, null);
+				holder = new ViewHolder();
+				holder.code = (TextView) convertView.findViewById(android.R.id.text1);
+				holder.name = (CheckBox) convertView.findViewById(R.id.checkbox);
+				convertView.setTag(holder);
+				holder.name.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						CheckBox cb = (CheckBox) v;
+						Category category = (Category) cb.getTag();
+						Toast.makeText(getApplicationContext(), "Categoria " + cb.getText() + " risulta " + cb.isChecked(), Toast.LENGTH_LONG).show();
+						category.setSelected(cb.isChecked());
+					}
+				});
+			} else {
+				holder = (ViewHolder) convertView.getTag();
+			}
+			Category category = list.get(position);
+			holder.code.setText(category.getCategory());
+			holder.name.setText(category.getCategory());
+			holder.name.setChecked(category.isSelected());
+			holder.name.setTag(category);
+			return convertView;
+		}
 	}
 
 	private class WebServiceTask extends AsyncTask<String, Integer, String> {
