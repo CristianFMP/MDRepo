@@ -12,7 +12,6 @@ import java.util.Set;
 
 import md.smartitineraryclient.db.DatabaseHelper;
 import md.smartitineraryclient.model.Category;
-import md.smartitineraryclient.model.Interest;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -32,7 +31,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -131,6 +129,27 @@ public class ModCategoriesActivity extends Activity {
 			
 		}
 		// TODO: rimuovo le categorie che sono state deselezionate
+		Category categ;
+		boolean presente = false;
+		boolean checked = false;
+		for (String r : saved_categories) {
+			for (String s : categories.keySet()) {
+				macrocat = s;
+				for (int i = 0; i < categories.get(s).size(); i++) {
+					categ = categories.get(s).get(i);
+					cat = categ.getCategory();
+					checked = categ.isSelected();
+					if (checked){
+						if (r.equals(cat)){
+							presente = true;
+						}
+					}
+				}
+				if (!presente){
+					DbH.deleteInterest(db, r);
+				}
+			}
+		}
 		NavUtils.navigateUpFromSameTask(this);
 		overridePendingTransition(0,0);
 	}
