@@ -1,27 +1,23 @@
 package md.smartitineraryclient.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Category {
 	private String category;
-	private List<String> subCategories;
+	private boolean selected = false;
 
-	public Category(String category, List<String> subCategories) {
+	public Category(String category, boolean selected) {
 		this.category = category;
-		this.subCategories = subCategories;
-	}
-	
-	public Category() {
-		category = "";
-		subCategories = new ArrayList<String>();
+		this.setSelected(selected);
 	}
 
 	public String getCategory() {
 		return category;
 	}
 
-	public List<String> getSubCategories() {
-		return subCategories;
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 	}
 }

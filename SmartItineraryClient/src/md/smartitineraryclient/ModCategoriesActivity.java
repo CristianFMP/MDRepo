@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import md.smartitineraryclient.model.Category;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -48,10 +50,12 @@ import android.widget.Toast;
 
 public class ModCategoriesActivity extends Activity {
 	private static final String SERVICE_URL = "http://192.168.0.18:8080/SmartItineraryWebService/rest/category";
+	@SuppressWarnings("unused")
 	private static final String TAG = "ModCategoriesActivity";
-	private Map<String, List<String>> categories;
-	private ArrayAdapter<String> adapter, listadapter;
-	private List<String> cats;
+	private Map<String, List<Category>> categories;
+	private ArrayAdapter<String> adapter;
+	ArrayAdapter<Category> listadapter;
+	private List<Category> cats;
 	private Spinner spMacroCats;
 	ListView lv;
 
@@ -114,8 +118,9 @@ public class ModCategoriesActivity extends Activity {
 	    overridePendingTransition(0,0);
 	}
 	
+	// Riceve formato JSON, ne crea una rappresentazione utilizzando una Mappa
 	public void handleResponse(String response) {
-		categories = new HashMap<String, List<String>>();	
+		categories = new HashMap<String, List<Category>>();	
 		try {
 			JSONArray jArray = new JSONArray(response);
 			// TODO: handle JSONexceptions
@@ -123,19 +128,20 @@ public class ModCategoriesActivity extends Activity {
 				JSONObject tmpJObj = jArray.getJSONObject(i);
 				String macro_cat = tmpJObj.getString("category");
 				JSONArray subJArray = tmpJObj.getJSONArray("subCategories");
-				List<String> subCats = new ArrayList<String>();
+				List<Category> subCats = new ArrayList<Category>();
 				for (int j = 0; j < subJArray.length(); j++) {
-					subCats.add(subJArray.getString(j));
+					subCats.add(new Category(subJArray.getString(j), false));
 				}
 				categories.put(macro_cat, subCats);
 			}
 			updateMacroCatsSpinner();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+			// TODO
 			e.printStackTrace();
 		}
 	}
 	
+	// Gestione dimamica di Spinner e listview
 	private void updateMacroCatsSpinner() {
 		Set<String> macro_cats_set = categories.keySet();
 		String[] macro_cats = new String[8];
@@ -157,17 +163,17 @@ public class ModCategoriesActivity extends Activity {
 
 			@Override
 			public void onNothingSelected(AdapterView<?> parent) {
-				// TODO Auto-generated method stub
-				
+				// TODO
 			}
 		});
 	}
 	
-	private class MyCustomAdapter extends ArrayAdapter<String> {
-		private List<String> list;
-		public MyCustomAdapter(Context context, int textViewResourceId, List<String> list) {
+	// Adapter customizzato per gestire oggetti Category ed i checkbox associati
+	private class MyCustomAdapter extends ArrayAdapter<Category> {
+		private List<Category> list;
+		public MyCustomAdapter(Context context, int textViewResourceId, List<Category> list) {
 			super(context, textViewResourceId, list);
-			this.list = new ArrayList<String>();
+			this.list = new ArrayList<Category>();
 			this.list.addAll(list);
 		}
 		
@@ -189,18 +195,19 @@ public class ModCategoriesActivity extends Activity {
 					
 					@Override
 					public void onClick(View v) {
-						// TODO Auto-generated method stub
 						CheckBox cb = (CheckBox) v;
-						String category = (String) cb.getTag();
+						Category category = (Category) cb.getTag();
 						Toast.makeText(getApplicationContext(), "Categoria " + cb.getText() + " risulta " + cb.isChecked(), Toast.LENGTH_LONG).show();
+						category.setSelected(cb.isChecked());
 					}
 				});
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
-			String category = list.get(position);
-			holder.code.setText(category);
-			holder.name.setText(category);
+			Category category = list.get(position);
+			holder.code.setText(category.getCategory());
+			holder.name.setText(category.getCategory());
+			holder.name.setChecked(category.isSelected());
 			holder.name.setTag(category);
 			return convertView;
 		}
