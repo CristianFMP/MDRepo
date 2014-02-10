@@ -232,15 +232,16 @@ containing a value of this type.
         public static final int ic_plusone_tall_off_client=0x7f020026;
     }
     public static final class id {
-        public static final int action_add_fav=0x7f05001c;
-        public static final int action_favourites=0x7f05001a;
-        public static final int action_itinerary_as_list=0x7f05001b;
-        public static final int action_result=0x7f05001d;
-        public static final int action_search=0x7f050019;
+        public static final int action_add_fav=0x7f05001d;
+        public static final int action_favourites=0x7f05001b;
+        public static final int action_itinerary_as_list=0x7f05001c;
+        public static final int action_result=0x7f05001e;
+        public static final int action_search=0x7f05001a;
         public static final int catList=0x7f050014;
         public static final int category_list=0x7f050008;
+        public static final int checkbox=0x7f050017;
         public static final int commentList=0x7f050005;
-        public static final int comments=0x7f050018;
+        public static final int comments=0x7f050019;
         public static final int editText_maxLength=0x7f05000e;
         public static final int editText_pos=0x7f05000b;
         public static final int editText_range=0x7f050011;
@@ -249,7 +250,7 @@ containing a value of this type.
         public static final int itineraryList=0x7f050009;
         public static final int macro_categories_spinner=0x7f050007;
         public static final int map=0x7f050006;
-        public static final int nextItem=0x7f050017;
+        public static final int nextItem=0x7f050018;
         public static final int none=0x7f050000;
         public static final int normal=0x7f050001;
         public static final int poiList=0x7f050016;
@@ -276,8 +277,9 @@ containing a value of this type.
         public static final int activity_result=0x7f030006;
         public static final int activity_search=0x7f030007;
         public static final int activity_selected_itinerary=0x7f030008;
-        public static final int rowlayout=0x7f030009;
-        public static final int simple_list_item_1_custom=0x7f03000a;
+        public static final int rowcheckbox=0x7f030009;
+        public static final int rowlayout=0x7f03000a;
+        public static final int simple_list_item_1_custom=0x7f03000b;
     }
     public static final class menu {
         public static final int comments=0x7f0a0000;
