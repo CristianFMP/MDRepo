@@ -36,6 +36,8 @@ public class SearchActivity extends Activity implements LocationListener {
 	private static final String TAG = "SearchActivity";
 	private static final String TEXT1 = "text1";
 	private static final String TEXT2 = "text2";
+	private List<Interest> catList;
+	private ArrayList<String> list;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,11 @@ public class SearchActivity extends Activity implements LocationListener {
 		
 		/** Recupera gli interessi memorizzati in locale, e li mostra */
 		// vedo spunto da handleresposnse di cristian
-		List<Interest> catList = new ArrayList<Interest>();
+		catList = new ArrayList<Interest>();
+		list = new ArrayList<String>();
+		// esempio di categorie già checkate
+		list.add("Airport");
+		list.add("Airport Gate");
 		databaseHelper = new DatabaseHelper(this);
 		Cursor c = databaseHelper.getAllInterests();
 		try {
@@ -58,6 +64,7 @@ public class SearchActivity extends Activity implements LocationListener {
 				String canc = c.getString(4);
 				Log.d(TAG, id + " " + categ + " " + macroc + " " + ins + " " + canc);
 				if(canc==null) {
+					list.add(categ);
 					catList.add(new Interest(categ, macroc, ins, canc));
 					cat += categ+",";
 				}
@@ -75,6 +82,7 @@ public class SearchActivity extends Activity implements LocationListener {
 	
 	public void openInterests(View view) {
 		Intent intent = new Intent(view.getContext(), ModCategoriesActivity.class);
+		intent.putStringArrayListExtra("saved_categories", list);
 		startActivityForResult(intent, 0);
 		overridePendingTransition(0,0);
 	}
@@ -109,9 +117,7 @@ public class SearchActivity extends Activity implements LocationListener {
 	 * Set up the {@link android.app.ActionBar}.
 	 */
 	private void setupActionBar() {
-
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
 	}
 	
 	@Override

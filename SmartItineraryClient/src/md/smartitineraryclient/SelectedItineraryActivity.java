@@ -21,7 +21,6 @@ import android.widget.SimpleAdapter;
 public class SelectedItineraryActivity extends Activity {
 	private static final String TEXT1 = "text1";
 	private static final String TEXT2 = "text2";
-	@SuppressWarnings("unused")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

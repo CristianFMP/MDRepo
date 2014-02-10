@@ -49,15 +49,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ModCategoriesActivity extends Activity {
-	private static final String SERVICE_URL = "http://192.168.0.13:8080/SmartItineraryWebService/rest/category";
+	private static final String SERVICE_URL = "http://192.168.0.18:8080/SmartItineraryWebService/rest/category";
 	@SuppressWarnings("unused")
 	private static final String TAG = "ModCategoriesActivity";
 	private Map<String, List<Category>> categories;
 	private ArrayAdapter<String> adapter;
-	ArrayAdapter<Category> listadapter;
+	private ArrayAdapter<Category> listadapter;
 	private List<Category> cats;
 	private Spinner spMacroCats;
-	ListView lv;
+	private ListView lv;
+	private List<String> saved_categories;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,8 @@ public class ModCategoriesActivity extends Activity {
 		setContentView(R.layout.activity_mod_categories);
 		// Show the Up button in the action bar.
 		setupActionBar();
+		Intent intent = getIntent();
+		saved_categories = intent.getStringArrayListExtra("saved_categories");
 		String url = SERVICE_URL + "/getCategories";
 		WebServiceTask wst = new WebServiceTask(WebServiceTask.GET_TASK, this, "Retrieving Categories...");
 		// show toast with real url
@@ -105,17 +108,16 @@ public class ModCategoriesActivity extends Activity {
 			NavUtils.navigateUpFromSameTask(this);
 			overridePendingTransition(0,0);
 			return true;
-		case R.id.action_favourites:
-            openFavourites();
+		case R.id.action_save_categories:
+            onSaveCategories();
             return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 	
-	private void openFavourites() {
-		Intent intent = new Intent(this, FavouritesActivity.class);
-	    startActivity(intent);
-	    overridePendingTransition(0,0);
+	private void onSaveCategories() {
+		NavUtils.navigateUpFromSameTask(this);
+		overridePendingTransition(0,0);
 	}
 	
 	// Riceve formato JSON, ne crea una rappresentazione utilizzando una Mappa
@@ -130,7 +132,11 @@ public class ModCategoriesActivity extends Activity {
 				JSONArray subJArray = tmpJObj.getJSONArray("subCategories");
 				List<Category> subCats = new ArrayList<Category>();
 				for (int j = 0; j < subJArray.length(); j++) {
-					subCats.add(new Category(subJArray.getString(j), false));
+					String tmp = subJArray.getString(j);
+					if (saved_categories.contains(tmp))
+						subCats.add(new Category(tmp, true));
+					else
+						subCats.add(new Category(tmp, false));
 				}
 				categories.put(macro_cat, subCats);
 			}
@@ -140,7 +146,7 @@ public class ModCategoriesActivity extends Activity {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// Gestione dimamica di Spinner e listview
 	private void updateMacroCatsSpinner() {
 		Set<String> macro_cats_set = categories.keySet();
@@ -206,7 +212,6 @@ public class ModCategoriesActivity extends Activity {
 			}
 			Category category = list.get(position);
 			holder.code.setText(category.getCategory());
-			holder.name.setText(category.getCategory());
 			holder.name.setChecked(category.isSelected());
 			holder.name.setTag(category);
 			return convertView;
