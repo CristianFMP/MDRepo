@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,14 +32,18 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ModCategoriesActivity extends Activity {
@@ -140,13 +143,14 @@ public class ModCategoriesActivity extends Activity {
 		spMacroCats = (Spinner) findViewById(R.id.macro_categories_spinner);
 		lv = (ListView) findViewById(R.id.category_list);
 		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, macro_cats);		
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spMacroCats.setAdapter(adapter);
 		spMacroCats.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 				String macro_category = spMacroCats.getItemAtPosition(pos).toString();
 				cats = categories.get(macro_category);
-				listadapter = new ArrayAdapter<String>(parent.getContext(), android.R.layout.simple_list_item_1, cats);
+				listadapter = new MyCustomAdapter(parent.getContext(), R.layout.rowcheckbox, cats);
 				lv.setAdapter(listadapter);
 				listadapter.notifyDataSetChanged();
 			}
@@ -157,6 +161,49 @@ public class ModCategoriesActivity extends Activity {
 				
 			}
 		});
+	}
+	
+	private class MyCustomAdapter extends ArrayAdapter<String> {
+		private List<String> list;
+		public MyCustomAdapter(Context context, int textViewResourceId, List<String> list) {
+			super(context, textViewResourceId, list);
+			this.list = new ArrayList<String>();
+			this.list.addAll(list);
+		}
+		
+		private class ViewHolder {
+			TextView code;
+			CheckBox name;
+		}
+		
+		public View getView(int position, View convertView, ViewGroup parent) {
+			ViewHolder holder = null;
+			if (convertView == null) {
+				LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				convertView = vi.inflate(R.layout.rowcheckbox, null);
+				holder = new ViewHolder();
+				holder.code = (TextView) convertView.findViewById(android.R.id.text1);
+				holder.name = (CheckBox) convertView.findViewById(R.id.checkbox);
+				convertView.setTag(holder);
+				holder.name.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						CheckBox cb = (CheckBox) v;
+						String category = (String) cb.getTag();
+						Toast.makeText(getApplicationContext(), "Categoria " + cb.getText() + " risulta " + cb.isChecked(), Toast.LENGTH_LONG).show();
+					}
+				});
+			} else {
+				holder = (ViewHolder) convertView.getTag();
+			}
+			String category = list.get(position);
+			holder.code.setText(category);
+			holder.name.setText(category);
+			holder.name.setTag(category);
+			return convertView;
+		}
 	}
 
 	private class WebServiceTask extends AsyncTask<String, Integer, String> {
