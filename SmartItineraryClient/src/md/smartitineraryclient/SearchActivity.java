@@ -201,7 +201,7 @@ public class SearchActivity extends Activity implements LocationListener {
         	rag = "1000";
         }
         
-        cat = "Home (private),Coworking Space,Office"; // TODO: eliminare questo valore fisso - intera line
+        cat = "Home (private),Coworking Space,Office,Bar,Pub,Restaurant"; // TODO: eliminare questo valore fisso - intera line
         // TODO: capire se crea problemi nel caso in cui non ci siano spazi da riampiazzare
         cat = cat.replace(" ", ".");
         pos = pos.replace(",", ".");
