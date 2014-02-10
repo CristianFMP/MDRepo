@@ -1,5 +1,6 @@
 package md.smartitineraryclient.db;
 
+import java.sql.Timestamp;
 import java.text.MessageFormat;
 
 import android.content.ContentValues;
@@ -23,7 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		String sql = "CREATE TABLE {0} ({1} INTEGER PRIMARY KEY AUTOINCREMENT, "
-				+ "{2} TEXT NOT NULL,{3} TEXT NOT NULL,{4} DATETIME NOT NULL,{5} DATETIME);";
+				+ "{2} TEXT NOT NULL,{3} TEXT NOT NULL,{4} TEXT NOT NULL,{5} TEXT);";
 		db.execSQL(MessageFormat.format(sql, InterestTable.TABLE_NAME, 
 				InterestTable._ID,
 				InterestTable.CATEGORIA, 
@@ -33,7 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		
 		sql = "CREATE TABLE {0} ({1} INTEGER PRIMARY KEY AUTOINCREMENT, "
 				+ "{2} TEXT NOT NULL, {3} INTEGER NOT NULL, {4} DOUBLE NOT NULL, {5} INTEGER NOT NULL, "
-				+ "{6} TEXT NOT NULL, {7} DATETIME NOT NULL);";
+				+ "{6} TEXT NOT NULL, {7} TEXT NOT NULL);";
 		db.execSQL(MessageFormat.format(sql, ItineraryTable.TABLE_NAME,
 				ItineraryTable._ID,
 				ItineraryTable.ELENCO_POI,
@@ -62,8 +63,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		ContentValues v = new ContentValues();
 		v.put(InterestTable.CATEGORIA, cat);
 		v.put(InterestTable.MACROCATEGORIA, macrocat);
-	    // TODO: controllare appena possibile se il NOW() funziona
-		v.put(InterestTable.DATA_INSERIMENTO, "NOW()");
+		java.util.Date date = new java.util.Date();
+		Timestamp now = new Timestamp(date.getTime());
+		v.put(InterestTable.DATA_INSERIMENTO, now.toString());
 		long id = db.insert(InterestTable.TABLE_NAME, null, v);
 		Log.d("Interest inserted", "with id: " + id);
 		return id;
@@ -82,8 +84,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	public int deleteInterest(SQLiteDatabase db, String cat) {
 	    ContentValues v = new ContentValues();
-	    // TODO: controllare appena possibile se il NOW() funziona
-	    v.put(InterestTable.DATA_CANCELLAZIONE, "NOW()");
+	    java.util.Date date = new java.util.Date();
+		Timestamp now = new Timestamp(date.getTime());
+	    v.put(InterestTable.DATA_CANCELLAZIONE, now.toString());
 	    int idCanc = db.update(InterestTable.TABLE_NAME, v, InterestTable.CATEGORIA + "=" + cat, null);
 	    Log.d("Interest deleted", "with id: " + idCanc);
 	    return idCanc;
@@ -92,8 +95,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public int restoreInterest(SQLiteDatabase db, String cat) {
 		ContentValues v = new ContentValues();
 	    v.putNull(InterestTable.DATA_CANCELLAZIONE);
-	    // TODO: controllare appena possibile se il NOW() funziona
-	    v.put(InterestTable.DATA_INSERIMENTO, "NOW()");
+	    java.util.Date date = new java.util.Date();
+		Timestamp now = new Timestamp(date.getTime());
+	    v.put(InterestTable.DATA_INSERIMENTO, now.toString());
 	    int idRes = db.update(InterestTable.TABLE_NAME, v, InterestTable.CATEGORIA + "=" + cat, null);
 	    Log.d("Interest restored", "with id: " + idRes);
 	    return idRes;
@@ -110,8 +114,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		v.put(ItineraryTable.LUNGHEZZA, lung);
 		v.put(ItineraryTable.NUM_POI, numpoi);
 		v.put(ItineraryTable.POS_UTENTE, posiz);
-	    // TODO: controllare appena possibile se il NOW() funziona
-		v.put(ItineraryTable.DATA_PREFERENZA, "NOW()");
+		java.util.Date date = new java.util.Date();
+		Timestamp now = new Timestamp(date.getTime());
+		v.put(ItineraryTable.DATA_PREFERENZA, now.toString());
 		long id = db.insert(ItineraryTable.TABLE_NAME, null, v);
 		Log.d("Itinerary inserted", "with id: " + id);
 		return id;
