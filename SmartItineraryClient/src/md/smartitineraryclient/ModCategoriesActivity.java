@@ -51,7 +51,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ModCategoriesActivity extends Activity {
-	private static final String SERVICE_URL = "http://192.168.0.13:8080/SmartItineraryWebService/rest/category";
+	private static final String SERVICE_URL = "http://192.168.0.18:8080/SmartItineraryWebService/rest/category";
 	@SuppressWarnings("unused")
 	private static final String TAG = "ModCategoriesActivity";
 	private Map<String, List<Category>> categories;
@@ -61,6 +61,7 @@ public class ModCategoriesActivity extends Activity {
 	private Spinner spMacroCats;
 	private ListView lv;
 	private List<String> saved_categories;
+	private Map<String, List<String>> updatedcategories;
 	DatabaseHelper DbH;
 	SQLiteDatabase db ;
 
@@ -72,6 +73,7 @@ public class ModCategoriesActivity extends Activity {
 		setupActionBar();
 		Intent intent = getIntent();
 		saved_categories = intent.getStringArrayListExtra("saved_categories");
+		updatedcategories = new HashMap<String, List<String>>();
 		String url = SERVICE_URL + "/getCategories";
 		WebServiceTask wst = new WebServiceTask(WebServiceTask.GET_TASK, this, "Retrieving Categories...");
 		// show toast with real url
@@ -118,7 +120,15 @@ public class ModCategoriesActivity extends Activity {
 	private void onSaveCategories() {
 		String cat = "";
 		String macrocat = "";
-			
+		String text = "";
+		for (String s : updatedcategories.keySet()) {
+			for (int i = 0; i < updatedcategories.get(s).size(); i++) {
+				text += updatedcategories.get(s).get(i) + "\n";
+			}
+		}
+		int duration = Toast.LENGTH_LONG;
+		Toast toast = Toast.makeText(this, text, duration);
+		toast.show();	
 		long id = DbH.insertInterest(db, cat, macrocat);
     	
 		NavUtils.navigateUpFromSameTask(this);
@@ -134,6 +144,7 @@ public class ModCategoriesActivity extends Activity {
 			for (int i = 0; i < jArray.length(); i++) {
 				JSONObject tmpJObj = jArray.getJSONObject(i);
 				String macro_cat = tmpJObj.getString("category");
+				updatedcategories.put(macro_cat, new ArrayList<String>());
 				JSONArray subJArray = tmpJObj.getJSONArray("subCategories");
 				List<Category> subCats = new ArrayList<Category>();
 				for (int j = 0; j < subJArray.length(); j++) {
@@ -167,7 +178,7 @@ public class ModCategoriesActivity extends Activity {
 			public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 				String macro_category = spMacroCats.getItemAtPosition(pos).toString();
 				cats = categories.get(macro_category);
-				listadapter = new MyCustomAdapter(parent.getContext(), R.layout.rowcheckbox, cats);
+				listadapter = new MyCustomAdapter(parent.getContext(), R.layout.rowcheckbox, cats, macro_category);
 				lv.setAdapter(listadapter);
 				listadapter.notifyDataSetChanged();
 			}
@@ -182,10 +193,12 @@ public class ModCategoriesActivity extends Activity {
 	// Adapter customizzato per gestire oggetti Category ed i checkbox associati
 	private class MyCustomAdapter extends ArrayAdapter<Category> {
 		private List<Category> list;
-		public MyCustomAdapter(Context context, int textViewResourceId, List<Category> list) {
+		private String macro_cat;
+		public MyCustomAdapter(Context context, int textViewResourceId, List<Category> list, String macro_cat) {
 			super(context, textViewResourceId, list);
 			this.list = new ArrayList<Category>();
 			this.list.addAll(list);
+			this.macro_cat = macro_cat;
 		}
 		
 		private class ViewHolder {
@@ -210,6 +223,9 @@ public class ModCategoriesActivity extends Activity {
 						Category category = (Category) cb.getTag();
 						Toast.makeText(getApplicationContext(), "Categoria " + cb.getText() + " risulta " + cb.isChecked(), Toast.LENGTH_LONG).show();
 						category.setSelected(cb.isChecked());
+						if (cb.isChecked()) {
+							updatedcategories.get(macro_cat).add(category.getCategory());
+						}
 					}
 				});
 			} else {
