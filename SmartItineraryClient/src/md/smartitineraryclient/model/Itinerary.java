@@ -11,11 +11,21 @@ public class Itinerary implements Parcelable {
 	private List<Poi> pois; 
 	private int popularity; 
 	private double length;
+	private String add_date;
+	private String pos_user;
 	
 	public Itinerary(List<Poi> pois, int popularity, double length) {
 		this.pois = pois;
 		this.popularity = popularity;
 		this.length = length;
+	}
+	
+	public Itinerary(List<Poi> pois, int popularity, double length, String pos_user, String add_date) {
+		this.pois = pois;
+		this.popularity = popularity;
+		this.length = length;
+		this.add_date = add_date;
+		this.pos_user = pos_user;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -62,6 +72,22 @@ public class Itinerary implements Parcelable {
 		out.writeDouble(length);
 	}
 	
+	public String getAdd_date() {
+		return add_date;
+	}
+
+	public void setAdd_date(String add_date) {
+		this.add_date = add_date;
+	}
+
+	public String getPos_user() {
+		return pos_user;
+	}
+
+	public void setPos_user(String pos_user) {
+		this.pos_user = pos_user;
+	}
+
 	public static final Parcelable.Creator<Itinerary> CREATOR = new Parcelable.Creator<Itinerary>() {
         public Itinerary createFromParcel(Parcel in) {
             return new Itinerary(in);

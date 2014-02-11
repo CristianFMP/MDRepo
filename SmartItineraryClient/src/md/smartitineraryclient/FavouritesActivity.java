@@ -7,11 +7,12 @@ import java.util.Map;
 
 import md.smartitineraryclient.db.DatabaseHelper;
 import md.smartitineraryclient.model.Interest;
+import md.smartitineraryclient.model.Itinerary;
+import md.smartitineraryclient.model.Poi;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,10 +25,10 @@ public class FavouritesActivity extends Activity {
 	
 	private List<Interest> catList;
 	private ArrayList<String> list;
-	private String cat = "";
 	DatabaseHelper databaseHelper;
 	private static final String TEXT1 = "text1";
 	private static final String TEXT2 = "text2";
+	private List<Itinerary> itinList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,19 +52,46 @@ public class FavouritesActivity extends Activity {
 				if(canc==null) {
 					list.add(categ);
 					catList.add(new Interest(categ, macroc, ins, canc));
-					cat += categ+",";
 				}
-			}
-			if(cat.length()!=0){
-				cat = cat.substring(0, cat.length()-1);
 			}
 			
 		} finally {
 			c.close();
 		}
 		updateCategoryList(updateListToItem(catList)); 
+		
+		/** Recupera gli itinerari salvati in locale e li mostra */
+		// TODO: da continuare
+		itinList = new ArrayList<Itinerary>();
+		
+		Cursor k = databaseHelper.getAllItineraries();
+		try {
+			while (k.moveToNext()) {
+				//Long id = k.getLong(0);
+				String pois = k.getString(1);
+				int popol = k.getInt(2);
+				double leng = k.getDouble(3);
+				int num_poi = k.getInt(4);
+				String posutente = k.getString(5);
+				String data = k.getString(6);
+				
+				List<Poi> poislist = new ArrayList<Poi>();
+				pois = pois.substring(1, num_poi-1);
+				String[] poiArr = pois.split(",");
+				for (int i=0; i<num_poi; i++){
+					String[] coordPoi = poiArr[i].split(" ");
+					Poi poi = new Poi(Double.parseDouble(coordPoi[0]), Double.parseDouble(coordPoi[1]));
+					poislist.add(poi);
+				}
+				/*
+				itinList.add(new Itinerary(poislist, popol, leng, posutente, data));
+				*/
+			}
+		} finally {
+			k.close();
+		}
+		updateItineraryList(updateItinListToItem(itinList));
 	}
-
 
 	private void setupActionBar() {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -116,5 +144,17 @@ public class FavouritesActivity extends Activity {
 		startActivityForResult(intent, 0);
 		overridePendingTransition(0,0);
 	}
+	
+	private void updateItineraryList(Object updateItinListtoItem) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	private Object updateItinListToItem(List<Itinerary> itinList2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

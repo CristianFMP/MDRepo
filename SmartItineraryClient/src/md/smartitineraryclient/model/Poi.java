@@ -20,6 +20,11 @@ public class Poi implements Parcelable {
 		this.longitude = longitude;
 	}
 	
+	public Poi(double longitude, double latitude) {
+		this.longitude = longitude;
+		this.latitude = latitude;
+	}
+	
 	public Poi(Parcel in) {
 		id = in.readString();
 		name = in.readString();

@@ -83,8 +83,6 @@ public class SearchActivity extends Activity implements LocationListener {
 		startActivityForResult(intent, 0);
 		overridePendingTransition(0,0);
 	}
-	
-	// TODO: mostrare testo indicante che non c'è ancora nessuna categoria negli interessi
 
 	private void updateCategoryList(List<Map<String, String>> updateListToItem) {
 		final List<Map<String, String>> rows = updateListToItem;		
@@ -105,6 +103,11 @@ public class SearchActivity extends Activity implements LocationListener {
 			Map<String, String> listItemMap = new HashMap<String, String>();
 			listItemMap.put(TEXT1, category);
 			listItemMap.put(TEXT2, macrocat); // per ora non viene mostrato
+			listItem.add(listItemMap);
+		}
+		if (catList.size() == 0) {
+			Map<String, String> listItemMap = new HashMap<String, String>();
+			listItemMap.put(TEXT1, "Non hai scelto ancora nessuna categoria");
 			listItem.add(listItemMap);
 		}
 		return listItem;
@@ -196,7 +199,6 @@ public class SearchActivity extends Activity implements LocationListener {
         	rag = "1000";
         }
         
-        // TODO: capire se crea problemi nel caso in cui non ci siano spazi da riampiazzare
         cat = cat.replace(" ", ".");
         pos = pos.replace(",", ".");
         pos = pos.replace(" ", ",");

@@ -87,7 +87,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	    java.util.Date date = new java.util.Date();
 		Timestamp now = new Timestamp(date.getTime());
 	    v.put(InterestTable.DATA_CANCELLAZIONE, now.toString());
-	    int idCanc = db.update(InterestTable.TABLE_NAME, v, InterestTable.CATEGORIA + "=" + cat, null);
+	    int idCanc = db.update(InterestTable.TABLE_NAME, v, InterestTable.CATEGORIA + "= '" + cat + "'", null);
 	    Log.d("Interest deleted", "with id: " + idCanc);
 	    return idCanc;
 	}
@@ -98,7 +98,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	    java.util.Date date = new java.util.Date();
 		Timestamp now = new Timestamp(date.getTime());
 	    v.put(InterestTable.DATA_INSERIMENTO, now.toString());
-	    int idRes = db.update(InterestTable.TABLE_NAME, v, InterestTable.CATEGORIA + "=" + cat, null);
+	    int idRes = db.update(InterestTable.TABLE_NAME, v, InterestTable.CATEGORIA + "= '" + cat + "'", null);
 	    Log.d("Interest restored", "with id: " + idRes);
 	    return idRes;
 	}
